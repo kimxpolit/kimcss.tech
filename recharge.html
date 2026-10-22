@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nạp tiền tự động - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --primary1: #0a58ca;
+        }
+
+        .bank-select-card {
+            cursor: pointer;
+            border: 2px solid #e9ecef;
+            border-radius: 14px;
+            transition: all 0.25s ease;
+            position: relative;
+            background: #fff;
+        }
+
+        .bank-select-card:hover {
+            transform: translateY(-2px);
+            border-color: #9ec5fe;
+            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.1);
+        }
+
+        .bank-select-card.active {
+            border-color: #0d6efd;
+            background-color: #f8fbff;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
+        }
+
+        .bank-select-card.active .check-indicator {
+            display: flex !important;
+        }
+
+        .check-indicator {
+            display: none;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background-color: #0d6efd;
+            color: #fff;
+            font-size: 11px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-pills .nav-link {
+            color: #495057;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 12px 24px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+
+        .qr-display-box {
+            background: #fff;
+            border: 2px dashed #dee2e6;
+            border-radius: 16px;
+            padding: 16px;
+            display: inline-block;
+        }
+    </style>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="client/css/wallet.css">
+    <link rel="stylesheet" href="mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="sweetalert2/default.css" type="text/css">
+    <script src="sweetalert2/sweetalert2.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <a class="backtop" href="#"><i class="fa-sharp fa-solid fa-chevron-up"></i></a>
+
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-bolt text-warning me-2"></i> Hệ thống nạp tiền tự động 24/7 - Xử lý tức thì sau 1 - 3 phút</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 bg-white border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="header-logo">
+                <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='client/images/logo.png'" alt="ShopClone 7" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="index.html" class="btn btn-outline-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="orders.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-bag-shopping me-1"></i> Đơn hàng</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <!-- Instructions Banner -->
+            <div class="alert alert-warning border-0 shadow-sm rounded-4 mb-4 p-4">
+                <h5 class="fw-bold mb-2"><i class="fa-solid fa-triangle-exclamation text-danger me-2"></i> QUY ĐỊNH NẠP TIỀN TỰ ĐỘNG</h5>
+                <ul class="mb-0 small ps-3">
+                    <li class="mb-1">Vui lòng nhập <strong>chính xác 100%</strong> nội dung chuyển khoản theo tài khoản của bạn để được cộng tiền tự động.</li>
+                    <li class="mb-1">Hệ thống quét tự động từ <strong>1 - 3 phút</strong> sau khi nhận được chuyển khoản thành công từ ngân hàng.</li>
+                    <li>Mã VietQR bên dưới đã được mã hóa sẵn số tiền và cú pháp nạp. Bạn chỉ cần dùng App ngân hàng quét mã để thanh toán.</li>
+                </ul>
+            </div>
+
+            <!-- PAYMENT METHOD TABS -->
+            <ul class="nav nav-pills nav-fill justify-content-center p-2 bg-white rounded-pill shadow-sm mb-4" id="recharge-main-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab-bank-btn" data-bs-toggle="pill" data-bs-target="#tab-bank-pane" type="button" role="tab" aria-controls="tab-bank-pane" aria-selected="true" data-type="bank">
+                        <i class="fa-solid fa-qrcode me-2 text-primary"></i> 1. Ngân Hàng (VietQR)
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-momo-btn" data-bs-toggle="pill" data-bs-target="#tab-momo-pane" type="button" role="tab" aria-controls="tab-momo-pane" aria-selected="false" data-type="momo">
+                        <i class="fa-solid fa-wallet me-2 text-danger"></i> 2. Ví MoMo
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-thesieure-btn" data-bs-toggle="pill" data-bs-target="#tab-thesieure-pane" type="button" role="tab" aria-controls="tab-thesieure-pane" aria-selected="false" data-type="thesieure">
+                        <i class="fa-solid fa-money-bill-transfer me-2 text-info"></i> 3. Ví THESIEURE
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-card-btn" data-bs-toggle="pill" data-bs-target="#tab-card-pane" type="button" role="tab" aria-controls="tab-card-pane" aria-selected="false" data-type="card">
+                        <i class="fa-solid fa-credit-card me-2 text-warning"></i> 4. Thẻ Cào Tự Động
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-crypto-btn" data-bs-toggle="pill" data-bs-target="#tab-crypto-pane" type="button" role="tab" aria-controls="tab-crypto-pane" aria-selected="false" data-type="crypto">
+                        <i class="fa-solid fa-coins me-2 text-success"></i> 5. Crypto (USDT)
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="recharge-tab-content">
+                <!-- ==================== TAB 1: NGÂN HÀNG VIETQR ==================== -->
+                <div class="tab-pane fade show active" id="tab-bank-pane" role="tabpanel" aria-labelledby="tab-bank-btn">
+                    <!-- Bước 1: Chọn ngân hàng thụ hưởng (Bank Selector) -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 p-4 bg-white">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge bg-primary rounded-circle p-2 me-2 fs-6">1</span>
+                            <h5 class="fw-bold mb-0 text-dark">Chọn ngân hàng thụ hưởng</h5>
+                        </div>
+                        <div class="row g-3" id="bank-selector-container">
+                            <div class="col-12 text-center py-3 text-muted">
+                                <i class="fa fa-spinner fa-spin me-2 text-primary"></i> Đang tải danh sách ngân hàng...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 2: Nhập số tiền cần nạp -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 p-4 bg-white">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge bg-primary rounded-circle p-2 me-2 fs-6">2</span>
+                            <h5 class="fw-bold mb-0 text-dark">Nhập số tiền cần nạp</h5>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-lg-5 mb-3 mb-lg-0">
+                                <label class="form-label text-muted small fw-bold">Số tiền muốn nạp (VNĐ)</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-light text-primary fw-bold"><i class="fa-solid fa-dong-sign"></i></span>
+                                    <input type="text" class="form-control fw-bold text-primary" id="recharge-amount-input" placeholder="Ví dụ: 100,000" value="100,000">
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <label class="form-label text-muted small fw-bold">Chọn nhanh mệnh giá</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="50000">50.000 ₫</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-quick-amount active rounded-pill px-3 py-2" data-amount="100000">100.000 ₫</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="200000">200.000 ₫</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="500000">500.000 ₫</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="1000000">1.000.000 ₫</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="2000000">2.000.000 ₫</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 3: Khung hiển thị DUY NHẤT 1 MÃ VIETQR của ngân hàng đang chọn -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 bg-white overflow-hidden" id="selected-bank-display-card">
+                        <div class="card-header bg-gradient text-white py-3 px-4 d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-white text-primary rounded-circle p-2 me-2 fs-6">3</span>
+                                <h5 class="fw-bold mb-0" id="display-bank-title"><i class="fa-solid fa-building-columns me-2"></i> Thông Tin Thanh Toán VietQR</h5>
+                            </div>
+                            <span class="badge bg-light text-dark px-3 py-2 rounded-pill"><i class="fa-solid fa-shield-check text-success me-1"></i> Tự động 24/7</span>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <!-- Cột Trái: Ảnh Mã QR duy nhất -->
+                                <div class="col-lg-5 text-center mb-4 mb-lg-0 border-end-lg">
+                                    <div class="qr-display-box shadow-sm mb-3">
+                                        <img id="vietqr-image" src="" alt="VietQR" class="img-fluid rounded" style="max-height: 250px; min-height: 200px;">
+                                    </div>
+                                    <div>
+                                        <a id="vietqr-download-btn" href="#" target="_blank" download="vietqr.png" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                            <i class="fa-solid fa-download me-1"></i> Tải mã VietQR về máy
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Cột Phải: Chi tiết thông tin chuyển khoản -->
+                                <div class="col-lg-7 ps-lg-4">
+                                    <ul class="list-group list-group-flush mb-4">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-building-columns me-2"></i> Ngân hàng:</span>
+                                            <strong class="text-dark fs-6" id="display-bank-name">---</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-user me-2"></i> Chủ tài khoản:</span>
+                                            <strong class="text-dark fs-6 text-uppercase" id="display-account-name">---</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-credit-card me-2"></i> Số tài khoản:</span>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-primary me-2 fs-5 font-monospace" id="display-account-number">---</strong>
+                                                <button class="btn btn-sm btn-outline-primary rounded-pill px-2 py-1" onclick="copyDisplaySTK()" title="Sao chép">
+                                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-coins me-2"></i> Số tiền cần nạp:</span>
+                                            <strong class="text-danger fs-5 fw-bold" id="display-amount">100.000 ₫</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3 bg-light rounded-3">
+                                            <div>
+                                                <span class="text-dark fw-bold d-block"><i class="fa-solid fa-comment-dots text-danger me-2"></i> Nội dung chuyển khoản:</span>
+                                                <small class="text-muted">Nhập chính xác để được cộng tiền tự động</small>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-danger me-2 fs-5 font-monospace" id="display-syntax">NAP ---</strong>
+                                                <button class="btn btn-sm btn-danger rounded-pill px-3 py-1" onclick="copyDisplaySyntax()" title="Sao chép">
+                                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <!-- Hộp Trạng Thái Thanh Toán Thời Gian Thực -->
+                                    <div class="border rounded-4 p-3 bg-light text-center">
+                                        <div class="d-flex justify-content-center align-items-center text-primary mb-1">
+                                            <div class="spinner-border spinner-border-sm me-2 text-primary" role="status"></div>
+                                            <span class="fw-bold fs-6">Đang chờ chuyển khoản...</span>
+                                        </div>
+                                        <small class="text-muted d-block">
+                                            <i class="fa-solid fa-shield-halved text-success me-1"></i> Hệ thống tự động kiểm tra số dư và cộng tiền từ <strong>1 - 3 phút</strong> sau khi nhận được tiền.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB 2: VÍ ĐIỆN TỬ MOMO ==================== -->
+                <div class="tab-pane fade" id="tab-momo-pane" role="tabpanel" aria-labelledby="tab-momo-btn">
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 bg-white overflow-hidden">
+                        <div class="card-header text-white py-3 px-4 d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #d63384 0%, #b02a37 100%);">
+                            <h5 class="fw-bold mb-0"><i class="fa-solid fa-wallet me-2"></i> Nạp Tiền Qua Ví Điện Tử MoMo Tự Động</h5>
+                            <span class="badge bg-white text-danger px-3 py-2 rounded-pill"><i class="fa-solid fa-bolt me-1"></i> Xử lý 24/7</span>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <!-- MoMo QR -->
+                                <div class="col-lg-5 text-center mb-4 mb-lg-0 border-end-lg">
+                                    <div class="qr-display-box shadow-sm mb-3">
+                                        <img id="momo-qr-image" src="" alt="MoMo QR" class="img-fluid rounded" style="max-height: 250px; min-height: 200px;">
+                                    </div>
+                                    <div>
+                                        <a id="momo-download-btn" href="#" target="_blank" download="momo_qr.png" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                                            <i class="fa-solid fa-download me-1"></i> Tải mã QR MoMo
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- MoMo Details -->
+                                <div class="col-lg-7 ps-lg-4">
+                                    <ul class="list-group list-group-flush mb-4">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-mobile-screen me-2"></i> Ví điện tử:</span>
+                                            <strong class="text-danger fs-6">MoMo Pay (Ví Momo)</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-user me-2"></i> Tên người nhận:</span>
+                                            <strong class="text-dark fs-6" id="momo-account-name">NGUYEN VAN QUYEN (ADMIN SHOPCLONE)</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-phone me-2"></i> Số điện thoại MoMo:</span>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-danger me-2 fs-5 font-monospace" id="momo-phone-number">0989461037</strong>
+                                                <button class="btn btn-sm btn-outline-danger rounded-pill px-2 py-1" onclick="copyText(document.getElementById('momo-phone-number').innerText)" title="Sao chép">
+                                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3 bg-light rounded-3">
+                                            <div>
+                                                <span class="text-dark fw-bold d-block"><i class="fa-solid fa-comment-dots text-danger me-2"></i> Lời nhắn (Nội dung chuyển):</span>
+                                                <small class="text-muted">Bắt buộc phải điền đúng để hệ thống cộng tiền</small>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-danger me-2 fs-5 font-monospace" id="momo-syntax">NAP ---</strong>
+                                                <button class="btn btn-sm btn-danger rounded-pill px-3 py-1" onclick="copyDisplaySyntax()" title="Sao chép">
+                                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="border rounded-4 p-3 bg-light text-center">
+                                        <div class="d-flex justify-content-center align-items-center text-danger mb-1">
+                                            <div class="spinner-border spinner-border-sm me-2 text-danger" role="status"></div>
+                                            <span class="fw-bold fs-6">Đang chờ chuyển tiền qua MoMo...</span>
+                                        </div>
+                                        <small class="text-muted d-block">
+                                            Hệ thống tự động cộng tiền ngay khi nhận được biến động từ MoMo.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB 3: NẠP THẺ CÀO TỰ ĐỘNG ==================== -->
+                <div class="tab-pane fade" id="tab-card-pane" role="tabpanel" aria-labelledby="tab-card-btn">
+                    <div class="row">
+                        <!-- Form Nạp Thẻ Cào -->
+                        <div class="col-lg-7 mb-4">
+                            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-credit-card text-warning me-2"></i> Nhập Thông Tin Thẻ Cào</h5>
+                                <form id="card-recharge-form">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold small text-muted">Loại thẻ cào (<span class="text-danger">*</span>)</label>
+                                        <select class="form-select form-select-lg" id="card-telco" required>
+                                            <option value="">-- Chọn loại thẻ --</option>
+                                            <option value="VIETTEL">Viettel (Chiết khấu 15%)</option>
+                                            <option value="VINAPHONE">Vinaphone (Chiết khấu 15%)</option>
+                                            <option value="MOBIFONE">Mobifone (Chiết khấu 15%)</option>
+                                            <option value="VNMOBI">Vietnamobile (Chiết khấu 18%)</option>
+                                            <option value="ZING">Thẻ Zing (Chiết khấu 15%)</option>
+                                            <option value="GARENA">Thẻ Garena (Chiết khấu 15%)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold small text-muted">Mệnh giá thẻ (<span class="text-danger">*</span>)</label>
+                                        <select class="form-select form-select-lg" id="card-amount" required onchange="updateCardRealAmount()">
+                                            <option value="">-- Chọn đúng mệnh giá --</option>
+                                            <option value="10000">10.000 ₫</option>
+                                            <option value="20000">20.000 ₫</option>
+                                            <option value="30000">30.000 ₫</option>
+                                            <option value="50000">50.000 ₫</option>
+                                            <option value="100000">100.000 ₫</option>
+                                            <option value="200000">200.000 ₫</option>
+                                            <option value="500000">500.000 ₫</option>
+                                            <option value="1000000">1.000.000 ₫</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold small text-muted">Số Serial (<span class="text-danger">*</span>)</label>
+                                        <input type="text" class="form-control form-control-lg font-monospace" id="card-serial" placeholder="Nhập số serial in trên thẻ" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold small text-muted">Mã thẻ (Mã PIN) (<span class="text-danger">*</span>)</label>
+                                        <input type="text" class="form-control form-control-lg font-monospace" id="card-pin" placeholder="Nhập mã thẻ cào dưới lớp tráng bạc" required>
+                                    </div>
+                                    <div class="alert alert-info py-3 mb-4 rounded-3 d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold"><i class="fa-solid fa-calculator me-2"></i> Số tiền thực nhận vào ví:</span>
+                                        <span class="fs-4 fw-bold text-danger" id="card-real-amount-display">0 ₫</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-warning w-100 py-3 fw-bold rounded-pill text-dark" id="btnSubmitCard">
+                                        <i class="fa-solid fa-paper-plane me-2"></i> NẠP THẺ CÀO NGAY
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Lưu ý nạp thẻ -->
+                        <div class="col-lg-5">
+                            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-circle-exclamation text-danger me-2"></i> Lưu Ý Khi Nạp Thẻ</h5>
+                                <ul class="small text-muted ps-3 mb-0" style="line-height: 1.8;">
+                                    <li>Vui lòng chọn <strong>chính xác mệnh giá thẻ</strong>. Nếu chọn sai mệnh giá sẽ bị trừ 50% thực nhận hoặc mất thẻ theo quy định của nhà mạng.</li>
+                                    <li>Thời gian gạch thẻ tự động từ <strong>1 - 5 phút</strong> tùy trạng thái cổng kết nối nhà mạng.</li>
+                                    <li>Tuyệt đối không gửi thẻ sai, thẻ đã qua sử dụng nhiều lần để tránh bị khóa tính năng.</li>
+                                    <li>Hỗ trợ các loại thẻ phổ biến: Viettel, Vinaphone, Mobifone, Vietnamobile, Zing, Garena.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB 3: VÍ THẺ SIÊU RẺ ==================== -->
+                <div class="tab-pane fade" id="tab-thesieure-pane" role="tabpanel" aria-labelledby="tab-thesieure-btn">
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 bg-white overflow-hidden">
+                        <div class="card-header text-white py-3 px-4 d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%);">
+                            <h5 class="fw-bold mb-0 text-white"><i class="fa-solid fa-money-bill-transfer me-2"></i> Nạp Tiền Qua Ví Thẻ Siêu Rẻ (TheSieuRe.com)</h5>
+                            <span class="badge bg-white text-info px-3 py-2 rounded-pill"><i class="fa-solid fa-bolt me-1"></i> Tự động 24/7</span>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-lg-5 text-center mb-4 mb-lg-0 border-end-lg">
+                                    <div class="qr-display-box shadow-sm mb-3 p-3">
+                                        <img src="mod/img/icon-thesieure.webp" alt="TheSieuRe" class="img-fluid rounded" style="max-height: 180px;">
+                                    </div>
+                                    <div class="alert alert-light border small text-muted text-start mb-0">
+                                        <i class="fa-solid fa-circle-info text-info me-1"></i> Đăng nhập vào <strong>thesieure.com</strong> chọn chức năng <strong>Chuyển quỹ</strong> hoặc <strong>Chuyển tiền ví</strong>.
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 ps-lg-4">
+                                    <ul class="list-group list-group-flush mb-4">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-wallet me-2"></i> Ví nhận:</span>
+                                            <strong class="text-info fs-6">THESIEURE.COM</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-user me-2"></i> Tài khoản nhận:</span>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-dark me-2 fs-5 font-monospace" id="tsr-account-name">shopclonevn</strong>
+                                                <button class="btn btn-sm btn-outline-info rounded-pill px-2 py-1" onclick="copyText('shopclonevn')" title="Sao chép">
+                                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-phone me-2"></i> Số điện thoại ví TSR:</span>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-primary me-2 fs-6 font-monospace" id="tsr-phone-number">0989461037</strong>
+                                                <button class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1" onclick="copyText(document.getElementById('tsr-phone-number').innerText)" title="Sao chép">
+                                                    <i class="fa-solid fa-copy"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3 bg-light rounded-3">
+                                            <div>
+                                                <span class="text-dark fw-bold d-block"><i class="fa-solid fa-comment-dots text-danger me-2"></i> Lời nhắn chuyển quỹ:</span>
+                                                <small class="text-muted">Bắt buộc phải điền đúng để hệ thống cộng tiền</small>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-danger me-2 fs-5 font-monospace thesieure-syntax">NAP ---</strong>
+                                                <button class="btn btn-sm btn-danger rounded-pill px-3 py-1" onclick="copyDisplaySyntax()" title="Sao chép">
+                                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="border rounded-4 p-3 bg-light text-center">
+                                        <div class="d-flex justify-content-center align-items-center text-info mb-1">
+                                            <div class="spinner-border spinner-border-sm me-2 text-info" role="status"></div>
+                                            <span class="fw-bold fs-6">Đang chờ chuyển tiền Thẻ Siêu Rẻ...</span>
+                                        </div>
+                                        <small class="text-muted d-block">
+                                            Hệ thống tự động cộng tiền trong 1 - 3 phút sau khi giao dịch thành công.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB 5: TIỀN ẢO CRYPTO (USDT) ==================== -->
+                <div class="tab-pane fade" id="tab-crypto-pane" role="tabpanel" aria-labelledby="tab-crypto-btn">
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 bg-white overflow-hidden">
+                        <div class="card-header text-white py-3 px-4 d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #198754 0%, #146c43 100%);">
+                            <h5 class="fw-bold mb-0 text-white"><i class="fa-solid fa-coins me-2"></i> Nạp Tiền Qua Tiền Điện Tử Crypto (USDT TRC20 / BEP20)</h5>
+                            <span class="badge bg-white text-success px-3 py-2 rounded-pill"><i class="fa-brands fa-bitcoin me-1"></i> Blockchain</span>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-lg-5 text-center mb-4 mb-lg-0 border-end-lg">
+                                    <div class="qr-display-box shadow-sm mb-3">
+                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TYx987ShopCloneTRC20OfficialWallet" alt="USDT QR" class="img-fluid rounded" style="max-height: 220px;">
+                                    </div>
+                                    <div class="text-center">
+                                        <span class="badge bg-light text-success border px-3 py-2 fs-6">
+                                            Tỷ giá: <strong>1 USDT = 25.400 ₫</strong>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 ps-lg-4">
+                                    <ul class="list-group list-group-flush mb-4">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-network-wired me-2"></i> Mạng hỗ trợ:</span>
+                                            <strong class="text-success fs-6">USDT (Mạng TRC20 - Tron / BEP20)</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                            <span class="text-muted"><i class="fa-solid fa-wallet me-2"></i> Địa chỉ ví:</span>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-dark me-2 fs-6 font-monospace text-break" id="crypto-wallet-address">TYx987ShopCloneTRC20OfficialWallet</strong>
+                                                <button class="btn btn-sm btn-outline-success rounded-pill px-2 py-1" onclick="copyText(document.getElementById('crypto-wallet-address').innerText)" title="Sao chép">
+                                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3 bg-light rounded-3">
+                                            <div>
+                                                <span class="text-dark fw-bold d-block"><i class="fa-solid fa-comment-dots text-danger me-2"></i> Ghi chú giao dịch (Memo / Tag):</span>
+                                                <small class="text-muted">Nhập ghi chú hoặc mã giao dịch để xác nhận</small>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-danger me-2 fs-5 font-monospace crypto-syntax">NAP ---</strong>
+                                                <button class="btn btn-sm btn-danger rounded-pill px-3 py-1" onclick="copyDisplaySyntax()" title="Sao chép">
+                                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="border rounded-4 p-3 bg-light text-center">
+                                        <div class="d-flex justify-content-center align-items-center text-success mb-1">
+                                            <div class="spinner-border spinner-border-sm me-2 text-success" role="status"></div>
+                                            <span class="fw-bold fs-6">Đang chờ xác nhận từ Blockchain...</span>
+                                        </div>
+                                        <small class="text-muted d-block">
+                                            Số dư được tự động cộng vào tài khoản sau 1 block confirmation (khoảng 1 - 3 phút).
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deposit History Table -->
+            <div class="card border-0 shadow-sm rounded-4 mt-4 overflow-hidden bg-white">
+                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-clock-rotate-left text-primary me-2"></i> Lịch Sử Biến Động Số Dư</h5>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="loadTransactions()"><i class="fa-solid fa-rotate me-1"></i> Làm mới</button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Thời gian</th>
+                                    <th>Loại giao dịch</th>
+                                    <th>Mã GD</th>
+                                    <th>Ghi chú</th>
+                                    <th>Số dư trước</th>
+                                    <th>Biến động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="deposits-table-body">
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">Đang tải lịch sử giao dịch...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-part py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | Hệ thống cung cấp tài nguyên MMO hàng đầu Việt Nam</small>
+    </footer>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="client/vendor/bootstrap/popper.min.js"></script>
+    <script src="client/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- App Modules -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/i18n.js"></script>
+    <script src="js/recharge.js"></script>
+</body>
+
+</html>

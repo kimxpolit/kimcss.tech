@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tài liệu tích hợp API - kimcss.tech</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --primary1: #0a58ca;
+        }
+
+        .api-badge-method {
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        .method-get {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+        .method-post {
+            background-color: #198754;
+            color: #fff;
+        }
+
+        .code-preview {
+            background: #1e1e2f;
+            color: #7dd3fc;
+            padding: 16px;
+            border-radius: 12px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            border: 1px solid #334155;
+        }
+
+        .api-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eef2f6;
+            margin-bottom: 24px;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .api-card-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid #f1f5f9;
+            background: #f8fafc;
+        }
+
+        .api-card-body {
+            padding: 24px;
+        }
+
+        .copy-btn {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .copy-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+    </style>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="client/css/wallet.css">
+    <link rel="stylesheet" href="mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="sweetalert2/default.css" type="text/css">
+    <script src="sweetalert2/sweetalert2.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <a class="backtop" href="#"><i class="fa-sharp fa-solid fa-chevron-up"></i></a>
+
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-code text-primary me-2"></i> Cổng API kết nối tự động cho Nhà phát triển & Đại lý</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 bg-white border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="header-logo">
+                <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='assets/storage/images/logo_hoang_kim.png'" alt="HOÀNG KIM" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="index.html" class="btn btn-outline-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="recharge.html" class="btn btn-outline-success btn-sm rounded-pill px-3"><i class="fa-solid fa-wallet me-1"></i> Nạp tiền</a>
+                <a href="orders.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-bag-shopping me-1"></i> Đơn hàng</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <!-- Header Title -->
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <div>
+                    <h3 class="fw-bold mb-1"><i class="fa-solid fa-file-code text-primary me-2"></i> TÀI LIỆU TÍCH HỢP API</h3>
+                    <p class="text-muted small mb-0">Hệ thống API RESTful tốc độ cao, hỗ trợ đặt hàng và quản lý tài nguyên tức thì.</p>
+                </div>
+                <a href="index.html" class="btn btn-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-arrow-left me-1"></i> Quay lại</a>
+            </div>
+
+            <!-- API Key Card -->
+            <div class="api-card">
+                <div class="api-card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold text-dark"><i class="fa-solid fa-key text-warning me-2"></i> Khóa bảo mật API Key của bạn</h5>
+                    <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill">Hoạt động 24/7</span>
+                </div>
+                <div class="api-card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <label class="fw-bold text-secondary mb-1">API Key hiện tại:</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" id="display-api-key" class="form-control font-monospace fw-bold text-primary" readonly value="Đang tải..." placeholder="Vui lòng đăng nhập để xem API Key">
+                                <button class="btn btn-primary copy-btn" onclick="copyText('display-api-key')" type="button">
+                                    <i class="fa-solid fa-copy me-1"></i> Sao chép
+                                </button>
+                                <button class="btn btn-danger" id="btn-change-key" onclick="regenerateApiKey()" type="button" title="Thay đổi API Key mới">
+                                    <i class="fa-solid fa-rotate me-1"></i> Đổi Key Mới
+                                </button>
+                            </div>
+                            <small class="text-danger mt-1 d-block"><i class="fa-solid fa-shield-halved me-1"></i> Bảo mật API Key cẩn thận. Tuyệt đối không gửi cho người khác hoặc để lộ công khai.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Endpoints Section -->
+            <h4 class="fw-bold mt-4 mb-3"><i class="fa-solid fa-network-wired text-primary me-2"></i> Danh sách các cổng kết nối API</h4>
+
+            <!-- Endpoint 1: Profile -->
+            <div class="api-card">
+                <div class="api-card-header d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="api-badge-method method-get">GET</span>
+                        <strong class="fs-6">1. Lấy thông tin tài khoản và số dư ví</strong>
+                    </div>
+                </div>
+                <div class="api-card-body">
+                    <p class="text-muted small">Cung cấp thông tin tài khoản, email và số dư hiện có trong ví.</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-light font-monospace fw-bold">GET</span>
+                        <input type="text" id="url-api-profile" class="form-control font-monospace" readonly>
+                        <button class="btn btn-outline-primary copy-btn" onclick="copyText('url-api-profile')"><i class="fa-solid fa-copy"></i> Copy</button>
+                    </div>
+                    <label class="fw-bold small text-secondary mb-1">Dữ liệu phản hồi mẫu (JSON Response):</label>
+                    <pre class="code-preview mb-0"><code>{
+    "status": "success",
+    "msg": "Lấy dữ liệu thành công!",
+    "data": {
+        "username": "khachhang",
+        "email": "khachhang@shopclone.vn",
+        "money": 573000,
+        "balance": 573000
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Endpoint 2: Products List -->
+            <div class="api-card">
+                <div class="api-card-header d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="api-badge-method method-get">GET</span>
+                        <strong class="fs-6">2. Lấy danh sách chuyên mục & sản phẩm đang bán</strong>
+                    </div>
+                </div>
+                <div class="api-card-body">
+                    <p class="text-muted small">Lấy toàn bộ cây chuyên mục kèm các sản phẩm, giá bán, tồn kho thực tế.</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-light font-monospace fw-bold">GET</span>
+                        <input type="text" id="url-api-products" class="form-control font-monospace" readonly>
+                        <button class="btn btn-outline-primary copy-btn" onclick="copyText('url-api-products')"><i class="fa-solid fa-copy"></i> Copy</button>
+                    </div>
+                    <label class="fw-bold small text-secondary mb-1">Dữ liệu phản hồi mẫu (JSON Response):</label>
+                    <pre class="code-preview mb-0"><code>{
+    "status": "success",
+    "msg": "Lấy dữ liệu thành công!",
+    "categories": [
+        {
+            "id": 1,
+            "name": "Tài Khoản Facebook",
+            "icon": "assets/storage/images/icon_fb.png",
+            "products": [
+                {
+                    "id": 1,
+                    "name": "Clone Facebook 50-500 bạn bè, 2FA, Live trâu",
+                    "price": 2500,
+                    "amount": 250,
+                    "description": "Bao login lần đầu trong 24h",
+                    "flag": "vn",
+                    "min": 1,
+                    "max": 250
+                }
+            ]
+        }
+    ]
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Endpoint 3: Single Product Detail -->
+            <div class="api-card">
+                <div class="api-card-header d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="api-badge-method method-get">GET</span>
+                        <strong class="fs-6">3. Lấy chi tiết và kiểm tra tồn kho sản phẩm cụ thể</strong>
+                    </div>
+                </div>
+                <div class="api-card-body">
+                    <p class="text-muted small">Truy vấn nhanh thông tin một mã sản phẩm cụ thể theo tham số <code>product={ID}</code>.</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-light font-monospace fw-bold">GET</span>
+                        <input type="text" id="url-api-product" class="form-control font-monospace" readonly>
+                        <button class="btn btn-outline-primary copy-btn" onclick="copyText('url-api-product')"><i class="fa-solid fa-copy"></i> Copy</button>
+                    </div>
+                    <label class="fw-bold small text-secondary mb-1">Dữ liệu phản hồi mẫu (JSON Response):</label>
+                    <pre class="code-preview mb-0"><code>{
+    "status": "success",
+    "msg": "Lấy dữ liệu thành công!",
+    "product": [
+        {
+            "id": 1,
+            "name": "Clone Facebook 50-500 bạn bè, 2FA, Live trâu",
+            "price": 2500,
+            "amount": 250,
+            "description": "Bao login lần đầu trong 24h",
+            "flag": "vn",
+            "min": 1,
+            "max": 250
+        }
+    ]
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Endpoint 4: Buy Product -->
+            <div class="api-card">
+                <div class="api-card-header d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="api-badge-method method-post">POST</span>
+                        <strong class="fs-6">4. Tạo đơn mua hàng tự động (Order Placement)</strong>
+                    </div>
+                </div>
+                <div class="api-card-body">
+                    <p class="text-muted small">Hệ thống kiểm tra số dư ví, trừ tiền và xuất trực tiếp danh sách tài khoản theo cơ chế FIFO.</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-light font-monospace fw-bold">POST / GET</span>
+                        <input type="text" id="url-api-buy" class="form-control font-monospace" readonly>
+                        <button class="btn btn-outline-primary copy-btn" onclick="copyText('url-api-buy')"><i class="fa-solid fa-copy"></i> Copy</button>
+                    </div>
+
+                    <h6 class="fw-bold text-dark mt-3 mb-2"><i class="fa-solid fa-list-check me-1"></i> Tham số truyền vào (Payload):</h6>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-bordered table-sm small align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Tham số</th>
+                                    <th>Kiểu</th>
+                                    <th>Bắt buộc</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code class="text-primary fw-bold">api_key</code></td>
+                                    <td>String</td>
+                                    <td><span class="badge bg-danger">Có</span></td>
+                                    <td>Khóa API Key của tài khoản người mua</td>
+                                </tr>
+                                <tr>
+                                    <td><code class="text-primary fw-bold">id</code></td>
+                                    <td>Integer</td>
+                                    <td><span class="badge bg-danger">Có</span></td>
+                                    <td>ID sản phẩm cần mua</td>
+                                </tr>
+                                <tr>
+                                    <td><code class="text-primary fw-bold">amount</code></td>
+                                    <td>Integer</td>
+                                    <td><span class="badge bg-danger">Có</span></td>
+                                    <td>Số lượng cần mua (Tối thiểu 1)</td>
+                                </tr>
+                                <tr>
+                                    <td><code class="text-primary fw-bold">coupon</code></td>
+                                    <td>String</td>
+                                    <td><span class="badge bg-secondary">Không</span></td>
+                                    <td>Mã giảm giá khuyến mãi (nếu có)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <label class="fw-bold small text-secondary mb-1">Dữ liệu phản hồi mẫu khi mua thành công (JSON Response):</label>
+                    <pre class="code-preview mb-0"><code>{
+    "status": "success",
+    "msg": "Tạo đơn hàng thành công!",
+    "trans_id": "API_M3KZ4_9A21",
+    "data": [
+        "1000040304952|GUTJXYIFPWLHCNDOMBRKVAQESZ",
+        "1000087676467|IVMRLABECWTQYUXHPOFNJDSZGK"
+    ]
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Integration Code Samples -->
+            <div class="api-card">
+                <div class="api-card-header">
+                    <h5 class="mb-0 fw-bold"><i class="fa-solid fa-code text-primary me-2"></i> Mẫu Code Tích Hợp Đa Ngôn Ngữ</h5>
+                </div>
+                <div class="api-card-body">
+                    <ul class="nav nav-tabs mb-3" id="codeTabs" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active fw-bold" id="curl-tab" data-bs-toggle="tab" data-bs-target="#tab-curl">cURL</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link fw-bold" id="js-tab" data-bs-toggle="tab" data-bs-target="#tab-js">Node.js (Fetch)</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link fw-bold" id="py-tab" data-bs-toggle="tab" data-bs-target="#tab-py">Python (Requests)</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tab-curl">
+                            <pre class="code-preview"><code>curl -X POST "<span class="domain-placeholder"></span>/api/buy_product" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "api_key": "<span class="key-placeholder">YOUR_API_KEY</span>",
+    "id": 1,
+    "amount": 2
+  }'</code></pre>
+                        </div>
+                        <div class="tab-pane fade" id="tab-js">
+                            <pre class="code-preview"><code>const response = await fetch('<span class="domain-placeholder"></span>/api/buy_product', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        api_key: '<span class="key-placeholder">YOUR_API_KEY</span>',
+        id: 1,
+        amount: 2
+    })
+});
+const result = await response.json();
+console.log(result);</code></pre>
+                        </div>
+                        <div class="tab-pane fade" id="tab-py">
+                            <pre class="code-preview"><code>import requests
+
+url = "<span class="domain-placeholder"></span>/api/buy_product"
+payload = {
+    "api_key": "<span class="key-placeholder">YOUR_API_KEY</span>",
+    "id": 1,
+    "amount": 2
+}
+response = requests.post(url, json=payload)
+print(response.json())</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-part py-4 bg-white border-top">
+        <div class="container text-center text-muted small">
+            <p class="mb-1"><strong>kimcss.tech</strong> - Hệ thống cung cấp tài nguyên số tự động 24/7</p>
+            <p class="mb-0">Bản quyền © 2026. Mọi quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS (CDN with Local Fallback) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>if (typeof bootstrap === 'undefined') document.write('<script src="client/vendor/bootstrap/bootstrap.bundle.min.js"><\/script>')</script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/i18n.js"></script>
+
+    <script>
+        let currentUserApiKey = '';
+
+        function copyText(elementId) {
+            const input = document.getElementById(elementId);
+            if (!input || !input.value) return;
+
+            navigator.clipboard.writeText(input.value).then(() => {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã sao chép vào bộ nhớ tạm!',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }).catch(() => {
+                input.select();
+                document.execCommand('copy');
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã sao chép vào bộ nhớ tạm!',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        }
+
+        async function loadApiDocumentInfo() {
+            const origin = window.location.origin;
+            const domainHolders = document.querySelectorAll('.domain-placeholder');
+            domainHolders.forEach(el => el.innerText = origin);
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                document.getElementById('display-api-key').value = 'Vui lòng đăng nhập tài khoản để nhận API Key';
+                document.getElementById('url-api-profile').value = `${origin}/api/profile?api_key=YOUR_API_KEY`;
+                document.getElementById('url-api-products').value = `${origin}/api/products.php?api_key=YOUR_API_KEY`;
+                document.getElementById('url-api-product').value = `${origin}/api/product?api_key=YOUR_API_KEY&product=1`;
+                document.getElementById('url-api-buy').value = `${origin}/api/buy_product`;
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/auth/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.status === 'success' && data.user) {
+                    currentUserApiKey = data.user.api_key || 'Chưa tạo key';
+                    document.getElementById('display-api-key').value = currentUserApiKey;
+                    document.getElementById('url-api-profile').value = `${origin}/api/profile?api_key=${currentUserApiKey}`;
+                    document.getElementById('url-api-products').value = `${origin}/api/products.php?api_key=${currentUserApiKey}`;
+                    document.getElementById('url-api-product').value = `${origin}/api/product?api_key=${currentUserApiKey}&product=1`;
+                    document.getElementById('url-api-buy').value = `${origin}/api/buy_product`;
+
+                    const keyHolders = document.querySelectorAll('.key-placeholder');
+                    keyHolders.forEach(el => el.innerText = currentUserApiKey);
+                }
+            } catch (err) {
+                console.error('Error loading API info:', err);
+            }
+        }
+
+        async function regenerateApiKey() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Chưa đăng nhập!',
+                    text: 'Vui lòng đăng nhập tài khoản để quản lý API Key.',
+                    confirmButtonText: 'Đăng nhập ngay'
+                }).then(() => {
+                    window.location.href = 'login.html';
+                });
+                return;
+            }
+
+            const confirmResult = await Swal.fire({
+                title: 'Tạo mới API Key?',
+                text: 'Hệ thống sẽ vô hiệu hóa API Key cũ và cấp một API Key hoàn toàn mới. Bạn có chắc chắn?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Tôi đồng ý',
+                cancelButtonText: 'Hủy bỏ'
+            });
+
+            if (!confirmResult.isConfirmed) return;
+
+            try {
+                const res = await fetch('/api/auth/change-api-key', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: 'Đã tạo mới API Key thành công.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    loadApiDocumentInfo();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: data.msg || 'Không thể đổi API Key!'
+                    });
+                }
+            } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Lỗi mạng khi kết nối server: ' + err.message
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadApiDocumentInfo();
+        });
+    </script>
+</body>
+
+</html>

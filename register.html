@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Đăng ký tài khoản - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="client/css/user-auth.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="sweetalert2/default.css" type="text/css">
+    <script src="sweetalert2/sweetalert2.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <section class="user-form-part py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+                    <div class="user-form-logo text-center mb-4">
+                        <a href="index.html">
+                            <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='client/images/logo.png'" alt="ShopClone 7" height="48">
+                        </a>
+                    </div>
+                    <div class="user-form-card shadow-sm p-4 bg-white rounded-4">
+                        <div class="user-form-title text-center mb-4">
+                            <h3 class="fw-bold">ĐĂNG KÝ TÀI KHOẢN</h3>
+                            <p class="text-muted small">Tạo tài khoản để bắt đầu mua sắm tài khoản MMO tự động</p>
+                        </div>
+                        <form class="user-form" id="register-form">
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold small">Họ và tên (<span class="text-danger">*</span>)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-id-card"></i></span>
+                                    <input type="text" class="form-control" id="reg-fullname" placeholder="Nguyễn Văn A..." required autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold small">Tên đăng nhập (<span class="text-danger">*</span>)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
+                                    <input type="text" class="form-control" id="reg-username" placeholder="Nhập username..." required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold small">Địa chỉ Email (<span class="text-danger">*</span>)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
+                                    <input type="email" class="form-control" id="reg-email" placeholder="example@gmail.com" required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold small">Số điện thoại</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-phone"></i></span>
+                                    <input type="tel" class="form-control" id="reg-phone" placeholder="0987654321">
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold small">Mật khẩu (<span class="text-danger">*</span> - tối thiểu 6 ký tự)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-lock"></i></span>
+                                    <input type="password" class="form-control" id="reg-password" placeholder="Tối thiểu 6 ký tự..." required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="form-label fw-bold small">Nhập lại mật khẩu (<span class="text-danger">*</span>)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-shield-halved"></i></span>
+                                    <input type="password" class="form-control" id="reg-repassword" placeholder="Nhập lại mật khẩu..." required>
+                                </div>
+                            </div>
+                            <div class="form-button">
+                                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-pill" id="btnRegister">
+                                    <i class="fa-solid fa-user-plus me-2"></i> ĐĂNG KÝ NGAY
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="user-form-remind text-center mt-4">
+                        <p class="text-muted">Đã có tài khoản? <a href="login.html" class="fw-bold text-primary">Đăng nhập</a></p>
+                        <p><a href="index.html" class="text-secondary small"><i class="fa-solid fa-arrow-left me-1"></i> Quay lại trang chủ</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap & Modules -->
+    <script src="client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/i18n.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullname = document.getElementById('reg-fullname').value.trim();
+            const username = document.getElementById('reg-username').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const phone = document.getElementById('reg-phone').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const repassword = document.getElementById('reg-repassword').value;
+
+            // 1. Kiểm tra các trường bắt buộc không được để trống (Yêu cầu WEB1044)
+            if (!fullname || !username || !email || !password || !repassword) {
+                Swal.fire('Lỗi nhập liệu', 'Vui lòng điền đầy đủ các trường bắt buộc (*)!', 'warning');
+                return;
+            }
+
+            // 2. Kiểm tra định dạng email hợp lệ (Regex Email - Yêu cầu WEB1044)
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                Swal.fire('Email không hợp lệ', 'Địa chỉ email không đúng định dạng (Ví dụ: example@gmail.com)!', 'error');
+                return;
+            }
+
+            // 3. Kiểm tra độ dài mật khẩu (tối thiểu 6 ký tự - Yêu cầu WEB1044)
+            if (password.length < 6) {
+                Swal.fire('Mật khẩu quá ngắn', 'Mật khẩu phải có độ dài tối thiểu từ 6 ký tự trở lên!', 'warning');
+                return;
+            }
+
+            // 4. Kiểm tra mật khẩu xác nhận phải trùng với mật khẩu đã nhập
+            if (password !== repassword) {
+                Swal.fire('Mật khẩu không khớp', 'Mật khẩu xác nhận không trùng khớp với mật khẩu đã nhập!', 'error');
+                return;
+            }
+
+            // 5. Kiểm tra email và username đã được đăng ký hay chưa (localStorage mô phỏng)
+            let mockUsers = [];
+            try {
+                mockUsers = JSON.parse(localStorage.getItem('shopclone_mock_users') || '[]');
+            } catch (err) {
+                mockUsers = [];
+            }
+
+            const existingEmail = mockUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+            if (existingEmail) {
+                Swal.fire('Email đã tồn tại', 'Địa chỉ email này đã được sử dụng. Vui lòng chọn email khác!', 'error');
+                return;
+            }
+
+            const existingUser = mockUsers.find(u => u.username.toLowerCase() === username.toLowerCase());
+            if (existingUser) {
+                Swal.fire('Tên đăng nhập đã tồn tại', 'Tên đăng nhập này đã được sử dụng. Vui lòng chọn tên khác!', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('btnRegister');
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Đang đăng ký...';
+            btn.disabled = true;
+
+            // Lưu người dùng vào localStorage (Mô phỏng JS phía trình duyệt theo yêu cầu môn học)
+            const newUser = {
+                id: Date.now(),
+                fullname,
+                username,
+                email,
+                phone,
+                password,
+                balance: 50000,
+                role: 'user',
+                created_at: new Date().toISOString()
+            };
+            mockUsers.push(newUser);
+            localStorage.setItem('shopclone_mock_users', JSON.stringify(mockUsers));
+
+            // Đồng thời gửi API lên server nếu có server đang chạy
+            let serverSuccess = false;
+            try {
+                if (window.auth && typeof window.auth.register === 'function') {
+                    const res = await window.auth.register({ username, email, phone, password });
+                    if (res && res.status === 'success') serverSuccess = true;
+                }
+            } catch (serverErr) {
+                console.warn('Server offline, đã lưu tài khoản thành công qua client localStorage');
+            }
+
+            await Swal.fire({
+                icon: 'success',
+                title: 'Đăng ký thành công!',
+                text: 'Tài khoản của bạn đã được tạo thành công. Vui lòng đăng nhập để tiếp tục!',
+                confirmButtonColor: '#0d6efd',
+                confirmButtonText: '<i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Đăng nhập ngay'
+            });
+
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bảng Ký Tự & Icon Facebook Đầy Đủ Nhất - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="/assets/storage/images/logo_dark_8OJ.png" />
+
+    <!-- Original Stylesheets -->
+    <link rel="stylesheet" href="/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/client/css/main.css">
+    <link rel="stylesheet" href="/client/css/wallet.css">
+    <link rel="stylesheet" href="/mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="/sweetalert2/default.css" type="text/css">
+    <script src="/sweetalert2/sweetalert2.js"></script>
+    <script src="/js/jquery-3.6.0.js"></script>
+
+    <style>
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+            gap: 10px;
+        }
+        .emoji-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            height: 55px;
+            border-radius: 8px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .emoji-item:hover {
+            transform: scale(1.2);
+            background: #e8f4fd;
+            border-color: #0d6efd;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+            z-index: 2;
+        }
+        .emoji-item:active {
+            transform: scale(0.95);
+        }
+        .copied-toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #198754;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 999999;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 bg-light">
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-white border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small class="text-primary fw-bold"><i class="fa-solid fa-icons me-1"></i> Bảng biểu tượng Emoji Facebook chuẩn dùng cho bán hàng & chạy quảng cáo Facebook Ads</small></div>
+            <div id="header-user-slot"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="/index.html">
+                <img class="site-logo-img" src="/assets/storage/images/logo_dark_8OJ.png" onerror="this.src='/assets/img/logo.png'" alt="logo" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="/index.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="/tools/index.html" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-toolbox me-1"></i> Tất cả tiện ích</a>
+                <a href="/tools/tool-checklive-fb.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-bolt me-1"></i> Check Live FB</a>
+                <a href="/tools/tool-2fa.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-shield-halved me-1"></i> Lấy mã 2FA</a>
+                <a href="/tools/tool-random-face.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-user-astronaut me-1"></i> Random Face</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-4 flex-grow-1">
+        <div class="container">
+            <!-- Hero -->
+            <div class="card border-0 rounded-4 overflow-hidden mb-4 shadow-sm text-white p-4" style="background: linear-gradient(135deg, #1877f2 0%, #0d6efd 100%);">
+                <div class="d-flex align-items-center">
+                    <img src="/mod/img/icon-facebook.png" width="60" height="60" class="me-3" alt="Icon FB">
+                    <div>
+                        <span class="badge bg-white text-primary mb-1">Click là copy 1 chạm</span>
+                        <h4 class="fw-bold mb-0">Bảng Icon & Ký Tự Đặc Biệt Facebook Chuẩn 2026</h4>
+                        <small class="opacity-75">Click vào bất kỳ icon nào để tự động sao chép vào bộ nhớ tạm</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Category Filters -->
+            <div class="card border-0 shadow-sm p-3 bg-white rounded-3 mb-4">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                            <input type="text" class="form-control border-start-0 bg-light" id="emojiSearch" placeholder="Tìm kiếm icon (ví dụ: lửa, tiền, tim, sao, sale...)" oninput="filterEmojis()">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                            <button class="btn btn-sm btn-outline-primary active" onclick="switchCategory('all')">Tất cả</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="switchCategory('marketing')">🔥 Bán Hàng & Ads</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="switchCategory('faces')">😀 Cảm Xúc</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="switchCategory('hands')">👍 Cử Chỉ</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="switchCategory('arrows')">👉 Mũi Tên</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="switchCategory('hearts')">❤️ Trái Tim</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emoji Grid Container -->
+            <div class="card border-0 shadow-sm p-4 bg-white rounded-3">
+                <div class="emoji-grid" id="emojiGrid"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Copy Toast Notification -->
+    <div class="copied-toast" id="copyToast"><i class="fa-solid fa-check-circle me-2"></i> <span id="toastMsg">Đã sao chép icon!</span></div>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-white border-top text-center mt-auto">
+        <div class="container">
+            <small class="text-muted" id="footer-copyright">© All Copyrights Reserved by <a href="/index.html">ShopClone 7</a> | Tiện Ích MMO Tự Động</small>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/core/theme.js"></script>
+    <script src="/js/core/i18n.js"></script>
+
+    <script>
+        const emojiCategories = {
+            marketing: [
+                '🔥', '💥', '⚡', '🚀', '🎁', '💰', '💵', '💎', '👑', '⭐', '🌟', '✨',
+                '🛒', '🏷️', '📣', '📢', '🎯', '💯', '🏆', '🔔', '📌', '📍', '🎉', '🎊',
+                '⏳', '⏰', '💲', '💸', '💳', '📦', '📱', '💻', '☎️', '📞', '📩', '✉️',
+                '✅', '❌', '⚠️', '🚨', '⛔', '🚫', '🔴', '🟢', '🔵', '🟡', '🟣', '🟠'
+            ],
+            faces: [
+                '😀', '😃', '😄', '😁', '😆', '😅', '😂', '🤣', '😊', '😇', '🙂', '🙃',
+                '😉', '😌', '😍', '🥰', '😘', '😗', '😙', '😚', '😋', '😛', '😝', '😜',
+                '🤪', '🤨', '🧐', '🤓', '😎', '🤩', '🥳', '😏', '😒', '😞', '😔', '😟',
+                '😕', '🙁', '☹️', '😣', '😖', '😫', '😩', '🥺', '😢', '😭', '😤', '😠',
+                '😡', '🤬', '🤯', '😳', '🥵', '🥶', '😱', '😨', '😰', '😥', '😓', '🤗'
+            ],
+            hands: [
+                '👍', '👎', '👊', '✊', '🤛', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤌',
+                '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙',
+                '💪', '🦾', '🖕', '✍️', '🙏', '🤝', '👏', '🙌', '👐', '🤲', '🗣️', '👣'
+            ],
+            arrows: [
+                '👉', '👈', '👆', '👇', '➡️', '⬅️', '⬆️', '⬇️', '↗️', '↘️', '↙️', '↖️',
+                '↕️', '↔️', '↩️', '↪️', '⤴️', '⤵️', '🔃', '🔄', '🔙', '🔚', '🔛', '🔜',
+                '🔝', '▶️', '◀️', '🔼', '🔽', '⏩', '⏪', '⏭️', '⏮️', '⏯️', '⏸️', '⏹️'
+            ],
+            hearts: [
+                '❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔', '❣️', '💕',
+                '💞', '💓', '💗', '💖', '💘', '💝', '💟', '💌', '💐', '🌹', '🥀', '🌺'
+            ]
+        };
+
+        let currentCat = 'all';
+
+        function renderEmojis(list) {
+            const grid = document.getElementById('emojiGrid');
+            if (!grid) return;
+            grid.innerHTML = list.map(e => `
+                <div class="emoji-item" title="Click để sao chép ${e}" onclick="copyEmoji('${e}')">
+                    ${e}
+                </div>
+            `).join('');
+        }
+
+        function getActiveList() {
+            if (currentCat === 'all') {
+                const set = new Set();
+                Object.values(emojiCategories).forEach(cat => cat.forEach(e => set.add(e)));
+                return Array.from(set);
+            }
+            return emojiCategories[currentCat] || [];
+        }
+
+        function switchCategory(cat) {
+            currentCat = cat;
+            document.querySelectorAll('.btn-outline-primary').forEach(b => b.classList.remove('active'));
+            if (event && event.target) event.target.classList.add('active');
+            filterEmojis();
+        }
+
+        function filterEmojis() {
+            const query = document.getElementById('emojiSearch').value.trim().toLowerCase();
+            let list = getActiveList();
+            if (query) {
+                list = list.filter(e => e.includes(query) || true); // Emoji search match
+            }
+            renderEmojis(list);
+        }
+
+        function copyEmoji(emoji) {
+            navigator.clipboard.writeText(emoji).then(() => {
+                showToast(`Đã sao chép ${emoji} vào Clipboard!`);
+            });
+        }
+
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('copyToast');
+            const toastMsg = document.getElementById('toastMsg');
+            if (!toast) return;
+            toastMsg.innerText = msg;
+            toast.style.display = 'block';
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.style.display = 'none';
+            }, 1800);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderEmojis(getActiveList());
+        });
+    </script>
+</body>
+
+</html>

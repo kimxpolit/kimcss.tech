@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Kho Tiện Ích MMO Tự Động Miễn Phí - ShopClone 7</title>
+    <meta name="description" content="Tổng hợp tiện ích MMO miễn phí: Check live Facebook UID hàng loạt, lấy mã 2FA Google Authenticator trực tuyến, kho icon emoji Facebook, tạo ảnh người thật ngẫu nhiên Random Face." />
+    <meta name="keywords" content="check live fb, get 2fa online, icon facebook, random face, tien ich mmo, shopclone">
+    <link rel="icon" type="image/png" href="/assets/storage/images/logo_dark_8OJ.png" />
+
+    <style>
+    :root {
+        --primary: #0d6efd;
+        --primary1: #0a58ca;
+        --accent: #d4af37;
+        --logo-height: 54px;
+    }
+    </style>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/client/css/main.css">
+    <link rel="stylesheet" href="/client/css/index.css">
+    <link rel="stylesheet" href="/client/css/wallet.css">
+    <link rel="stylesheet" href="/mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="/sweetalert2/default.css" type="text/css">
+    <script src="/sweetalert2/sweetalert2.js"></script>
+
+    <!-- jQuery -->
+    <script src="/js/jquery-3.6.0.js"></script>
+
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+    .header-logo img,
+    .header-media-group .site-logo-img {
+        height: var(--logo-height, 54px);
+        max-height: 60px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    /* Tool Card Modern Styling */
+    .tool-portal-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    }
+    .tool-portal-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 30px rgba(13, 110, 253, 0.12);
+        border-color: #0d6efd;
+    }
+    .tool-card-banner {
+        padding: 24px;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .tool-badge-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #0d6efd;
+        backdrop-filter: blur(4px);
+        margin-bottom: 12px;
+    }
+    .tool-icon-wrapper {
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        margin-bottom: 14px;
+    }
+    .tool-icon-wrapper img {
+        width: 38px;
+        height: 38px;
+        object-fit: contain;
+    }
+    .tool-body-desc {
+        padding: 20px 24px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .tool-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #1e293b;
+        margin-bottom: 8px;
+    }
+    .tool-text {
+        font-size: 14px;
+        color: #64748b;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+    .tool-features {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 20px;
+        font-size: 13px;
+        color: #475569;
+    }
+    .tool-features li {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+    }
+    .tool-features li i {
+        color: #10b981;
+        margin-right: 8px;
+        font-size: 14px;
+    }
+    .btn-launch-tool {
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        transition: all 0.2s ease;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    /* Floating Contact Bar */
+    .giuseart-pc-contact-bar {
+        left: 14px;
+        bottom: 135px;
+        position: fixed;
+        z-index: 998;
+        margin-bottom: 0;
+        padding-left: 0;
+        transition: all 0.3s ease;
+    }
+    .giuseart-pc-contact-bar li {
+        width: 44px;
+        height: 46px;
+        overflow: hidden;
+        margin-bottom: 8px;
+        list-style: none;
+        transition: transform 0.2s ease;
+    }
+    .giuseart-pc-contact-bar li:hover {
+        transform: scale(1.08);
+    }
+    .giuseart-pc-contact-bar li.facebook {
+        background: url('/mod/img/icon-mess.webp');
+        background-repeat: no-repeat;
+    }
+    .giuseart-pc-contact-bar li.zalo {
+        background: url('/mod/img/icon-chat-zalo.webp');
+        background-repeat: no-repeat;
+    }
+    .giuseart-pc-contact-bar li a {
+        display: block;
+        width: 44px;
+        height: 44px;
+    }
+
+    /* Hotline phone ring */
+    .hotline-phone-ring-wrap {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
+        z-index: 999999;
+    }
+    .hotline-phone-ring {
+        position: relative;
+        visibility: visible;
+        background-color: transparent;
+        width: 110px;
+        height: 110px;
+        cursor: pointer;
+        z-index: 11;
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        transition: visibility .5s;
+        left: 0;
+        bottom: 0;
+        display: block;
+    }
+    .hotline-phone-ring-circle {
+        width: 85px;
+        height: 85px;
+        top: 10px;
+        left: 10px;
+        position: absolute;
+        background-color: transparent;
+        border-radius: 100%;
+        border: 2px solid #e60808;
+        -webkit-animation: phonering-alo-circle-anim 1.2s infinite ease-in-out;
+        animation: phonering-alo-circle-anim 1.2s infinite ease-in-out;
+        transition: all .5s;
+        -webkit-transform-origin: 50% 50%;
+        -ms-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        opacity: 0.5;
+    }
+    .hotline-phone-ring-circle-fill {
+        width: 55px;
+        height: 55px;
+        top: 25px;
+        left: 25px;
+        position: absolute;
+        background-color: rgba(230, 8, 8, 0.7);
+        border-radius: 100%;
+        border: 2px solid transparent;
+        -webkit-animation: phonering-alo-circle-fill-anim 2.3s infinite ease-in-out;
+        animation: phonering-alo-circle-fill-anim 2.3s infinite ease-in-out;
+        transition: all .5s;
+        -webkit-transform-origin: 50% 50%;
+        -ms-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    .hotline-phone-ring-img-circle {
+        background-color: #e60808;
+        width: 33px;
+        height: 33px;
+        top: 37px;
+        left: 37px;
+        position: absolute;
+        background-size: 20px;
+        border-radius: 100%;
+        border: 2px solid transparent;
+        -webkit-animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+        animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+        -webkit-transform-origin: 50% 50%;
+        -ms-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .hotline-phone-ring-img-circle .pps-btn-img {
+        display: flex;
+    }
+    .hotline-phone-ring-img-circle .pps-btn-img img {
+        width: 20px;
+        height: 20px;
+    }
+    .hotline-bar {
+        position: absolute;
+        background: rgba(230, 8, 8, 0.75);
+        height: 40px;
+        width: 180px;
+        top: 33px;
+        border-radius: 3px 20px 20px 3px;
+        left: 45px;
+        padding: 8px 15px 8px 30px;
+        box-sizing: border-box;
+    }
+    .hotline-bar>a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 24px;
+        font-family: Arial, sans-serif;
+        white-space: nowrap;
+    }
+    @-webkit-keyframes phonering-alo-circle-anim {
+        0% { -webkit-transform: rotate(0) scale(0.5) skew(1deg); -webkit-opacity: 0.1; }
+        30% { -webkit-transform: rotate(0) scale(0.7) skew(1deg); -webkit-opacity: 0.5; }
+        100% { -webkit-transform: rotate(0) scale(1) skew(1deg); -webkit-opacity: 0.1; }
+    }
+    @keyframes phonering-alo-circle-anim {
+        0% { transform: rotate(0) scale(0.5) skew(1deg); opacity: 0.1; }
+        30% { transform: rotate(0) scale(0.7) skew(1deg); opacity: 0.5; }
+        100% { transform: rotate(0) scale(1) skew(1deg); opacity: 0.1; }
+    }
+    @-webkit-keyframes phonering-alo-circle-fill-anim {
+        0% { -webkit-transform: rotate(0) scale(0.7) skew(1deg); opacity: 0.6; }
+        50% { -webkit-transform: rotate(0) scale(1) skew(1deg); opacity: 0.6; }
+        100% { -webkit-transform: rotate(0) scale(0.7) skew(1deg); opacity: 0.6; }
+    }
+    @keyframes phonering-alo-circle-fill-anim {
+        0% { transform: rotate(0) scale(0.7) skew(1deg); opacity: 0.6; }
+        50% { transform: rotate(0) scale(1) skew(1deg); opacity: 0.6; }
+        100% { transform: rotate(0) scale(0.7) skew(1deg); opacity: 0.6; }
+    }
+    @-webkit-keyframes phonering-alo-circle-img-anim {
+        0% { -webkit-transform: rotate(0) scale(1) skew(1deg); }
+        10% { -webkit-transform: rotate(-25deg) scale(1) skew(1deg); }
+        20% { -webkit-transform: rotate(25deg) scale(1) skew(1deg); }
+        30% { -webkit-transform: rotate(-25deg) scale(1) skew(1deg); }
+        40% { -webkit-transform: rotate(25deg) scale(1) skew(1deg); }
+        50% { -webkit-transform: rotate(0) scale(1) skew(1deg); }
+        100% { -webkit-transform: rotate(0) scale(1) skew(1deg); }
+    }
+    @keyframes phonering-alo-circle-img-anim {
+        0% { transform: rotate(0) scale(1) skew(1deg); }
+        10% { transform: rotate(-25deg) scale(1) skew(1deg); }
+        20% { transform: rotate(25deg) scale(1) skew(1deg); }
+        30% { transform: rotate(-25deg) scale(1) skew(1deg); }
+        40% { transform: rotate(25deg) scale(1) skew(1deg); }
+        50% { transform: rotate(0) scale(1) skew(1deg); }
+        100% { transform: rotate(0) scale(1) skew(1deg); }
+    }
+
+    @media (max-width: 991px) {
+        .hotline-phone-ring-wrap {
+            bottom: 70px !important;
+        }
+        .hotline-bar {
+            display: none !important;
+        }
+        .giuseart-pc-contact-bar {
+            bottom: 175px !important;
+            left: 12px !important;
+        }
+    }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 bg-light">
+    <div class="backdrop"></div>
+    <a class="backtop" href="#"><i class="fa-sharp fa-solid fa-chevron-up"></i></a>
+
+    <!-- Topbar -->
+    <div class="header-top">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-12 col-lg-5">
+                    <div class="header-top-welcome" id="header-top-welcome">
+                        <p data-i18n="welcome_top">🔥 Chào mừng bạn đến với HOÀNG KIM MMO SOLUTION - Nạp tiền tự động qua VietQR duyệt trong 3 giây!</p>
+                    </div>
+                </div>
+                <div class="col-md-5 col-lg-3">
+                    <div class="header-top-select">
+                        <div class="header-select"><i class="icofont-world"></i>
+                            <select class="select" id="changeLanguage" data-id="language-select">
+                                <option value="vi" selected>Tiếng Việt</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        <div class="header-select"><i class="icofont-money"></i>
+                            <select class="select" id="changeCurrency" data-id="currency-select">
+                                <option value="VND" selected>VND</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-4">
+                    <ul class="header-top-list">
+                        <li><a href="/terms.html" data-i18n="policy">Chính sách</a></li>
+                        <li><a href="/faq.html" data-i18n="faq">FAQ</a></li>
+                        <li><a href="/contact.html" data-i18n="contact">Liên Hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-media-group">
+                    <button class="header-user" onclick="openNavSidebar()"><i class="fa-solid fa-bars"></i></button>
+                    <a href="/index.html">
+                        <img class="site-logo-img" src="/assets/storage/images/logo_dark_8OJ.png" onerror="this.src='/assets/img/logo.png'" alt="logo">
+                    </a>
+                    <button class="header-src" onclick="$('.header-form').toggleClass('active')"><i class="fas fa-search"></i></button>
+                </div>
+                <a href="/index.html" class="header-logo">
+                    <img class="site-logo-img" src="/assets/storage/images/logo_dark_8OJ.png" onerror="this.src='/assets/img/logo.png'" alt="logo">
+                </a>
+                <form class="header-form" action="/index.html" method="GET">
+                    <input type="text" id="keyword-input" name="keyword" data-i18n-placeholder="search_placeholder" placeholder="Tìm kiếm sản phẩm...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="header-widget-group">
+                    <a href="/orders.html" class="header-widget" title="Đơn hàng" data-i18n-title="orders">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                    </a>
+                    <a href="/recharge.html?type=bank" class="header-widget header-cart" title="Nạp tiền" data-i18n-title="recharge">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </a>
+                    <!-- Dynamic Auth Slot -->
+                    <div id="header-user-slot" class="d-inline-flex align-items-center">
+                        <a href="/login.html" class="header-widget" title="Login" data-i18n-title="login">
+                            <img src="/assets/storage/images/avatar_user.png" onerror="this.src='/client/images/avatar.png'" alt="user"><span>Login</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar-part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="navbar-content">
+                        <ul class="navbar-list">
+                            <li class="navbar-item"><a class="navbar-link" href="/index.html" data-i18n="home">Trang chủ</a></li>
+                            <li class="navbar-item"><a class="navbar-link" href="/index.html#categories" data-i18n="products">Sản phẩm</a></li>
+                            <li class="navbar-item"><a class="navbar-link active fw-bold text-primary" href="/tools/index.html" data-i18n="mmo_tools">Tiện ích MMO</a></li>
+                            <li class="navbar-item dropdown">
+                                <a class="navbar-link dropdown-arrow" href="/recharge.html?type=bank" data-i18n="recharge">Nạp tiền</a>
+                                <ul class="dropdown-position-list">
+                                    <li><a href="/recharge.html?type=bank"><img width="20px" src="/assets/img/icon-bank.svg" alt="Bank"> <span data-i18n="bank_vietqr">Ngân hàng (VietQR Napas)</span></a></li>
+                                    <li><a href="/recharge.html?type=momo"><img width="20px" src="/assets/img/icon-momo.png" alt="MoMo"> <span data-i18n="momo_wallet">Ví MOMO</span></a></li>
+                                    <li><a href="/recharge.html?type=thesieure"><img width="20px" src="/mod/img/icon-thesieure.webp" alt="TSR"> <span data-i18n="thesieure">Ví THESIEURE</span></a></li>
+                                    <li><a href="/recharge.html?type=card"><img width="20px" src="/assets/img/icon-cards.png" alt="Cards"> <span data-i18n="scratch_card">Thẻ cào tự động</span></a></li>
+                                    <li><a href="/recharge.html?type=crypto"><img width="20px" src="/assets/img/icon-usdt.svg" alt="Crypto"> <span data-i18n="crypto">Crypto (USDT)</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="navbar-item dropdown">
+                                <a class="navbar-link dropdown-arrow" href="/orders.html" data-i18n="history">Lịch sử</a>
+                                <ul class="dropdown-position-list">
+                                    <li><a href="/orders.html" data-i18n="orders">Lịch sử đơn hàng</a></li>
+                                    <li><a href="/transactions.html" data-i18n="transactions">Biến động số dư</a></li>
+                                </ul>
+                            </li>
+                            <li class="navbar-item"><a class="navbar-link" href="/api-document.html" data-i18n="api_docs">Tài liệu API</a></li>
+                            <li class="navbar-item" id="admin-panel-nav" style="display:none;">
+                                <a class="navbar-link text-danger fw-bold" href="/admin/index.html">
+                                    <i class="fa-solid fa-shield-halved me-1"></i> Admin Panel
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="navbar-info-group">
+                            <div class="navbar-info"><i class="fa-solid fa-headset fs-4 text-primary me-2"></i>
+                                <p><small>Hotline</small><span id="navbar-hotline" class="site-hotline">0989.461.037</span></p>
+                            </div>
+                            <div class="navbar-info"><i class="fa-solid fa-envelope fs-4 text-primary me-2"></i>
+                                <p><small>Email</small><span id="navbar-email">hotro@kimcss.tech</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="py-2 bg-white border-bottom">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 py-1" style="font-size: 14px;">
+                    <li class="breadcrumb-item"><a href="/index.html" class="text-decoration-none"><i class="fa-solid fa-house me-1 text-primary"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item active text-primary fw-bold" aria-current="page">Kho Tiện Ích MMO</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-5 flex-grow-1">
+        <div class="container">
+
+            <!-- Hero Section -->
+            <div class="card border-0 rounded-4 overflow-hidden mb-5 shadow-sm text-white p-4 p-md-5" style="background: linear-gradient(135deg, #1e3a8a 0%, #0d6efd 60%, #0284c7 100%); position: relative;">
+                <div class="position-absolute end-0 top-0 h-100 d-none d-lg-block opacity-25 pe-4" style="pointer-events: none;">
+                    <i class="fa-solid fa-toolbox" style="font-size: 260px; line-height: 1; transform: rotate(-15deg) translateY(20px);"></i>
+                </div>
+                <div class="row align-items-center position-relative" style="z-index: 2;">
+                    <div class="col-lg-8">
+                        <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3 fs-6">
+                            <i class="fa-solid fa-wand-magic-sparkles me-1"></i> 100% MIỄN PHÍ TRỌN ĐỜI
+                        </span>
+                        <h2 class="display-6 fw-bold mb-3">Kho Tiện Ích MMO Chuyên Nghiệp 24/7</h2>
+                        <p class="lead opacity-90 mb-4" style="font-size: 16px;">
+                            Tổng hợp đầy đủ các công cụ hỗ trợ người làm MMO, nuôi nick Facebook số lượng lớn, sinh mã bảo mật 2FA trực tuyến, kho icon emoji marketing và bộ tạo ảnh đại diện chân dung ngẫu nhiên vượt checkpoint.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#tools-grid" class="btn btn-light text-primary btn-lg fw-bold rounded-pill px-4 shadow-sm">
+                                <i class="fa-solid fa-arrow-down me-2"></i> Khám Phá Công Cụ
+                            </a>
+                            <a href="/index.html" class="btn btn-outline-light btn-lg fw-bold rounded-pill px-4">
+                                <i class="fa-solid fa-shop me-2"></i> Xem Kho Sản Phẩm
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools Grid Section -->
+            <div class="text-center mb-5" id="tools-grid">
+                <span class="badge bg-light text-primary border px-3 py-2 rounded-pill fw-bold mb-2">DANH SÁCH CÔNG CỤ</span>
+                <h3 class="fw-bold text-dark">Chọn Tiện Ích Bạn Muốn Sử Dụng</h3>
+                <p class="text-muted">Tất cả tiện ích đều hoạt động ổn định trên cả máy tính và điện thoại</p>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <!-- Tool 1: Check Live Facebook -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="tool-portal-card">
+                        <div class="tool-card-banner" style="background-image: url('/mod/img/bg-1.png');">
+                            <div class="tool-badge-pill">
+                                <i class="fa-solid fa-bolt me-1 text-success"></i> Tốc Độ Siêu Tốc
+                            </div>
+                            <div class="tool-icon-wrapper">
+                                <img src="/mod/img/icon-facebook.png" alt="Check live FB">
+                            </div>
+                            <h4 class="text-white fw-bold mb-0">Check Live FB</h4>
+                        </div>
+                        <div class="tool-body-desc">
+                            <div>
+                                <h5 class="tool-title" data-i18n="widget_checklive_title">Check Live Facebook UID</h5>
+                                <p class="tool-text" data-i18n="widget_checklive_desc">
+                                    Kiểm tra trạng thái LIVE / DIE / CHECKPOINT hàng loạt tài khoản UID Facebook trong tích tắc.
+                                </p>
+                                <ul class="tool-features">
+                                    <li><i class="fa-solid fa-circle-check"></i> Check hàng ngàn UID/lần</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Phân loại Live & Die rõ ràng</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Xuất file kết quả 1-click</li>
+                                </ul>
+                            </div>
+                            <a href="/tools/tool-checklive-fb.html" class="btn btn-success btn-launch-tool shadow-sm">
+                                <i class="fa-solid fa-play me-2"></i> Mở Tiện Ích Ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 2: Get 2FA Code -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="tool-portal-card">
+                        <div class="tool-card-banner" style="background-image: url('/mod/img/bg-2.png');">
+                            <div class="tool-badge-pill">
+                                <i class="fa-solid fa-shield-halved me-1 text-primary"></i> RFC 6238 TOTP
+                            </div>
+                            <div class="tool-icon-wrapper">
+                                <img src="/mod/img/icon-google-auth.png" alt="Get 2FA code">
+                            </div>
+                            <h4 class="text-white fw-bold mb-0">Get 2FA Code</h4>
+                        </div>
+                        <div class="tool-body-desc">
+                            <div>
+                                <h5 class="tool-title" data-i18n="widget_2fa_title">Lấy Mã 2FA Google Auth</h5>
+                                <p class="tool-text" data-i18n="widget_2fa_desc">
+                                    Giải mã mã OTP 6 số theo thời gian thực (30s) từ Secret Key bảo mật 100% Client-Side.
+                                </p>
+                                <ul class="tool-features">
+                                    <li><i class="fa-solid fa-circle-check"></i> Chạy 100% trên trình duyệt</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Hỗ trợ tính toán hàng loạt</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Đếm ngược thời gian trực quan</li>
+                                </ul>
+                            </div>
+                            <a href="/tools/tool-2fa.html" class="btn btn-primary btn-launch-tool shadow-sm">
+                                <i class="fa-solid fa-key me-2"></i> Mở Tiện Ích Ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 3: Icon Facebook -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="tool-portal-card">
+                        <div class="tool-card-banner" style="background-image: url('/mod/img/bg-3.png');">
+                            <div class="tool-badge-pill">
+                                <i class="fa-solid fa-icons me-1 text-info"></i> 1000+ Ký Tự Đẹp
+                            </div>
+                            <div class="tool-icon-wrapper">
+                                <img src="/mod/img/icon-facebook.png" alt="Icon FB">
+                            </div>
+                            <h4 class="text-white fw-bold mb-0">Icon Facebook</h4>
+                        </div>
+                        <div class="tool-body-desc">
+                            <div>
+                                <h5 class="tool-title" data-i18n="widget_icon_title">Kho Icon & Emoji FB</h5>
+                                <p class="tool-text" data-i18n="widget_icon_desc">
+                                    Bộ sưu tập biểu tượng cảm xúc, emoji và ký tự đặc biệt đỉnh cao phục vụ viết content bán hàng.
+                                </p>
+                                <ul class="tool-features">
+                                    <li><i class="fa-solid fa-circle-check"></i> Phân loại theo từng chủ đề</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Sao chép tức thì với 1-click</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Tương thích FB, Zalo, TikTok</li>
+                                </ul>
+                            </div>
+                            <a href="/tools/tool-icon-facebook.html" class="btn btn-info text-white btn-launch-tool shadow-sm" style="background-color: #8b5cf6; border-color: #8b5cf6;">
+                                <i class="fa-solid fa-sparkles me-2"></i> Mở Tiện Ích Ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 4: Random Face -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="tool-portal-card">
+                        <div class="tool-card-banner" style="background-image: url('/mod/img/bg-4.png');">
+                            <div class="tool-badge-pill">
+                                <i class="fa-solid fa-user-astronaut me-1 text-warning"></i> AI Generated
+                            </div>
+                            <div class="tool-icon-wrapper">
+                                <img src="/mod/img/icon-random-face.png" alt="Random Face" style="border-radius: 8px;">
+                            </div>
+                            <h4 class="text-white fw-bold mb-0">Random Face</h4>
+                        </div>
+                        <div class="tool-body-desc">
+                            <div>
+                                <h5 class="tool-title" data-i18n="widget_avatar_title">Tạo Avatar Random Face</h5>
+                                <p class="tool-text" data-i18n="widget_avatar_desc">
+                                    Tạo khuôn mặt người thật ngẫu nhiên bằng công nghệ AI để nuôi nick và vượt checkpoint chân dung.
+                                </p>
+                                <ul class="tool-features">
+                                    <li><i class="fa-solid fa-circle-check"></i> Ảnh người thật siêu nét 1024px</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Lưu lịch sử ảnh vừa tạo</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> Tải ảnh tức thì về thiết bị</li>
+                                </ul>
+                            </div>
+                            <a href="/tools/tool-random-face.html" class="btn btn-warning text-white btn-launch-tool shadow-sm" style="background-color: #d97706; border-color: #d97706;">
+                                <i class="fa-solid fa-camera me-2"></i> Mở Tiện Ích Ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Value Proposition / Quality Guarantees -->
+            <div class="row g-4 mt-2">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-4 text-center rounded-4 h-100 bg-white">
+                        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary" style="width: 60px; height: 60px;">
+                            <i class="fa-solid fa-gauge-high fs-3"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Tốc Độ Xử Lý Tức Thì</h5>
+                        <p class="text-muted small mb-0">Hệ thống tối ưu thuật toán xử lý luồng Client-Side và Backend Node.js siêu tốc, phản hồi dưới 100ms.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-4 text-center rounded-4 h-100 bg-white">
+                        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success" style="width: 60px; height: 60px;">
+                            <i class="fa-solid fa-shield-check fs-3"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Bảo Mật Tuyệt Đối 100%</h5>
+                        <p class="text-muted small mb-0">Cam kết không lưu trữ khóa bí mật 2FA hay danh sách UID tài khoản của khách hàng lên bất kỳ server nào.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-4 text-center rounded-4 h-100 bg-white">
+                        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10 text-warning" style="width: 60px; height: 60px;">
+                            <i class="fa-solid fa-gift fs-3"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Hoàn Toàn Miễn Phí</h5>
+                        <p class="text-muted small mb-0">Cung cấp hoàn toàn miễn phí cho cộng đồng MMO, không bắt buộc đăng ký tài khoản hay giới hạn lượt sử dụng.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hotline Phone Ring Widget -->
+    <div class="hotline-phone-ring-wrap">
+        <div class="hotline-phone-ring">
+            <div class="hotline-phone-ring-circle"></div>
+            <div class="hotline-phone-ring-circle-fill"></div>
+            <div class="hotline-phone-ring-img-circle">
+                <a href="tel:0989461037" class="pps-btn-img site-hotline-tel">
+                    <img src="/mod/img/icon-call-1.png" alt="Gọi ngay" width="50">
+                </a>
+            </div>
+        </div>
+        <div class="hotline-bar">
+            <a href="tel:0989461037" class="site-hotline-tel">
+                <span class="text-hotline site-hotline">0989.461.037</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Floating Contact Bar -->
+    <ul class="giuseart-pc-contact-bar">
+        <li class="facebook">
+            <a href="https://m.me/" target="_blank" rel="noopener noreferrer" title="Messenger"></a>
+        </li>
+        <li class="zalo">
+            <a href="https://zalo.me/0989461037" target="_blank" rel="noopener noreferrer" title="Zalo" class="site-zalo-link"></a>
+        </li>
+    </ul>
+
+    <!-- Footer -->
+    <footer class="footer-part mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="footer-widget">
+                        <a class="footer-logo" href="/index.html">
+                            <img class="site-logo-img" src="/assets/storage/images/logo_dark_8OJ.png" onerror="this.src='/assets/img/logo.png'" alt="logo">
+                        </a>
+                        <p class="footer-desc" id="footer-desc">Hệ thống cung cấp sỉ lẻ tài khoản Clone Facebook, Via Facebook, Gmail, TikTok, Proxy tốc độ cao tự động 24/7.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="footer-widget contact">
+                        <h3 class="footer-title">Liên hệ</h3>
+                        <ul class="footer-contact">
+                            <li><i class="fa-solid fa-envelope text-primary me-2"></i>
+                                <p id="footer-email">hotro@kimcss.tech</p>
+                            </li>
+                            <li><i class="fa-solid fa-phone text-primary me-2"></i>
+                                <p id="footer-hotline">0989.461.037</p>
+                            </li>
+                            <li><i class="fa-solid fa-location-dot text-primary me-2"></i>
+                                <p id="footer-address">Hồ Chí Minh, Việt Nam</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Liên kết</h3>
+                        <div class="footer-links">
+                            <ul>
+                                <li><a href="/terms.html">Chính sách dịch vụ</a></li>
+                                <li><a href="/faq.html">Câu hỏi thường gặp (FAQ)</a></li>
+                                <li><a href="/contact.html">Liên hệ hỗ trợ</a></li>
+                                <li><a href="/api-document.html">Tài liệu kết nối API</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer-bottom">
+                        <p class="footer-copytext" id="footer-copyright">© All Copyrights Reserved by <a href="/index.html">kimcss.tech</a> | Hệ thống Kinh Doanh MMO Tự Động</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>if (typeof bootstrap === 'undefined') document.write('<script src="/client/vendor/bootstrap/bootstrap.bundle.min.js"><\/script>')</script>
+
+    <!-- Core App Modules -->
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/core/theme.js"></script>
+    <script src="/js/core/i18n.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check Admin role for Admin Panel link in navbar
+            try {
+                const userRaw = localStorage.getItem('user');
+                if (userRaw) {
+                    const user = JSON.parse(userRaw);
+                    if (user && (user.admin === 1 || user.admin === true || user.role === 'admin')) {
+                        const adminNav = document.getElementById('admin-panel-nav');
+                        if (adminNav) adminNav.style.display = 'block';
+                    }
+                }
+            } catch (e) {}
+        });
+    </script>
+</body>
+
+</html>

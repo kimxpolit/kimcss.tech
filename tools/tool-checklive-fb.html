@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Check Live Facebook UID Tự Động - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="/assets/storage/images/logo_dark_8OJ.png" />
+
+    <!-- Original Stylesheets -->
+    <link rel="stylesheet" href="/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/client/css/main.css">
+    <link rel="stylesheet" href="/client/css/wallet.css">
+    <link rel="stylesheet" href="/mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="/sweetalert2/default.css" type="text/css">
+    <script src="/sweetalert2/sweetalert2.js"></script>
+    <script src="/js/jquery-3.6.0.js"></script>
+</head>
+
+<body class="d-flex flex-column h-100 bg-light">
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-white border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small class="text-primary fw-bold"><i class="fa-solid fa-wrench me-1"></i> Tiện ích MMO kiểm tra UID Facebook trực tuyến 24/7 (Miễn phí)</small></div>
+            <div id="header-user-slot"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="/index.html">
+                <img class="site-logo-img" src="/assets/storage/images/logo_dark_8OJ.png" onerror="this.src='/assets/img/logo.png'" alt="logo" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="/index.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="/tools/index.html" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-toolbox me-1"></i> Tất cả tiện ích</a>
+                <a href="/tools/tool-2fa.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-shield-halved me-1"></i> Lấy mã 2FA</a>
+                <a href="/tools/tool-icon-facebook.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-icons me-1"></i> Icon FB</a>
+                <a href="/tools/tool-random-face.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-user-astronaut me-1"></i> Random Face</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-4 flex-grow-1">
+        <div class="container">
+            <!-- Counter badges -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3 bg-white text-center rounded-3">
+                        <small class="text-muted text-uppercase fw-bold">Trạng thái LIVE</small>
+                        <h2 class="text-success fw-bold mb-0" id="liveCount">0</h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3 bg-white text-center rounded-3">
+                        <small class="text-muted text-uppercase fw-bold">Trạng thái DIE / CHECKPOINT</small>
+                        <h2 class="text-danger fw-bold mb-0" id="dieCount">0</h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3 bg-white text-center rounded-3">
+                        <small class="text-muted text-uppercase fw-bold">Tổng đã kiểm tra</small>
+                        <h2 class="text-primary fw-bold mb-0" id="totalCount">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Input and Output Areas -->
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="card border-0 shadow-sm p-4 bg-white rounded-3">
+                        <label class="form-label fw-bold"><i class="fa-solid fa-list me-2 text-primary"></i> Nhập danh sách UID Facebook (Hỗ trợ UID hoặc UID|Pass|... mỗi tài khoản 1 dòng):</label>
+                        <textarea class="form-control font-monospace mb-3 p-3" id="inputAccounts" rows="6" placeholder="1000827282928&#10;1000918273645|password123|2FA...&#10;4|MarkZuckerberg"></textarea>
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            <button class="btn btn-primary px-4 py-2" id="btnStartCheck" onclick="startCheckLive()"><i class="fa-solid fa-play me-2"></i> Bắt đầu kiểm tra</button>
+                            <button class="btn btn-outline-secondary px-3" onclick="clearAll()"><i class="fa-solid fa-trash-can me-1"></i> Xóa tất cả</button>
+                            <span id="checkingIndicator" class="text-primary fw-bold ms-3" style="display:none;"><i class="fa fa-spinner fa-spin me-2"></i> Đang kiểm tra...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm p-3 bg-white rounded-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label fw-bold text-success mb-0"><i class="fa-solid fa-circle-check me-1"></i> Danh sách LIVE (<span id="liveBadge">0</span>)</label>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-success" onclick="copyText('liveAccounts')"><i class="fa-solid fa-copy me-1"></i> Sao chép</button>
+                                <button class="btn btn-success text-white" onclick="downloadTxt('liveAccounts', 'LIVE_UIDs.txt')"><i class="fa-solid fa-download me-1"></i> Tải file .txt</button>
+                            </div>
+                        </div>
+                        <textarea class="form-control font-monospace text-success bg-light" id="liveAccounts" rows="10" readonly placeholder="Kết quả tài khoản LIVE sẽ xuất hiện ở đây..."></textarea>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm p-3 bg-white rounded-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label fw-bold text-danger mb-0"><i class="fa-solid fa-circle-xmark me-1"></i> Danh sách DIE (<span id="dieBadge">0</span>)</label>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-danger" onclick="copyText('dieAccounts')"><i class="fa-solid fa-copy me-1"></i> Sao chép</button>
+                                <button class="btn btn-danger text-white" onclick="downloadTxt('dieAccounts', 'DIE_UIDs.txt')"><i class="fa-solid fa-download me-1"></i> Tải file .txt</button>
+                            </div>
+                        </div>
+                        <textarea class="form-control font-monospace text-danger bg-light" id="dieAccounts" rows="10" readonly placeholder="Kết quả tài khoản DIE sẽ xuất hiện ở đây..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-white border-top text-center mt-auto">
+        <div class="container">
+            <small class="text-muted" id="footer-copyright">© All Copyrights Reserved by <a href="/index.html">ShopClone 7</a> | Tiện Ích MMO Tự Động</small>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/core/theme.js"></script>
+    <script src="/js/core/i18n.js"></script>
+
+    <script>
+        let isRunning = false;
+
+        async function startCheckLive() {
+            const raw = document.getElementById('inputAccounts').value.trim();
+            if (!raw) {
+                window.api.alertError('Vui lòng nhập ít nhất 1 UID để kiểm tra!');
+                return;
+            }
+
+            const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+            if (lines.length === 0) return;
+
+            isRunning = true;
+            document.getElementById('btnStartCheck').disabled = true;
+            document.getElementById('checkingIndicator').style.display = 'inline-block';
+
+            document.getElementById('liveAccounts').value = '';
+            document.getElementById('dieAccounts').value = '';
+            document.getElementById('liveCount').innerText = '0';
+            document.getElementById('dieCount').innerText = '0';
+            document.getElementById('totalCount').innerText = '0';
+            document.getElementById('liveBadge').innerText = '0';
+            document.getElementById('dieBadge').innerText = '0';
+
+            try {
+                const res = await window.api.post('/tools/checklive-fb', { list_uids: lines });
+                if (res && res.status === 'success') {
+                    const liveLines = [];
+                    const dieLines = [];
+
+                    // Match original lines back to result
+                    lines.forEach(line => {
+                        const uid = line.split('|')[0].trim();
+                        if (res.live_uids.includes(uid)) {
+                            liveLines.push(line);
+                        } else {
+                            dieLines.push(line);
+                        }
+                    });
+
+                    document.getElementById('liveAccounts').value = liveLines.join('\n');
+                    document.getElementById('dieAccounts').value = dieLines.join('\n');
+
+                    document.getElementById('liveCount').innerText = liveLines.length;
+                    document.getElementById('dieCount').innerText = dieLines.length;
+                    document.getElementById('totalCount').innerText = lines.length;
+                    document.getElementById('liveBadge').innerText = liveLines.length;
+                    document.getElementById('dieBadge').innerText = dieLines.length;
+
+                    window.api.alertSuccess(`Đã kiểm tra xong ${lines.length} UID! (Live: ${liveLines.length}, Die: ${dieLines.length})`);
+                } else {
+                    window.api.alertError(res ? res.msg : 'Có lỗi khi kiểm tra!');
+                }
+            } catch (err) {
+                console.error(err);
+                window.api.alertError('Lỗi kết nối máy chủ!');
+            } finally {
+                isRunning = false;
+                document.getElementById('btnStartCheck').disabled = false;
+                document.getElementById('checkingIndicator').style.display = 'none';
+            }
+        }
+
+        function copyText(elemId) {
+            const el = document.getElementById(elemId);
+            if (!el || !el.value) {
+                window.api.alertError('Không có nội dung để sao chép!');
+                return;
+            }
+            navigator.clipboard.writeText(el.value).then(() => {
+                window.api.alertSuccess('Đã sao chép vào bộ nhớ tạm (Clipboard)!');
+            });
+        }
+
+        function downloadTxt(elemId, filename) {
+            const el = document.getElementById(elemId);
+            if (!el || !el.value) {
+                window.api.alertError('Không có dữ liệu để tải về!');
+                return;
+            }
+            const blob = new Blob([el.value], { type: 'text/plain;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+        }
+
+        function clearAll() {
+            document.getElementById('inputAccounts').value = '';
+            document.getElementById('liveAccounts').value = '';
+            document.getElementById('dieAccounts').value = '';
+            document.getElementById('liveCount').innerText = '0';
+            document.getElementById('dieCount').innerText = '0';
+            document.getElementById('totalCount').innerText = '0';
+            document.getElementById('liveBadge').innerText = '0';
+            document.getElementById('dieBadge').innerText = '0';
+        }
+    </script>
+</body>
+
+</html>

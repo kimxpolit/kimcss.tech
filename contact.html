@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Liên Hệ Hỗ Trợ - kimcss.tech</title>
+    <link rel="icon" type="image/png" href="assets/storage/images/logo_dark_8OJ.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="mod/css/main.css?v=21">
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-headset text-primary me-2"></i> Trung tâm chăm sóc khách hàng 24/7</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 bg-white border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="header-logo">
+                <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='client/images/logo.png'" alt="Logo" height="48">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="index.html" class="btn btn-outline-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="terms.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-scale-balanced me-1"></i> Chính sách</a>
+                <a href="faq.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-circle-question me-1"></i> FAQ</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white h-100">
+                        <h4 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-address-book text-primary me-2"></i> THÔNG TIN KẾT NỐI</h4>
+                        <ul class="list-unstyled lh-lg text-secondary">
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="fa-solid fa-phone fs-5 text-primary me-3"></i>
+                                <div>
+                                    <strong class="text-dark d-block">Hotline hỗ trợ:</strong>
+                                    <a href="tel:0989461037" class="text-decoration-none text-primary fw-bold"><span id="navbar-hotline" class="site-hotline">0989.461.037</span></a>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="fa-solid fa-envelope fs-5 text-danger me-3"></i>
+                                <div>
+                                    <strong class="text-dark d-block">Email phản hồi:</strong>
+                                    <span id="navbar-email" class="site-email">hotro@kimcss.tech</span>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="fa-brands fa-telegram fs-5 text-info me-3"></i>
+                                <div>
+                                    <strong class="text-dark d-block">Kênh Telegram CSKH:</strong>
+                                    <a href="https://t.me/kimcss_support" target="_blank" class="link-telegram">@kimcss_support</a>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="fa-solid fa-comment-dots fs-5 text-primary me-3"></i>
+                                <div>
+                                    <strong class="text-dark d-block">Zalo giải quyết khiếu nại:</strong>
+                                    <a href="https://zalo.me/0989461037" target="_blank" class="link-zalo fw-bold">0989.461.037</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white h-100">
+                        <h4 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-paper-plane text-success me-2"></i> GỬI YÊU CẦU TRỰC TUYẾN</h4>
+                        <p class="text-muted small mb-4">Đội ngũ kỹ thuật trực 24/7, phản hồi trong vòng 5 - 15 phút.</p>
+                        <form onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Chúng tôi đã nhận được yêu cầu và sẽ liên hệ lại sớm.');">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Họ và tên của bạn:</label>
+                                <input type="text" class="form-control rounded-3" placeholder="Nguyễn Văn A" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Số điện thoại hoặc Telegram:</label>
+                                <input type="text" class="form-control rounded-3" placeholder="0989... hoặc @username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Nội dung cần hỗ trợ:</label>
+                                <textarea class="form-control rounded-3" rows="4" placeholder="Mô tả chi tiết vấn đề hoặc mã đơn hàng cần kiểm tra..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-pill shadow-sm">
+                                <i class="fa-solid fa-paper-plane me-2"></i> Gửi Tin Nhắn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-part py-4 bg-dark text-white text-center">
+        <small>© 2026 kimcss.tech | Mọi quyền được bảo lưu.</small>
+    </footer>
+
+    <!-- Bootstrap & Scripts -->
+    <script src="client/vendor/bootstrap/popper.min.js"></script>
+    <script src="client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/i18n.js"></script>
+</body>
+
+</html>

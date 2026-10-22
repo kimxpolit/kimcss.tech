@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Biến động số dư - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --primary1: #0a58ca;
+        }
+    </style>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="sweetalert2/default.css" type="text/css">
+    <script src="sweetalert2/sweetalert2.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <a class="backtop" href="#"><i class="fa-sharp fa-solid fa-chevron-up"></i></a>
+
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-clock-rotate-left text-primary me-2"></i> Nhật ký biến động số dư tài khoản</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 bg-white border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="header-logo">
+                <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='client/images/logo.png'" alt="ShopClone 7" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="index.html" class="btn btn-outline-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="recharge.html" class="btn btn-outline-success btn-sm rounded-pill px-3"><i class="fa-solid fa-wallet me-1"></i> Nạp tiền</a>
+                <a href="orders.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-bag-shopping me-1"></i> Đơn hàng</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <h4 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-clock-rotate-left text-primary me-2"></i> Lịch Sử Biến Động Số Dư</h4>
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Thời gian</th>
+                                    <th>Loại GD</th>
+                                    <th>Mã GD</th>
+                                    <th>Nội dung</th>
+                                    <th>Số dư trước</th>
+                                    <th>Biến động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tx-table-body">
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">Đang tải lịch sử biến động...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-part py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="client/vendor/bootstrap/popper.min.js"></script>
+    <script src="client/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- App Modules -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/i18n.js"></script>
+    <script>
+        async function loadTx() {
+            if (!window.auth.checkAuth('user')) return;
+            const tbody = document.getElementById('tx-table-body');
+            try {
+                const res = await window.api.get('/recharge/transactions');
+                if (res && res.status === 'success' && res.data) {
+                    if (res.data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Chưa có giao dịch biến động số dư nào</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = res.data.map(t => `
+                        <tr>
+                            <td><small class="text-muted">${t.created_at_formatted}</small></td>
+                            <td><span class="badge ${t.type === 'recharge' ? 'bg-success' : 'bg-primary'}">${t.type === 'recharge' ? 'Nạp tiền VietQR' : 'Thanh toán'}</span></td>
+                            <td><code>#${t.trans_code}</code></td>
+                            <td><small>${t.note || ''}</small></td>
+                            <td><strong>${t.balance_before_formatted}</strong></td>
+                            <td><strong class="${t.amount > 0 ? 'text-success' : 'text-danger'}">${t.amount_formatted}</strong></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-danger">Lỗi tải dữ liệu</td></tr>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadTx);
+    </script>
+</body>
+
+</html>
+

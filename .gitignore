@@ -15,3 +15,5 @@ Thumbs.db
 # OS generated
 .vscode/
 .idea/
+
+raw_source/
