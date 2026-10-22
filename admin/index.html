@@ -1,263 +1,224 @@
-﻿<!doctype html>
-<html lang="vi" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="dark">
+<!doctype html>
+<html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Admin Dashboard - ShopClone 7</title>
-    <link rel="icon" type="image/png" href="../assets/img/icon.png">
-    <link href="../public/theme/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../public/theme/assets/css/styles.min.css" rel="stylesheet">
-    <link href="../public/theme/assets/css/icons.css" rel="stylesheet">
-    <link href="../public/theme/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet">
-    <link href="../public/fontawesome/css/all.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link href="../public/theme/assets/css/styles.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Trang Quản Trị - ShopClone 7 (SQL Server Edition)</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../sweetalert2/default.css" type="text/css">
+    <script src="../sweetalert2/sweetalert2.js"></script>
+    <script src="../js/jquery-3.6.0.js"></script>
+
+    <style>
+        body { background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .sidebar { min-height: 100vh; background: #1e293b; color: #cbd5e1; }
+        .sidebar .nav-link { color: #94a3b8; padding: 12px 20px; font-weight: 500; border-radius: 8px; margin: 4px 12px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background: #334155; color: #fff; }
+        .sidebar .nav-link i { width: 24px; }
+        .stat-card { border-radius: 14px; border: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+    </style>
 </head>
+
 <body>
-    <div class="page">
-        <!-- Header -->
-        <header class="app-header">
-            <div class="main-header-container container-fluid">
-                <div class="header-content-left">
-                    <div class="header-element">
-                        <a href="index.html" class="header-logo">
-                            <span class="fs-18 fw-bold text-primary">ADMIN PANEL</span>
-                        </a>
-                    </div>
-                    <div class="header-element">
-                        <a aria-label="Toggle Sidebar" class="sidemenu-toggle header-link" href="javascript:void(0);" onclick="document.body.classList.toggle('sidenav-toggled')">
-                            <i class="bx bx-menu fs-20"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="header-content-right">
-                    <div class="header-element me-2">
-                        <a href="../index.html" class="btn btn-sm btn-outline-primary" target="_blank">
-                            <i class="bx bx-store me-1"></i> Xem Website
-                        </a>
-                    </div>
-                    <div class="header-element">
-                        <button class="btn btn-sm btn-danger" onclick="window.auth.logout()">
-                            <i class="bx bx-log-out me-1"></i> Đăng xuất
-                        </button>
-                    </div>
-                </div>
+    <div class="d-flex">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar p-0" style="width: 260px;">
+            <div class="p-4 border-bottom border-secondary d-flex align-items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-primary fs-3"></i>
+                <h5 class="fw-bold text-white mb-0">ShopClone Admin</h5>
             </div>
-        </header>
-
-        <!-- Sidebar -->
-        <aside class="app-sidebar sticky" id="sidebar">
-            <div class="main-sidebar-header">
-                <a href="index.html" class="header-logo text-white fw-bold fs-18">SHOPCLONE 7</a>
-            </div>
-            <div class="main-sidebar">
-                <nav class="main-menu-container nav nav-pills flex-column sub-open">
-                    <ul class="main-menu">
-                        <li class="slide__category"><span class="category-name">TỔNG QUAN</span></li>
-                        <li class="slide">
-                            <a href="index.html" class="side-menu__item active">
-                                <i class="bx bxs-dashboard side-menu__icon"></i>
-                                <span class="side-menu__label">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="slide__category"><span class="category-name">QUẢN LÝ DỊCH VỤ</span></li>
-                        <li class="slide">
-                            <a href="categories.html" class="side-menu__item">
-                                <i class="bx bx-category side-menu__icon"></i>
-                                <span class="side-menu__label">Chuyên mục</span>
-                            </a>
-                        </li>
-                        <li class="slide">
-                            <a href="products.html" class="side-menu__item">
-                                <i class="bx bx-box side-menu__icon"></i>
-                                <span class="side-menu__label">Tất cả sản phẩm</span>
-                            </a>
-                        </li>
-                        <li class="slide">
-                            <a href="product-add.html" class="side-menu__item">
-                                <i class="bx bx-plus-circle side-menu__icon"></i>
-                                <span class="side-menu__label">Thêm sản phẩm</span>
-                            </a>
-                        </li>
-                        <li class="slide">
-                            <a href="product-orders.html" class="side-menu__item">
-                                <i class="bx bx-cart side-menu__icon"></i>
-                                <span class="side-menu__label">Đơn hàng</span>
-                            </a>
-                        </li>
-                        <li class="slide__category"><span class="category-name">NGƯỜI DÙNG</span></li>
-                        <li class="slide">
-                            <a href="users.html" class="side-menu__item">
-                                <i class="bx bx-user side-menu__icon"></i>
-                                <span class="side-menu__label">Thành viên</span>
-                            </a>
-                        </li>
-                        <li class="slide__category"><span class="category-name">CẤU HÌNH</span></li>
-                        <li class="slide">
-                            <a href="settings.html" class="side-menu__item">
-                                <i class="bx bx-cog side-menu__icon"></i>
-                                <span class="side-menu__label">Cài đặt chung</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <div class="main-content app-content">
-            <div class="container-fluid">
-                <div class="d-md-flex d-block align-items-center justify-content-between my-3 page-header-breadcrumb">
-                    <h4 class="page-title fw-semibold fs-18 mb-0">Bảng Quản Trị Hệ Thống</h4>
-                </div>
-
-                <!-- Stats Cards -->
-                <div class="row">
-                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
-                        <div class="card custom-card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar bg-primary text-white p-3 rounded-circle me-3">
-                                        <i class="fa-solid fa-users fs-20"></i>
-                                    </div>
-                                    <div class="flex-fill">
-                                        <span class="text-muted d-block mb-1">Tổng thành viên</span>
-                                        <h4 class="fw-bold mb-0" id="stat-total-users">0</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
-                        <div class="card custom-card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar bg-info text-white p-3 rounded-circle me-3">
-                                        <i class="fa-solid fa-cart-shopping fs-20"></i>
-                                    </div>
-                                    <div class="flex-fill">
-                                        <span class="text-muted d-block mb-1">Tổng đơn hàng</span>
-                                        <h4 class="fw-bold mb-0" id="stat-total-orders">0</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
-                        <div class="card custom-card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar bg-success text-white p-3 rounded-circle me-3">
-                                        <i class="fa-solid fa-chart-line fs-20"></i>
-                                    </div>
-                                    <div class="flex-fill">
-                                        <span class="text-muted d-block mb-1">Doanh thu bán hàng</span>
-                                        <h4 class="fw-bold mb-0 text-success" id="stat-total-revenue">0đ</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
-                        <div class="card custom-card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar bg-warning text-white p-3 rounded-circle me-3">
-                                        <i class="fa-solid fa-money-bill-wave fs-20"></i>
-                                    </div>
-                                    <div class="flex-fill">
-                                        <span class="text-muted d-block mb-1">Tổng tiền nạp</span>
-                                        <h4 class="fw-bold mb-0 text-warning" id="stat-total-deposits">0đ</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tables: Recent Orders & Recent Users -->
-                <div class="row">
-                    <div class="col-xl-8 mb-4">
-                        <div class="card custom-card shadow-sm border-0">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="card-title fw-bold mb-0"><i class="fa-solid fa-receipt me-2 text-primary"></i> Đơn hàng gần đây</h6>
-                                <a href="product-orders.html" class="btn btn-sm btn-light">Xem tất cả</a>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-striped align-middle mb-0">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Mã đơn</th>
-                                                <th>Khách hàng</th>
-                                                <th>Sản phẩm</th>
-                                                <th>Số lượng</th>
-                                                <th>Thanh toán</th>
-                                                <th>Thời gian</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="recent-orders-table-body">
-                                            <tr>
-                                                <td colspan="6" class="text-center py-4 text-muted">
-                                                    <i class="fa fa-spinner fa-spin me-2"></i> Đang tải đơn hàng...
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 mb-4">
-                        <div class="card custom-card shadow-sm border-0">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="card-title fw-bold mb-0"><i class="fa-solid fa-user-plus me-2 text-info"></i> Thành viên mới</h6>
-                                <a href="users.html" class="btn btn-sm btn-light">Xem tất cả</a>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle mb-0">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Tài khoản</th>
-                                                <th>Số dư</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="recent-users-table-body">
-                                            <tr>
-                                                <td colspan="3" class="text-center py-4 text-muted">
-                                                    <i class="fa fa-spinner fa-spin me-2"></i> Đang tải...
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fa-solid fa-gauge-high me-2 text-primary"></i> Tổng quan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">
+                            <i class="fa-solid fa-box-archive me-2 text-warning"></i> Quản lý sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="stock.html">
+                            <i class="fa-solid fa-cloud-arrow-up me-2 text-success"></i> Nhập kho tài khoản
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">
+                            <i class="fa-solid fa-users me-2 text-info"></i> Quản lý thành viên
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="orders.html">
+                            <i class="fa-solid fa-bag-shopping me-2 text-danger"></i> Quản lý đơn hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">
+                            <i class="fa-solid fa-gear me-2 text-primary"></i> Cấu hình hệ thống & Ngân hàng
+                        </a>
+                    </li>
+                    <li class="nav-item mt-4 pt-3 border-top border-secondary">
+                        <a class="nav-link text-white" href="../index.html">
+                            <i class="fa-solid fa-globe me-2 text-success"></i> Xem trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="javascript:void(0)" onclick="window.auth.logout()">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="footer mt-auto py-3 bg-white text-center border-top">
-            <div class="container">
-                <span class="text-muted">Copyright © 2026 <strong>ShopClone 7</strong>. All rights reserved.</span>
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 p-4">
+            <!-- Top Bar -->
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom bg-white p-3 rounded-3 shadow-sm">
+                <div>
+                    <h4 class="fw-bold mb-0 text-dark">Bảng Điều Khiển Quản Trị</h4>
+                    <small class="text-muted">Hệ thống cơ sở dữ liệu thật: Microsoft SQL Server</small>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge bg-success px-3 py-2"><i class="fa-solid fa-database me-1"></i> MSSQL Online</span>
+                    <strong id="header-username" class="text-dark">admin</strong>
+                </div>
             </div>
-        </footer>
+
+            <!-- Stats 4 Cards -->
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card stat-card p-3 bg-white">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted fw-bold">TỔNG THÀNH VIÊN</small>
+                                <h3 class="fw-bold mb-0 text-dark mt-1" id="stat-total-users">0</h3>
+                            </div>
+                            <div class="bg-primary-subtle text-primary p-3 rounded-4">
+                                <i class="fa-solid fa-users fs-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card stat-card p-3 bg-white">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted fw-bold">TỔNG ĐƠN HÀNG</small>
+                                <h3 class="fw-bold mb-0 text-success mt-1" id="stat-total-orders">0</h3>
+                            </div>
+                            <div class="bg-success-subtle text-success p-3 rounded-4">
+                                <i class="fa-solid fa-bag-shopping fs-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card stat-card p-3 bg-white">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted fw-bold">DOANH THU ĐƠN HÀNG</small>
+                                <h3 class="fw-bold mb-0 text-danger mt-1" id="stat-total-revenue">0 ₫</h3>
+                            </div>
+                            <div class="bg-danger-subtle text-danger p-3 rounded-4">
+                                <i class="fa-solid fa-chart-line fs-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card stat-card p-3 bg-white">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted fw-bold">TỔNG TIỀN NẠP VIETQR</small>
+                                <h3 class="fw-bold mb-0 text-warning mt-1" id="stat-total-deposits">0 ₫</h3>
+                            </div>
+                            <div class="bg-warning-subtle text-warning p-3 rounded-4">
+                                <i class="fa-solid fa-wallet fs-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders and Recent Users Row -->
+            <div class="row g-4">
+                <!-- Recent Orders Table -->
+                <div class="col-xl-8">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                            <h6 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-cart-shopping me-2 text-primary"></i> Đơn hàng vừa phát sinh</h6>
+                            <a href="orders.html" class="btn btn-sm btn-outline-primary rounded-pill px-3">Xem tất cả</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Mã đơn</th>
+                                            <th>Khách hàng</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th>Thanh toán</th>
+                                            <th>Thời gian</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-orders-table-body">
+                                        <tr>
+                                            <td colspan="6" class="text-center py-4 text-muted">Đang tải dữ liệu...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Users List -->
+                <div class="col-xl-4">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                            <h6 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-user-plus me-2 text-info"></i> Thành viên mới đăng ký</h6>
+                            <a href="users.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">Tất cả</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Tài khoản</th>
+                                            <th>Số dư</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-users-table-body">
+                                        <tr>
+                                            <td colspan="3" class="text-center py-4 text-muted">Đang tải...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="../public/js/jquery-3.6.0.js"></script>
-    <script src="../public/theme/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../public/theme/assets/libs/sweetalert2/sweetalert2.min.js"></script>
-    <script src="../assets/js/core/mock_db.js"></script>
-    <script src="../assets/js/modules/api.js"></script>
-    <script src="../assets/js/modules/auth.js"></script>
-    <script src="../assets/js/modules/admin/dashboard.js"></script>
-</body>
-</html>
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="../client/vendor/bootstrap/bootstrap.min.js"></script>
 
+    <!-- App Modules -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quản lý đơn hàng - ShopClone 7 Admin</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../sweetalert2/default.css" type="text/css">
+    <script src="../sweetalert2/sweetalert2.js"></script>
+    <script src="../js/jquery-3.6.0.js"></script>
+
+    <style>
+        body { background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .sidebar { min-height: 100vh; background: #1e293b; color: #cbd5e1; }
+        .sidebar .nav-link { color: #94a3b8; padding: 12px 20px; font-weight: 500; border-radius: 8px; margin: 4px 12px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background: #334155; color: #fff; }
+        .sidebar .nav-link i { width: 24px; }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar p-0" style="width: 260px;">
+            <div class="p-4 border-bottom border-secondary d-flex align-items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-primary fs-3"></i>
+                <h5 class="fw-bold text-white mb-0">ShopClone Admin</h5>
+            </div>
+            <div class="py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-gauge-high me-2"></i> Tổng quan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">
+                            <i class="fa-solid fa-box-archive me-2 text-warning"></i> Quản lý sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="stock.html">
+                            <i class="fa-solid fa-cloud-arrow-up me-2 text-success"></i> Nhập kho tài khoản
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">
+                            <i class="fa-solid fa-users me-2 text-info"></i> Quản lý thành viên
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="orders.html">
+                            <i class="fa-solid fa-bag-shopping me-2 text-danger"></i> Quản lý đơn hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">
+                            <i class="fa-solid fa-gear me-2 text-primary"></i> Cấu hình hệ thống & Ngân hàng
+                        </a>
+                    </li>
+                    <li class="nav-item mt-4 pt-3 border-top border-secondary">
+                        <a class="nav-link text-white" href="../index.html">
+                            <i class="fa-solid fa-globe me-2 text-success"></i> Xem trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="javascript:void(0)" onclick="window.auth.logout()">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom bg-white p-3 rounded-3 shadow-sm">
+                <div>
+                    <h4 class="fw-bold mb-0 text-dark">Lịch Sử Toàn Bộ Đơn Hàng Hệ Thống</h4>
+                    <small class="text-muted">Theo dõi và truy xuất tài khoản đã bán từ bảng [Orders] trong SQL Server</small>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>Khách hàng</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Thời gian</th>
+                                    <th class="text-end">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-admin-tbody">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-muted">Đang tải lịch sử đơn hàng...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="../client/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- App Modules -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        async function loadAdminOrders() {
+            if (!window.auth.checkAuth('admin')) return;
+            const tbody = document.getElementById('orders-admin-tbody');
+            try {
+                const res = await window.api.get('/admin/orders');
+                if (res && res.status === 'success' && res.data) {
+                    if (res.data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-muted">Chưa có đơn hàng nào</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = res.data.map(o => `
+                        <tr>
+                            <td><strong>#${o.order_code}</strong></td>
+                            <td><strong>${o.username}</strong><br><small class="text-muted">${o.email}</small></td>
+                            <td>${o.product_name}</td>
+                            <td><span class="badge bg-secondary">${o.quantity}</span></td>
+                            <td><strong class="text-danger">${o.total_price_formatted}</strong></td>
+                            <td><small class="text-muted">${o.created_at_formatted}</small></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="viewAccounts('${encodeURIComponent(o.account_details || '')}', '${o.order_code}')">
+                                    <i class="fa-solid fa-eye me-1"></i> Xem hàng đã giao
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-danger">Lỗi tải danh sách đơn hàng</td></tr>';
+            }
+        }
+
+        window.viewAccounts = function(rawEncoded, orderCode) {
+            const raw = decodeURIComponent(rawEncoded);
+            Swal.fire({
+                title: `Tài khoản đơn hàng #${orderCode}`,
+                html: `
+                    <textarea class="form-control font-monospace" rows="8" readonly>${raw}</textarea>
+                `,
+                width: 600,
+                confirmButtonText: 'Đóng'
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', loadAdminOrders);
+    </script>
+</body>
+
+</html>
