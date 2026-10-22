@@ -20,6 +20,28 @@
     <script src="sweetalert2/sweetalert2.js"></script>
     <script src="js/jquery-3.6.0.js"></script>
 
+    <!-- Authentication Guard: Ngăn chặn người dùng chưa đăng nhập xem trang giỏ hàng -->
+    <script>
+        (function() {
+            try {
+                var token = localStorage.getItem('token');
+                var userStr = localStorage.getItem('shopclone_user');
+                var isAuth = false;
+                if (token && userStr) {
+                    var u = JSON.parse(userStr);
+                    if (u && u.username && u.username !== 'demo_user') {
+                        isAuth = true;
+                    }
+                }
+                if (!isAuth) {
+                    window.location.replace('login.html?redirect=' + encodeURIComponent('cart.html'));
+                }
+            } catch (e) {
+                window.location.replace('login.html?redirect=' + encodeURIComponent('cart.html'));
+            }
+        })();
+    </script>
+
     <style>
         .cart-table th {
             font-size: 0.85rem;
@@ -126,7 +148,7 @@
             </nav>
 
             <!-- Cart Content Wrapper -->
-            <div class="row g-4" id="cart-content-wrapper">
+            <div class="row g-4" id="cart-content-wrapper" style="display: none;">
                 <!-- Left Column: Cart Table (8 Cols) -->
                 <div class="col-lg-8">
                     <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-3">
@@ -241,6 +263,18 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Auth Required Box -->
+            <div id="cart-auth-required" class="bg-white rounded-4 shadow-sm border empty-cart-box" style="display: none;">
+                <div class="empty-cart-icon text-warning" style="background: #fffbeb;">
+                    <i class="fa-solid fa-lock text-warning"></i>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Vui lòng đăng nhập để xem giỏ hàng</h4>
+                <p class="text-muted mb-4">Bạn cần đăng nhập tài khoản để quản lý giỏ hàng và thực hiện thanh toán tự động.</p>
+                <a href="login.html?redirect=cart.html" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i> ĐĂNG NHẬP NGAY
+                </a>
             </div>
 
             <!-- Empty Cart Box -->

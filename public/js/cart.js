@@ -444,7 +444,18 @@ function renderCartPage() {
     const tableBody = document.getElementById('cart-items-body');
     const emptyState = document.getElementById('cart-empty-state');
     const cartContent = document.getElementById('cart-content-wrapper');
+    const authRequired = document.getElementById('cart-auth-required');
     if (!tableBody) return;
+
+    // Route guard: Bắt buộc đăng nhập để xem và thao tác giỏ hàng
+    if (!window.auth || !window.auth.isLoggedIn()) {
+        if (cartContent) cartContent.style.display = 'none';
+        if (emptyState) emptyState.style.display = 'none';
+        if (authRequired) authRequired.style.display = 'block';
+        window.location.replace('login.html?redirect=' + encodeURIComponent('cart.html'));
+        return;
+    }
+    if (authRequired) authRequired.style.display = 'none';
 
     const cart = getCart();
     const summary = calculateCartSummary(cart);
@@ -942,10 +953,20 @@ function downloadAccountsFromCartBox() {
     URL.revokeObjectURL(url);
 }
 
-// Tự động cập nhật badge khi tải bất kỳ trang web nào
+// Tự động cập nhật badge và kiểm tra quyền truy cập giỏ hàng khi tải trang
 document.addEventListener('DOMContentLoaded', () => {
     updateCartBadges();
     if (document.getElementById('cart-items-body')) {
+        if (!window.auth || !window.auth.isLoggedIn()) {
+            const cartContent = document.getElementById('cart-content-wrapper');
+            const emptyState = document.getElementById('cart-empty-state');
+            const authRequired = document.getElementById('cart-auth-required');
+            if (cartContent) cartContent.style.display = 'none';
+            if (emptyState) emptyState.style.display = 'none';
+            if (authRequired) authRequired.style.display = 'block';
+            window.location.replace('login.html?redirect=' + encodeURIComponent('cart.html'));
+            return;
+        }
         renderCartPage();
     }
 });
