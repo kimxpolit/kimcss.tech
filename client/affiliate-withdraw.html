@@ -1,0 +1,143 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Rút tiền hoa hồng - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-money-bill-transfer text-primary me-2"></i> Rút hoa hồng về tài khoản ngân hàng</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="affiliates.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-left me-1"></i> Tiếp thị liên kết</a>
+                <a href="affiliate-history.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-clock-rotate-left me-1"></i> Lịch sử rút</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h4 class="fw-bold mb-3 text-center"><i class="fa-solid fa-money-bill-transfer text-success me-2"></i> RÚT HOA HỒNG VỀ TÀI KHOẢN</h4>
+                        <div class="alert alert-info border-0 small mb-4">
+                            Số dư hoa hồng khả dụng: <strong class="text-danger" id="current-ref-price">0đ</strong><br>
+                            Số tiền rút tối thiểu: <strong>50,000 đ</strong>
+                        </div>
+
+                        <form id="formWithdraw">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Ngân hàng thụ hưởng (<span class="text-danger">*</span>)</label>
+                                <input type="text" class="form-control" id="bank" placeholder="Ví dụ: MBBank, Vietcombank, Techcombank..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Số tài khoản (<span class="text-danger">*</span>)</label>
+                                <input type="text" class="form-control" id="stk" placeholder="Nhập số tài khoản ngân hàng..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Tên chủ tài khoản (<span class="text-danger">*</span>)</label>
+                                <input type="text" class="form-control text-uppercase" id="name" placeholder="NGUYEN VAN A" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Số tiền cần rút (VNĐ) (<span class="text-danger">*</span>)</label>
+                                <input type="number" class="form-control" id="amount" placeholder="Tối thiểu 50,000" min="50000" required>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill" id="btnSubmitWithdraw">
+                                <i class="fa-solid fa-check me-2"></i> TẠO YÊU CẦU RÚT TIỀN
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!window.auth.checkAuth('user')) return;
+            const user = window.auth.getUser();
+            if (user) {
+                document.getElementById('current-ref-price').innerText = user.ref_price_formatted || window.formatCurrency(user.ref_price);
+            }
+
+            document.getElementById('formWithdraw').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('btnSubmitWithdraw');
+                btn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Đang gửi...';
+                btn.disabled = true;
+
+                const bank = document.getElementById('bank').value.trim();
+                const stk = document.getElementById('stk').value.trim();
+                const name = document.getElementById('name').value.trim();
+                const amount = document.getElementById('amount').value;
+
+                try {
+                    const res = await window.api.post('ajaxs/client/create.php', {
+                        action: 'WithdrawCommission',
+                        bank: bank,
+                        stk: stk,
+                        name: name,
+                        amount: amount
+                    });
+
+                    if (res && res.status === 'success') {
+                        window.api.alertSuccess(res.msg || 'Tạo yêu cầu rút tiền thành công!');
+                        await window.auth.syncUser();
+                        setTimeout(() => {
+                            window.location.href = 'affiliate-history.html';
+                        }, 1500);
+                    } else {
+                        window.api.alertError(res ? res.msg : 'Rút tiền thất bại');
+                    }
+                } catch(err) {
+                    console.error(err);
+                } finally {
+                    btn.innerHTML = '<i class="fa-solid fa-check me-2"></i> TẠO YÊU CẦU RÚT TIỀN';
+                    btn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+

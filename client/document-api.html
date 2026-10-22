@@ -1,0 +1,143 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tài liệu tích hợp API - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-code text-primary me-2"></i> Tài liệu hướng dẫn tích hợp API v2</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="profile.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-key me-1"></i> Lấy API Key</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <h3 class="fw-bold mb-3"><i class="fa-solid fa-file-code text-primary me-2"></i> TÀI LIỆU TÍCH HỢP REST API V2</h3>
+                <p class="text-muted">Hệ thống cung cấp API cho phép các nhà phát triển và đại lý tự động kiểm tra số dư, duyệt danh sách sản phẩm và mua tài khoản tự động bằng mã lệnh.</p>
+            </div>
+
+            <!-- API Endpoint 1: Check Balance -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3">
+                    <span class="badge bg-primary me-2">GET</span>
+                    <strong class="fs-6">1. Kiểm tra thông tin tài khoản & số dư</strong>
+                </div>
+                <div class="card-body">
+                    <p>Endpoint: <code>/api/profile.php?api_key={YOUR_API_KEY}</code></p>
+                    <h6 class="fw-bold mt-3">Mẫu phản hồi JSON (200 OK):</h6>
+                    <pre class="bg-dark text-light p-3 rounded small"><code>{
+  "status": "success",
+  "msg": "Lấy dữ liệu thành công!",
+  "data": {
+    "username": "client_demo",
+    "money": 500000
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- API Endpoint 2: Get Products -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3">
+                    <span class="badge bg-primary me-2">GET</span>
+                    <strong class="fs-6">2. Lấy danh sách sản phẩm & tồn kho</strong>
+                </div>
+                <div class="card-body">
+                    <p>Endpoint: <code>/api/products.php?api_key={YOUR_API_KEY}</code></p>
+                    <h6 class="fw-bold mt-3">Mẫu phản hồi JSON (200 OK):</h6>
+                    <pre class="bg-dark text-light p-3 rounded small"><code>{
+  "status": "success",
+  "data": [
+    {
+      "category_name": "CLONE FACEBOOK",
+      "products": [
+        {
+          "id": 1,
+          "name": "Clone FB 2FA Nuôi Cổ",
+          "price": 5000,
+          "amount": 250,
+          "description": "Bao login 1 đổi 1 trong 24h"
+        }
+      ]
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- API Endpoint 3: Buy Product -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3">
+                    <span class="badge bg-success me-2">POST / GET</span>
+                    <strong class="fs-6">3. Mua sản phẩm tự động</strong>
+                </div>
+                <div class="card-body">
+                    <p>Endpoint: <code>/ajaxs/client/product.php</code></p>
+                    <p class="mb-1"><strong>Tham số yêu cầu:</strong></p>
+                    <ul class="small">
+                        <li><code>action</code>: <code>buyProduct</code></li>
+                        <li><code>api_key</code>: API Key của bạn</li>
+                        <li><code>id</code>: ID sản phẩm cần mua</li>
+                        <li><code>amount</code>: Số lượng cần mua</li>
+                        <li><code>coupon</code>: Mã giảm giá (nếu có)</li>
+                    </ul>
+                    <h6 class="fw-bold mt-3">Mẫu phản hồi thành công:</h6>
+                    <pre class="bg-dark text-light p-3 rounded small"><code>{
+  "status": "success",
+  "msg": "Tạo đơn hàng thành công!",
+  "trans_id": "ORD9283719",
+  "data": "1000827282|pass123|2FA_SECRET\n1000918273|pass456|2FA_SECRET"
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+</body>
+
+</html>
+

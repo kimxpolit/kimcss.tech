@@ -1,0 +1,32 @@
+{
+  "name": "shopclone7-node-mssql",
+  "version": "1.0.0",
+  "description": "ShopClone 7 - 100% JavaScript Full-Stack MMO Store with Node.js, Express & Microsoft SQL Server",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js",
+    "db:init": "node server/scripts/init_db.js",
+    "test": "node tests/test_fullstack_mssql.js"
+  },
+  "keywords": [
+    "shopclone",
+    "mssql",
+    "express",
+    "javascript",
+    "html5",
+    "mmo"
+  ],
+  "author": "ShopClone Development Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^10.0.2",
+    "pngjs": "^7.0.0",
+    "sharp": "^0.35.5"
+  }
+}

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quản lý sản phẩm - ShopClone 7 Admin</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../sweetalert2/default.css" type="text/css">
+    <script src="../sweetalert2/sweetalert2.js"></script>
+    <script src="../js/jquery-3.6.0.js"></script>
+
+    <style>
+        body { background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .sidebar { min-height: 100vh; background: #1e293b; color: #cbd5e1; }
+        .sidebar .nav-link { color: #94a3b8; padding: 12px 20px; font-weight: 500; border-radius: 8px; margin: 4px 12px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background: #334155; color: #fff; }
+        .sidebar .nav-link i { width: 24px; }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar p-0" style="width: 260px;">
+            <div class="p-4 border-bottom border-secondary d-flex align-items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-primary fs-3"></i>
+                <h5 class="fw-bold text-white mb-0">ShopClone Admin</h5>
+            </div>
+            <div class="py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-gauge-high me-2"></i> Tổng quan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="products.html">
+                            <i class="fa-solid fa-box-archive me-2 text-warning"></i> Quản lý sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="stock.html">
+                            <i class="fa-solid fa-cloud-arrow-up me-2 text-success"></i> Nhập kho tài khoản
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">
+                            <i class="fa-solid fa-users me-2 text-info"></i> Quản lý thành viên
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="orders.html">
+                            <i class="fa-solid fa-bag-shopping me-2 text-danger"></i> Quản lý đơn hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">
+                            <i class="fa-solid fa-gear me-2 text-primary"></i> Cấu hình hệ thống & Ngân hàng
+                        </a>
+                    </li>
+                    <li class="nav-item mt-4 pt-3 border-top border-secondary">
+                        <a class="nav-link text-white" href="../index.html">
+                            <i class="fa-solid fa-globe me-2 text-success"></i> Xem trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="javascript:void(0)" onclick="window.auth.logout()">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom bg-white p-3 rounded-3 shadow-sm">
+                <div>
+                    <h4 class="fw-bold mb-0 text-dark">Danh Sách Sản Phẩm & Tồn Kho Thực Tế</h4>
+                    <small class="text-muted">Dữ liệu kết nối trực tiếp từ bảng [Products] và [ProductStock]</small>
+                </div>
+                <button class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalAddProduct">
+                    <i class="fa-solid fa-plus me-1"></i> Thêm sản phẩm mới
+                </button>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Danh mục</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá bán</th>
+                                    <th>Tồn kho</th>
+                                    <th>Đã bán</th>
+                                    <th>Trạng thái</th>
+                                    <th class="text-end">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table-body">
+                                <tr>
+                                    <td colspan="8" class="text-center py-4 text-muted">Đang tải danh sách sản phẩm...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Product -->
+    <div class="modal fade" id="modalAddProduct" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 overflow-hidden">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold text-primary"><i class="fa-solid fa-box me-2"></i> Thêm Sản Phẩm Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="form-add-product">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Danh mục:</label>
+                                <select class="form-select" id="add-prod-cat" required></select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Giá bán (VNĐ):</label>
+                                <input type="number" class="form-control" id="add-prod-price" placeholder="Ví dụ: 15000" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small fw-bold">Tên sản phẩm:</label>
+                                <input type="text" class="form-control" id="add-prod-name" placeholder="Ví dụ: Clone Facebook 2FA..." required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small fw-bold">Mô tả chi tiết:</label>
+                                <textarea class="form-control" id="add-prod-desc" rows="3" placeholder="Định dạng tài khoản, chính sách bảo hành..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4" id="btnAddProdSubmit">Lưu sản phẩm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="../client/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- App Modules -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        async function loadAdminProducts() {
+            if (!window.auth.checkAuth('admin')) return;
+            const tbody = document.getElementById('products-table-body');
+            try {
+                const res = await window.api.get('/admin/products');
+                if (res && res.status === 'success' && res.data) {
+                    if (res.data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-muted">Chưa có sản phẩm nào</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = res.data.map(p => `
+                        <tr>
+                            <td>#${p.id}</td>
+                            <td><span class="badge bg-light text-dark border">${p.category_name}</span></td>
+                            <td><strong>${p.name}</strong></td>
+                            <td><strong class="text-danger">${p.price_formatted}</strong></td>
+                            <td><span class="badge ${p.stock > 0 ? 'bg-success' : 'bg-danger'}">${p.stock}</span></td>
+                            <td><span class="badge bg-secondary">${p.sold}</span></td>
+                            <td><span class="badge ${p.status ? 'bg-success' : 'bg-warning'}">${p.status ? 'Bật' : 'Tắt'}</span></td>
+                            <td class="text-end">
+                                <a href="stock.html" class="btn btn-sm btn-outline-success rounded-pill px-2" title="Nhập thêm kho">
+                                    <i class="fa-solid fa-plus"></i> Kho
+                                </a>
+                                <button class="btn btn-sm btn-outline-danger rounded-pill px-2 ms-1" onclick="deleteProduct(${p.id})">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-danger">Lỗi tải sản phẩm</td></tr>';
+            }
+        }
+
+        async function loadCategoriesDropdown() {
+            try {
+                const res = await window.api.get('/products/categories');
+                if (res && res.status === 'success' && res.data) {
+                    const sel = document.getElementById('add-prod-cat');
+                    sel.innerHTML = res.data.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+                }
+            } catch (e) {}
+        }
+
+        document.getElementById('form-add-product').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const category_id = document.getElementById('add-prod-cat').value;
+            const name = document.getElementById('add-prod-name').value;
+            const price = document.getElementById('add-prod-price').value;
+            const description = document.getElementById('add-prod-desc').value;
+
+            const res = await window.api.post('/admin/products', { category_id, name, price, description });
+            if (res && res.status === 'success') {
+                window.api.alertSuccess(res.msg);
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalAddProduct'));
+                if (modal) modal.hide();
+                document.getElementById('form-add-product').reset();
+                loadAdminProducts();
+            } else {
+                window.api.alertError(res ? res.msg : 'Thêm thất bại');
+            }
+        });
+
+        window.deleteProduct = async function(id) {
+            if (!confirm('Bạn có chắc muốn xóa sản phẩm này khỏi cơ sở dữ liệu?')) return;
+            const res = await window.api.delete(`/admin/products/${id}`);
+            if (res && res.status === 'success') {
+                window.api.alertSuccess('Đã xóa sản phẩm!');
+                loadAdminProducts();
+            } else {
+                window.api.alertError('Xóa thất bại');
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAdminProducts();
+            loadCategoriesDropdown();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tiếp thị liên kết (Affiliate) - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-handshake text-primary me-2"></i> Chương trình Tiếp thị liên kết hoa hồng trọn đời</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="affiliate-history.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-clock-rotate-left me-1"></i> Lịch sử rút</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <h4 class="fw-bold mb-3"><i class="fa-solid fa-handshake text-primary me-2"></i> Kiếm tiền cùng ShopClone 7</h4>
+                <p class="text-muted">Giới thiệu bạn bè đăng ký và mua hàng thông qua liên kết của bạn để nhận hoa hồng hấp dẫn trên mỗi đơn hàng thành công.</p>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Liên kết giới thiệu của bạn:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="aff-link" readonly value="Đang tải...">
+                        <button class="btn btn-primary" onclick="copyAffLink()"><i class="fa-solid fa-copy me-1"></i> Sao chép liên kết</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-4 text-center bg-white h-100">
+                        <small class="text-muted d-block">Hoa hồng khả dụng</small>
+                        <h3 class="text-success fw-bold my-2" id="aff-balance">0đ</h3>
+                        <a href="affiliate-withdraw.html" class="btn btn-success btn-sm rounded-pill mt-2"><i class="fa-solid fa-money-bill-transfer me-1"></i> Rút hoa hồng</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-4 text-center bg-white h-100">
+                        <small class="text-muted d-block">Số lượt click liên kết</small>
+                        <h3 class="text-primary fw-bold my-2" id="aff-clicks">0</h3>
+                        <small class="text-muted">Tổng số lượt truy cập từ link</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-4 text-center bg-white h-100">
+                        <small class="text-muted d-block">Mức hoa hồng</small>
+                        <h3 class="text-warning fw-bold my-2" id="aff-rate">10%</h3>
+                        <small class="text-muted">Hưởng trọn đời trên mọi đơn hàng</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!window.auth.checkAuth('user')) return;
+            const user = window.auth.getUser();
+
+            if (user) {
+                const origin = window.location.origin;
+                const link = `${origin}/index.html?aff=${user.id}`;
+                document.getElementById('aff-link').value = link;
+                document.getElementById('aff-balance').innerText = user.ref_price_formatted || window.formatCurrency(user.ref_price);
+                document.getElementById('aff-clicks').innerText = user.ref_click || 0;
+            }
+        });
+
+        function copyAffLink() {
+            const input = document.getElementById('aff-link');
+            navigator.clipboard.writeText(input.value).then(() => {
+                window.api.showToast('Đã sao chép liên kết giới thiệu!');
+            });
+        }
+    </script>
+</body>
+
+</html>
+

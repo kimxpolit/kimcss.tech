@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Xác minh 2FA - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/user-auth.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <section class="user-form-part py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
+                    <div class="user-form-logo text-center mb-4">
+                        <a href="home.html">
+                            <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="48">
+                        </a>
+                    </div>
+                    <div class="user-form-card shadow-sm p-4 bg-white rounded text-center">
+                        <div class="mb-3">
+                            <i class="fa-solid fa-shield-halved text-primary fs-1"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">XÁC MINH 2 BƯỚC (2FA)</h4>
+                        <p class="text-muted small mb-4">Nhập mã 6 chữ số từ ứng dụng Google Authenticator trên điện thoại của bạn.</p>
+
+                        <form id="verify-2fa-form">
+                            <div class="form-group mb-4">
+                                <input type="text" class="form-control form-control-lg text-center fw-bold letter-spacing-2" id="code" placeholder="000000" maxlength="6" pattern="[0-9]{6}" required autofocus style="letter-spacing: 5px; font-size: 24px;">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-pill" id="btnVerify2FA">
+                                <i class="fa-solid fa-lock me-2"></i> XÁC MINH & ĐĂNG NHẬP
+                            </button>
+                        </form>
+                    </div>
+                    <div class="user-form-remind text-center mt-4">
+                        <p><a href="login.html" class="text-secondary small"><i class="fa-solid fa-arrow-left me-1"></i> Quay lại Đăng nhập</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script>
+        document.getElementById('verify-2fa-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const urlParams = new URLSearchParams(window.location.search);
+            const token2fa = urlParams.get('token');
+            const code = document.getElementById('code').value.trim();
+
+            if (!token2fa) {
+                window.api.alertError('Token xác thực không hợp lệ. Vui lòng đăng nhập lại.');
+                return;
+            }
+
+            const btn = document.getElementById('btnVerify2FA');
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Đang xác minh...';
+            btn.disabled = true;
+
+            try {
+                await window.auth.verify2FA(token2fa, code);
+            } catch(err) {
+                console.error(err);
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-lock me-2"></i> XÁC MINH & ĐĂNG NHẬP';
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
+

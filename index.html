@@ -1,0 +1,548 @@
+<!doctype html>
+<html class="h-100" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ShopClone 7 - Hệ thống Bán Tài Khoản MMO Tự Động 24/7</title>
+    <meta name="description" content="Hệ thống cung cấp sỉ lẻ tài khoản Clone Facebook, Via Facebook, Gmail, TikTok, Proxy tốc độ cao tự động." />
+    <meta name="keywords" content="shop clone, via facebook, mua clone fb, gmail ngoai, proxy ipv4">
+    <link rel="icon" type="image/png" href="assets/storage/images/logo_dark_8OJ.png" />
+
+    <style>
+    :root {
+        --primary: #0d6efd;
+        --primary1: #0a58ca;
+    }
+    </style>
+    
+    <!-- Original Stylesheets -->
+    <link rel="stylesheet" href="client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="client/fonts/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="client/vendor/venobox/venobox.min.css">
+    <link rel="stylesheet" href="client/vendor/slickslider/slick.min.css">
+    <link rel="stylesheet" href="client/vendor/niceselect/nice-select.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="client/css/user-auth.css">
+    <link rel="stylesheet" href="client/css/index.css">
+    <link rel="stylesheet" href="client/css/wallet.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+
+    <!-- SweetAlert2 -->
+    <link class="main-stylesheet" href="sweetalert2/default.css" rel="stylesheet" type="text/css">
+    <script src="sweetalert2/sweetalert2.js"></script>
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.6.0.js"></script>
+
+    <link rel="stylesheet" href="mod/css/main.css?v=21">
+    <script src="mod/js/main.js?v=2"></script> 
+
+    <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .feature-content {
+        padding-left: 0px;
+        border-left: none;
+    }
+    .product-disable::before {
+        position: absolute;
+        content: "Hết hàng";
+        top: 89%;
+        left: 50%;
+        z-index: 2;
+        width: 100%;
+        font-size: 15px;
+        font-weight: 400;
+        padding: 0px;
+        text-align: center;
+        text-transform: uppercase;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        color: #fff;
+        background: rgba(224, 152, 22, 0.9);
+    }
+    .header-logo img {
+        max-height: 48px;
+        width: auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <a class="backtop" href="#"><i class="fa-sharp fa-solid fa-chevron-up"></i></a>
+    
+    <!-- Header Top -->
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-5">
+                    <div class="header-top-welcome">
+                        <p>🔥 Chào mừng bạn đến với ShopClone 7 - Nạp tiền tự động qua VietQR duyệt trong 3 giây!</p>
+                    </div>
+                </div>
+                <div class="col-md-5 col-lg-3">
+                    <div class="header-top-select">
+                        <div class="header-select"><i class="icofont-world"></i>
+                            <select class="select" id="changeLanguage">
+                                <option value="vi" selected>Tiếng Việt</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        <div class="header-select"><i class="icofont-money"></i>
+                            <select class="select" id="changeCurrency">
+                                <option value="VND" selected>VND</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-4">
+                    <ul class="header-top-list">
+                        <li><a href="javascript:void(0)">Chính sách</a></li>
+                        <li><a href="javascript:void(0)">FAQ</a></li>
+                        <li><a href="javascript:void(0)">Liên Hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-media-group">
+                    <button class="header-user" onclick="openNavSidebar()"><i class="fa-solid fa-bars"></i></button>
+                    <a href="index.html">
+                        <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='assets/img/logo.png'" alt="logo">
+                    </a>
+                    <button class="header-src" onclick="$('.header-form').toggleClass('active')"><i class="fas fa-search"></i></button>
+                </div>
+                <a href="index.html" class="header-logo">
+                    <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='assets/img/logo.png'" alt="logo">
+                </a>
+                <form class="header-form" onsubmit="event.preventDefault(); searchProducts();">
+                    <input type="text" id="keyword-input" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="header-widget-group">
+                    <a href="orders.html" class="header-widget" title="Đơn hàng">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                    </a>
+                    <a href="javascript:void(0)" class="header-widget" title="Sản phẩm yêu thích">
+                        <i class="fas fa-heart"></i>
+                        <sup id="numFavorites">0</sup>
+                    </a>
+                    <button class="header-widget header-cart" title="Nạp tiền" onclick="openCartSidebar()">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </button>
+                    <!-- Auth dynamic slot -->
+                    <div id="header-user-slot" class="d-inline-flex align-items-center">
+                        <a href="login.html" class="header-widget" title="Login">
+                            <img src="assets/storage/images/avatar_user.png" onerror="this.src='client/images/avatar.png'" alt="user"><span>Login</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar-part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="navbar-content">
+                        <ul class="navbar-list">
+                            <li class="navbar-item"><a class="navbar-link active" href="index.html">Trang chủ</a></li>
+                            <li class="navbar-item dropdown-megamenu"><a class="navbar-link dropdown-arrow" href="javascript:void(0)">Sản phẩm</a>
+                                <div class="megamenu">
+                                    <div class="container">
+                                        <div id="menu-categories-container">
+                                            <!-- Dynamically populated categories -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="navbar-item dropdown">
+                                <a class="navbar-link dropdown-arrow" href="recharge.html">Nạp tiền</a>
+                                <ul class="dropdown-position-list">
+                                    <li><a href="recharge.html"><img width="20px" src="assets/img/icon-bank.svg"> Ngân hàng (VietQR Napas)</a></li>
+                                    <li><a href="recharge.html"><img width="20px" src="assets/img/icon-momo.png"> Ví MOMO</a></li>
+                                    <li><a href="recharge.html"><img width="20px" src="mod/img/icon-thesieure.webp"> Ví THESIEURE</a></li>
+                                    <li><a href="recharge.html"><img width="20px" src="assets/img/icon-cards.png"> Thẻ cào tự động</a></li>
+                                    <li><a href="recharge.html"><img width="20px" src="assets/img/icon-usdt.svg"> Crypto (USDT)</a></li>
+                                </ul>
+                            </li>
+                            <li class="navbar-item dropdown">
+                                <a class="navbar-link dropdown-arrow" href="orders.html">Lịch sử</a>
+                                <ul class="dropdown-position-list">
+                                    <li><a href="orders.html">Lịch sử đơn hàng</a></li>
+                                    <li><a href="transactions.html">Biến động số dư</a></li>
+                                </ul>
+                            </li>
+                            <li class="navbar-item"><a class="navbar-link" href="javascript:void(0)">Tài liệu API</a></li>
+                            <li class="navbar-item" id="admin-panel-nav" style="display:none;">
+                                <a class="navbar-link text-danger fw-bold" href="admin/index.html">
+                                    <i class="fa-solid fa-shield-halved me-1"></i> Admin Panel
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="navbar-info-group">
+                            <div class="navbar-info"><i class="fa-solid fa-headset fs-4 text-primary me-2"></i>
+                                <p><small>Hotline</small><span>0947.838.128</span></p>
+                            </div>
+                            <div class="navbar-info"><i class="fa-solid fa-envelope fs-4 text-primary me-2"></i>
+                                <p><small>Email</small><span>hotro@shopclone.vn</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebars -->
+    <aside class="cart-sidebar">
+        <div class="cart-header">
+            <div class="cart-total"><i class="fa-solid fa-building-columns"></i><span>Chọn phương thức nạp tiền</span></div>
+            <button class="cart-close" onclick="closeCartSidebar()"><i class="icofont-close"></i></button>
+        </div>
+        <ul class="category-list">
+            <li class="category-item">
+                <a class="category-link" href="recharge.html"><img style="margin-right: 10px;" width="30px" src="assets/img/icon-bank.svg"> Ngân hàng (VietQR)</a>
+            </li>
+            <li class="category-item">
+                <a href="recharge.html" class="category-link"><img style="margin-right: 10px;" width="30px" src="assets/img/icon-momo.png"> Ví MOMO</a>
+            </li>
+            <li class="category-item">
+                <a href="recharge.html" class="category-link"><img style="margin-right: 10px;" width="30px" src="mod/img/icon-thesieure.webp"> Ví THESIEURE</a>
+            </li>
+            <li class="category-item">
+                <a class="category-link" href="recharge.html"><img width="30px" style="margin-right: 10px;" src="assets/img/icon-cards.png"> Thẻ cào tự động</a>
+            </li>
+            <li class="category-item">
+                <a class="category-link" href="recharge.html"><img style="margin-right: 10px;" width="30px" src="assets/img/icon-usdt.svg"> Crypto (USDT)</a>
+            </li>
+        </ul>
+    </aside>
+
+    <aside class="nav-sidebar">
+        <div class="nav-header">
+            <a href="index.html"><img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='assets/img/logo.png'" alt="logo"></a>
+            <button class="nav-close" onclick="closeNavSidebar()"><i class="icofont-close"></i></button>
+        </div>
+        <div class="nav-content">
+            <div class="nav-btn" id="mobile-nav-btn">
+                <a href="login.html" class="btn btn-inline"><i class="fa fa-unlock-alt"></i> <span>Đăng Nhập</span></a>
+            </div>
+            <div class="nav-select-group">
+                <p>Số dư của tôi: <strong class="text-wallet" id="mobile-balance">0 ₫</strong></p>
+            </div>
+            <ul class="nav-list">
+                <li><a class="nav-link" href="index.html"><i class="icofont-home"></i>Trang chủ</a></li>
+                <li><a class="nav-link" href="recharge.html"><i class="fa-solid fa-building-columns"></i>Nạp tiền</a></li>
+                <li><a class="nav-link" href="orders.html"><i class="fa-solid fa-clock-rotate-left"></i>Lịch sử đơn hàng</a></li>
+                <li><a class="nav-link" href="transactions.html"><i class="fa-solid fa-money-bill-transfer"></i>Biến động số dư</a></li>
+                <li id="mobile-admin-item" style="display:none;"><a class="nav-link text-danger" href="admin/index.html"><i class="fa-solid fa-gear"></i>Admin Panel</a></li>
+                <li id="mobile-logout-item" style="display:none;"><a class="nav-link" href="javascript:void(0)" onclick="window.auth.logout()"><i class="icofont-logout"></i>Đăng xuất</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <div class="mobile-menu">
+        <a href="index.html" title="Trang chủ" class="active"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+        <button class="cate-btn" title="Sản phẩm" onclick="openNavSidebar()"><i class="fas fa-list"></i><span>Sản phẩm</span></button>
+        <button class="cart-btn" title="Nạp tiền" onclick="openCartSidebar()"><i class="fa-solid fa-building-columns"></i><span>Nạp tiền</span></button>
+        <a href="orders.html" title="Đơn hàng"><i class="fa-solid fa-cart-shopping"></i><span>Đơn hàng</span></a>
+        <a href="profile.html" title="Thông tin"><i class="fa-solid fa-user"></i><span>Thông tin</span></a>
+    </div>
+
+    <!-- Main Content Section (views/client/home.php) -->
+    <section class="section feature-part">
+        <div class="container">
+            <div class="mb-4"></div>
+            
+            <div class="row mb-5">
+                <!-- Top Notice -->
+                <div class="col-md-12 mb-4">
+                    <div class="account-card pt-3">
+                        <div class="alert alert-info d-flex align-items-center mb-0" style="background:#e8f4fd;border-color:#b8daff;color:#004085;">
+                            <i class="fa-solid fa-bullhorn fs-4 me-3 text-primary"></i>
+                            <div>🔥 Chào mừng bạn đến với <strong>ShopClone 7</strong>! Hệ thống cung cấp sỉ lẻ tài khoản Clone, Via Facebook, Gmail, TikTok, Proxy tự động 24/7. Nạp tiền VietQR duyệt trong 3 giây. Hỗ trợ kỹ thuật 24/7.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4 Tool Boxes (views/client/widget_tools.php) -->
+                <div class="col-md-12">
+                    <div class="all-product-main row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3">
+                            <div class="box-product-main" style="background-image: url('mod/img/bg-1.webp');box-shadow: 0 2px 10px rgb(36 194 138 / 19%);">
+                                <a href="tools/tool-checklive-fb.html">
+                                    <div class="d-flex align-items-center">
+                                        <div class="box-img-product">
+                                            <img src="mod/img/icon-facebook.png" width="45" height="45">
+                                        </div>
+                                        <div class="box-text-style">
+                                            <div style="white-space: nowrap;color: #fff;font-weight: 700;font-size: 18px;">Check live FB</div>
+                                            <div style="white-space: nowrap;font-size: 15px;color: #fff;opacity: .7;">Miễn phí</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3">
+                            <div class="box-product-main" style="background-image: url('mod/img/bg-2.webp');box-shadow: 0 2px 10px rgb(0 147 255 / 27%);">
+                                <a href="tools/tool-2fa.html">
+                                    <div class="d-flex align-items-center">
+                                        <div class="box-img-product">
+                                            <img src="mod/img/icon-google-auth.webp" width="45" height="45">
+                                        </div>
+                                        <div class="box-text-style">
+                                            <div style="white-space: nowrap;color: #fff;font-weight: 700;font-size: 18px;">Lấy mã 2FA</div>
+                                            <div style="white-space: nowrap;font-size: 15px;color: #fff;opacity: .7;">Miễn phí</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3">
+                            <div class="box-product-main" style="background-image: url('mod/img/bg-3.webp');box-shadow: 0 2px 10px rgb(0 147 255 / 27%);">
+                                <a href="tools/tool-icon-facebook.html">
+                                    <div class="d-flex align-items-center">
+                                        <div class="box-img-product">
+                                            <img src="mod/img/icon-facebook.png" width="45" height="45">
+                                        </div>
+                                        <div class="box-text-style">
+                                            <div style="white-space: nowrap;color: #fff;font-weight: 700;font-size: 18px;">Icon Facebook</div>
+                                            <div style="white-space: nowrap;font-size: 15px;color: #fff;opacity: .7;">Miễn phí</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3">
+                            <div class="box-product-main" style="background-image: url('mod/img/bg-4.webp');box-shadow: 0 2px 10px rgb(0 147 255 / 27%);">
+                                <a href="tools/tool-random-face.html">
+                                    <div class="d-flex align-items-center">
+                                        <div class="box-img-product">
+                                            <img src="mod/img/icon-random-face.webp" width="45" height="45">
+                                        </div>
+                                        <div class="box-text-style">
+                                            <div style="white-space: nowrap;color: #fff;font-weight: 700;font-size: 18px;">Random Face</div>
+                                            <div style="white-space: nowrap;font-size: 15px;color: #fff;opacity: .7;">Miễn phí</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Main Area & Wallet Sidebar -->
+                <div class="col-xl-9">
+                    <!-- Category Tabs (views/client/home.php:89) -->
+                    <ul class="custom-button-list" id="home-categories-container">
+                        <li>
+                            <a class="btn-category-home active" href="javascript:void(0);" onclick="loadProductsByCategory('', '')">
+                                <i class="fa-solid fa-cart-shopping me-2"></i>Tất cả sản phẩm
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Products Grid Container -->
+                    <div id="products-container">
+                        <div class="skeleton-container">
+                            <div class="skeleton-card">
+                                <div class="skeleton-image"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-title"></div>
+                                    <div class="skeleton-text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column Wallet Card (views/client/home.php:157) -->
+                <div class="col-xl-3">
+                    <div class="account-card card-wallet-home py-4" id="home-wallet-card">
+                        <!-- Populated by JavaScript according to login state -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions (views/client/home.php:193) -->
+            <div class="row">
+                <div class="col-lg-6 mb-3">
+                    <div class="home-heading mb-3">
+                        <h3><i class="fa-solid fa-cart-shopping m-2"></i> ĐƠN HÀNG GẦN ĐÂY</h3>
+                    </div>
+                    <div id="recent-orders-container" style="height:350px;overflow-x:hidden;overflow-y:auto;">
+                        <div class="text-center py-4 text-muted"><i class="fa fa-spinner fa-spin me-2"></i> Đang tải đơn hàng...</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <div class="home-heading mb-3">
+                        <h3><i class="fa-solid fa-credit-card m-2"></i> NẠP TIỀN GẦN ĐÂY</h3>
+                    </div>
+                    <div id="recent-deposits-container" style="height:350px;overflow-x:hidden;overflow-y:auto;">
+                        <div class="text-center py-4 text-muted"><i class="fa fa-spinner fa-spin me-2"></i> Đang tải giao dịch...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Right Menu (views/client/home.php:499) -->
+    <ul id="top-menu-right">
+        <li>
+            <a class="menu-item" id="toggle-menu-button" href="javascript:void(0);" onclick="toggleTopMenu()">
+                <i class="fa-solid fa-eye-slash"></i>
+                <span>Tạm ẩn</span>
+            </a>
+        </li>
+        <li>
+            <a class="menu-item" href="orders.html">
+                <i class="fa-solid fa-heart" style="color:red;"></i>
+                <span>Đơn hàng của tôi</span>
+            </a>
+        </li>
+    </ul>
+
+    <!-- Modal Xem Chi Tiết & Mua Hàng (ajaxs/client/modal/view-product.php) -->
+    <div class="modal fade" id="openModal" tabindex="-1" aria-labelledby="openModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phone Ring Hotline Floating Widget (views/client/footer.php) -->
+    <div class="hotline-phone-ring-wrap">
+        <div class="hotline-phone-ring">
+            <div class="hotline-phone-ring-circle"></div>
+            <div class="hotline-phone-ring-circle-fill"></div>
+            <div class="hotline-phone-ring-img-circle">
+                <a href="tel:0947838128" class="pps-btn-img">
+                    <img src="mod/img/icon-call-nh.png" alt="Gọi điện thoại" width="50">
+                </a>
+            </div>
+        </div>
+        <div class="hotline-bar">
+            <a href="tel:0947838128">
+                <span class="text-hotline">0947.838.128</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Messenger & Zalo Floating Contact Bar (views/client/footer.php) -->
+    <ul class="giuseart-pc-contact-bar">
+        <li class="facebook">
+            <a href="https://facebook.com" target="_blank" rel="nofollow"></a>
+        </li>
+        <li class="zalo">
+            <a href="https://zalo.me" target="_blank" rel="nofollow"></a>
+        </li>
+    </ul>
+
+    <!-- Footer Part (views/client/footer.php:451) -->
+    <footer class="footer-part">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="footer-widget">
+                        <a class="footer-logo" href="index.html">
+                            <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='assets/img/logo.png'" alt="logo">
+                        </a>
+                        <p class="footer-desc">Hệ thống cung cấp sỉ lẻ tài khoản Clone Facebook, Via Facebook, Gmail, TikTok, Proxy tốc độ cao tự động 24/7.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="footer-widget contact">
+                        <h3 class="footer-title">Liên hệ</h3>
+                        <ul class="footer-contact">
+                            <li><i class="fa-solid fa-envelope text-primary me-2"></i>
+                                <p>hotro@shopclone.vn</p>
+                            </li>
+                            <li><i class="fa-solid fa-phone text-primary me-2"></i>
+                                <p>0947.838.128</p>
+                            </li>
+                            <li><i class="fa-solid fa-location-dot text-primary me-2"></i>
+                                <p>Hồ Chí Minh, Việt Nam</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Liên kết</h3>
+                        <div class="footer-links">
+                            <ul>
+                                <li><a href="javascript:void(0)">Chính sách dịch vụ</a></li>
+                                <li><a href="javascript:void(0)">Câu hỏi thường gặp (FAQ)</a></li>
+                                <li><a href="javascript:void(0)">Liên hệ hỗ trợ</a></li>
+                                <li><a href="javascript:void(0)">Tài liệu kết nối API</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer-bottom">
+                        <p class="footer-copytext">© All Copyrights Reserved by <a href="index.html">ShopClone 7</a> | Hệ thống Kinh Doanh MMO Tự Động</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="client/vendor/bootstrap/popper.min.js"></script>
+    <script src="client/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Core App Scripts (100% Vanilla JS & API Wrapper) -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/home.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initHomePage();
+        });
+
+        function openCartSidebar() {
+            $('.cart-sidebar').addClass('active');
+            $('.backdrop').fadeIn();
+        }
+        function closeCartSidebar() {
+            $('.cart-sidebar').removeClass('active');
+            $('.backdrop').fadeOut();
+        }
+        function openNavSidebar() {
+            $('.nav-sidebar').addClass('active');
+            $('.backdrop').fadeIn();
+        }
+        function closeNavSidebar() {
+            $('.nav-sidebar').removeClass('active');
+            $('.backdrop').fadeOut();
+        }
+        $('.backdrop').click(function() {
+            closeCartSidebar();
+            closeNavSidebar();
+        });
+
+        function toggleTopMenu() {
+            $('#top-menu-right').toggleClass('hidden');
+        }
+    </script>
+</body>
+
+</html>

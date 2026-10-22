@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nhập Kho Tài Khoản - ShopClone 7 Admin</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../sweetalert2/default.css" type="text/css">
+    <script src="../sweetalert2/sweetalert2.js"></script>
+    <script src="../js/jquery-3.6.0.js"></script>
+
+    <style>
+        body { background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .sidebar { min-height: 100vh; background: #1e293b; color: #cbd5e1; }
+        .sidebar .nav-link { color: #94a3b8; padding: 12px 20px; font-weight: 500; border-radius: 8px; margin: 4px 12px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background: #334155; color: #fff; }
+        .sidebar .nav-link i { width: 24px; }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar p-0" style="width: 260px;">
+            <div class="p-4 border-bottom border-secondary d-flex align-items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-primary fs-3"></i>
+                <h5 class="fw-bold text-white mb-0">ShopClone Admin</h5>
+            </div>
+            <div class="py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-gauge-high me-2"></i> Tổng quan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">
+                            <i class="fa-solid fa-box-archive me-2 text-warning"></i> Quản lý sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="stock.html">
+                            <i class="fa-solid fa-cloud-arrow-up me-2 text-success"></i> Nhập kho tài khoản
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">
+                            <i class="fa-solid fa-users me-2 text-info"></i> Quản lý thành viên
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="orders.html">
+                            <i class="fa-solid fa-bag-shopping me-2 text-danger"></i> Quản lý đơn hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">
+                            <i class="fa-solid fa-gear me-2 text-primary"></i> Cấu hình hệ thống & Ngân hàng
+                        </a>
+                    </li>
+                    <li class="nav-item mt-4 pt-3 border-top border-secondary">
+                        <a class="nav-link text-white" href="../index.html">
+                            <i class="fa-solid fa-globe me-2 text-success"></i> Xem trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="javascript:void(0)" onclick="window.auth.logout()">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom bg-white p-3 rounded-3 shadow-sm">
+                <div>
+                    <h4 class="fw-bold mb-0 text-dark">Nhập Kho Tài Khoản MMO (Bulk Stock Importer)</h4>
+                    <small class="text-muted">Nhập danh sách tài khoản theo từng dòng trực tiếp vào bảng [ProductStock] trong SQL Server</small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                        <form id="form-stock-import">
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">1. Chọn sản phẩm cần nhập thêm tài khoản:</label>
+                                <select class="form-select form-select-lg" id="select-product-import" required>
+                                    <option value="">-- Đang tải danh sách sản phẩm... --</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">2. Danh sách tài khoản (Mỗi tài khoản 1 dòng):</label>
+                                <textarea id="textarea-stock-data" class="form-control font-monospace" rows="12" placeholder="UID|Pass|2FA|Mail|PassMail&#10;UID2|Pass2|2FA2|Mail2|PassMail2&#10;UID3|Pass3|2FA3|Mail3|PassMail3" required></textarea>
+                                <small class="text-muted mt-2 d-block">
+                                    <i class="fa-solid fa-circle-info text-primary me-1"></i> Hệ thống tự động lọc bỏ các dòng trống và lưu riêng biệt từng tài khoản vào cơ sở dữ liệu.
+                                </small>
+                            </div>
+
+                            <button type="submit" class="btn btn-success btn-lg rounded-pill px-5 fw-bold" id="btnSubmitImport">
+                                <i class="fa-solid fa-cloud-arrow-up me-2"></i> Xác nhận nhập kho
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                        <h6 class="fw-bold mb-3"><i class="fa-solid fa-lightbulb text-warning me-2"></i> Hướng Dẫn Định Dạng</h6>
+                        <ul class="small text-muted ps-3 mb-0">
+                            <li class="mb-2"><strong>Clone/Via Facebook:</strong> <code>UID|MậtKhẩu|Mã2FA|Email|PassEmail</code></li>
+                            <li class="mb-2"><strong>Gmail/Hotmail:</strong> <code>Email|MậtKhẩu|EmailKhôiPhục</code></li>
+                            <li class="mb-2"><strong>Proxy IPv4:</strong> <code>IP:Port:User:Pass</code></li>
+                            <li><strong>Telegram/TikTok:</strong> <code>TênĐăngNhập|MậtKhẩu|Cookie</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                        <h6 class="fw-bold mb-2"><i class="fa-solid fa-shield-halved text-success me-2"></i> Cơ Chế Chống Trùng</h6>
+                        <p class="small text-muted mb-0">Mỗi tài khoản sau khi được khách hàng mua sẽ được đánh dấu <code>is_sold = 1</code> kèm mã đơn hàng tương ứng, đảm bảo 100% không bao giờ bị bán trùng cho khách hàng khác.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="../client/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- App Modules -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+
+</html>

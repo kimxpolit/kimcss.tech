@@ -1,0 +1,131 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nạp tiền qua Ví MoMo - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-qrcode text-danger me-2"></i> Nạp tiền ví MoMo tự động</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="recharge-bank.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-university me-1"></i> Nạp Ngân Hàng</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="card border-0 shadow-sm p-4 text-center">
+                        <div class="mb-3">
+                            <span class="badge bg-danger fs-6 p-2"><i class="fa-solid fa-wallet me-2"></i> VÍ ĐIỆN TỬ MOMO TỰ ĐỘNG</span>
+                        </div>
+                        <h4 class="fw-bold mb-3">Quét mã QR để chuyển tiền</h4>
+                        <p class="text-muted small mb-4">Vui lòng mở ứng dụng MoMo trên điện thoại và quét mã QR bên dưới, tiền sẽ được cộng tự động sau 1-3 phút.</p>
+
+                        <div class="border rounded p-3 d-inline-block bg-white shadow-sm mb-3 mx-auto" style="max-width: 260px;">
+                            <img id="momo-qr" src="../mod/img/icon-chat-zalo.webp" onerror="this.src='https://placehold.co/240x240?text=MoMo+QR'" class="img-fluid rounded" alt="MoMo QR">
+                        </div>
+
+                        <div class="text-start bg-light p-3 rounded mb-3 small">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Nội dung chuyển khoản (bắt buộc):</span>
+                                <div class="d-flex align-items-center">
+                                    <strong class="text-danger me-2" id="momo-syntax">NAPTIEN...</strong>
+                                    <button class="btn btn-sm btn-outline-danger py-0 px-2" onclick="copyMomoSyntax()"><i class="fa-solid fa-copy"></i></button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Trạng thái giao dịch:</span>
+                                <span class="badge bg-success"><i class="fa-solid fa-circle-dot me-1"></i> Đang chờ chuyển khoản</span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning border-0 small text-start mb-0">
+                            <strong>Lưu ý:</strong> Vui lòng điền đúng 100% nội dung chuyển khoản để hệ thống cộng tiền tự động.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!window.auth.checkAuth('user')) return;
+            const user = window.auth.getUser();
+            const syntax = `NAPTIEN ${user.username}`;
+            document.getElementById('momo-syntax').innerText = syntax;
+
+            // Poll for Momo topup notification
+            setInterval(async () => {
+                try {
+                    const res = await window.api.post('ajaxs/client/view.php', { action: 'notication_topup_momo' });
+                    if (res && res.status === 'success') {
+                        await window.auth.syncUser();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Nạp tiền MoMo thành công!',
+                            text: res.msg,
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = 'home.html';
+                        });
+                    }
+                } catch(e) {}
+            }, 6000);
+        });
+
+        function copyMomoSyntax() {
+            const user = window.auth.getUser();
+            const syntax = `NAPTIEN ${user.username}`;
+            navigator.clipboard.writeText(syntax).then(() => {
+                window.api.showToast(`Đã sao chép: ${syntax}`);
+            });
+        }
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,179 @@
+﻿<!doctype html>
+<html lang="vi" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Quản lý kho hàng - CTV Panel</title>
+    <link rel="icon" type="image/png" href="../assets/img/icon.png">
+    <link href="../public/theme/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/styles.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/icons.css" rel="stylesheet">
+    <link href="../public/theme/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet">
+    <link href="../public/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="main-header-container container-fluid">
+                <div class="header-content-left">
+                    <div class="header-element">
+                        <a href="index.html" class="header-logo">
+                            <span class="fs-18 fw-bold text-info">CỘNG TÁC VIÊN PANEL</span>
+                        </a>
+                    </div>
+                    <div class="header-element">
+                        <a aria-label="Toggle Sidebar" class="sidemenu-toggle header-link" href="javascript:void(0);" onclick="document.body.classList.toggle('sidenav-toggled')">
+                            <i class="bx bx-menu fs-20"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-content-right">
+                    <div class="header-element me-2">
+                        <a href="../index.html" class="btn btn-sm btn-outline-primary" target="_blank">
+                            <i class="bx bx-store me-1"></i> Xem Website
+                        </a>
+                    </div>
+                    <div class="header-element">
+                        <button class="btn btn-sm btn-danger" onclick="window.auth.logout()">
+                            <i class="bx bx-log-out me-1"></i> Đăng xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar sticky" id="sidebar">
+            <div class="main-sidebar-header">
+                <a href="index.html" class="header-logo text-white fw-bold fs-18">CTV PORTAL</a>
+            </div>
+            <div class="main-sidebar">
+                <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                    <ul class="main-menu">
+                        <li class="slide__category"><span class="category-name">TỔNG QUAN</span></li>
+                        <li class="slide">
+                            <a href="index.html" class="side-menu__item">
+                                <i class="bx bxs-dashboard side-menu__icon"></i>
+                                <span class="side-menu__label">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">QUẢN LÝ SẢN PHẨM</span></li>
+                        <li class="slide">
+                            <a href="products.html" class="side-menu__item active">
+                                <i class="bx bx-box side-menu__icon"></i>
+                                <span class="side-menu__label">Sản phẩm của tôi</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="product-add.html" class="side-menu__item">
+                                <i class="bx bx-plus-circle side-menu__icon"></i>
+                                <span class="side-menu__label">Đăng sản phẩm mới</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">TÀI CHÍNH</span></li>
+                        <li class="slide">
+                            <a href="ctv-withdraw.html" class="side-menu__item">
+                                <i class="bx bx-wallet side-menu__icon"></i>
+                                <span class="side-menu__label">Rút tiền hoa hồng</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content app-content">
+            <div class="container-fluid">
+                <div class="d-md-flex d-block align-items-center justify-content-between my-3 page-header-breadcrumb">
+                    <div>
+                        <h4 class="page-title fw-semibold fs-18 mb-1">Quản lý kho hàng: <span class="text-primary" id="stock-product-name">Đang tải...</span></h4>
+                        <span class="text-muted">Tổng số tài khoản trong kho: <strong class="text-success" id="stock-total-count">0</strong></span>
+                    </div>
+                    <div class="ms-auto">
+                        <a href="products.html" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-arrow-left me-1"></i> Quay lại sản phẩm
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Form nhập kho -->
+                    <div class="col-xl-5 mb-4">
+                        <div class="card custom-card shadow-sm border-0">
+                            <div class="card-header">
+                                <h6 class="card-title fw-bold mb-0"><i class="fa-solid fa-cloud-arrow-up me-2 text-primary"></i> Nhập thêm tài khoản</h6>
+                            </div>
+                            <div class="card-body">
+                                <form id="form-add-stock">
+                                    <input type="hidden" id="stock-product-id" value="">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Danh sách tài khoản (mỗi tài khoản một dòng):</label>
+                                        <textarea class="form-control font-monospace" id="stock-accounts-input" rows="12" required placeholder="user1|pass1|2fa1&#10;user2|pass2|2fa2&#10;user3|pass3|2fa3"></textarea>
+                                        <div class="form-text">Hỗ trợ các định dạng phân cách: <code>|</code>, <code>:</code>, hoặc khoảng trắng. Phần đầu tiên sẽ được lấy làm UID.</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fa-solid fa-plus me-1"></i> Nhập vào kho hàng
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Danh sách tài khoản trong kho -->
+                    <div class="col-xl-7 mb-4">
+                        <div class="card custom-card shadow-sm border-0">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="card-title fw-bold mb-0"><i class="fa-solid fa-boxes-stacked me-2 text-success"></i> Tài khoản trong kho</h6>
+                                <button class="btn btn-sm btn-light" onclick="loadProductStock(currentStockPage)"><i class="fa-solid fa-rotate-right me-1"></i> Làm mới</button>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive" style="max-height: 520px; overflow-y: auto;">
+                                    <table class="table table-hover table-striped align-middle mb-0">
+                                        <thead class="table-light sticky-top">
+                                            <tr>
+                                                <th style="width: 50px;">#</th>
+                                                <th>UID / Tên đăng nhập</th>
+                                                <th>Dữ liệu tài khoản</th>
+                                                <th class="text-end" style="width: 80px;">Xóa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stock-table-body">
+                                            <tr>
+                                                <td colspan="4" class="text-center py-4 text-muted">
+                                                    <i class="fa fa-spinner fa-spin me-2"></i> Đang tải...
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer mt-auto py-3 bg-white text-center border-top">
+            <div class="container">
+                <span class="text-muted">Copyright © 2026 <strong>ShopClone 7</strong>. All rights reserved.</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../public/js/jquery-3.6.0.js"></script>
+    <script src="../public/theme/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/theme/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/admin/product-stock.js"></script>
+</body>
+</html>
+

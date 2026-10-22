@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Câu Hỏi Thường Gặp (FAQ) - kimcss.tech</title>
+    <link rel="icon" type="image/png" href="assets/storage/images/logo_dark_8OJ.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="mod/css/main.css?v=21">
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-circle-question text-primary me-2"></i> Giải đáp các thắc mắc thường gặp</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 bg-white border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="header-logo">
+                <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='client/images/logo.png'" alt="Logo" height="48">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="index.html" class="btn btn-outline-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="terms.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-scale-balanced me-1"></i> Chính sách</a>
+                <a href="contact.html" class="btn btn-outline-success btn-sm rounded-pill px-3"><i class="fa-solid fa-headset me-1"></i> Liên hệ</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                <h3 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-circle-question text-primary me-2"></i> CÂU HỎI THƯỜNG GẶP (FAQ)</h3>
+                
+                <div class="accordion accordion-flush" id="faqAccordion">
+                    <div class="accordion-item border-bottom py-2">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                1. Sau khi chuyển khoản nạp tiền, bao lâu thì tài khoản nhận được tiền?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show">
+                            <div class="accordion-body text-secondary">
+                                Hệ thống tích hợp cổng VietQR tự động nhận diện giao dịch 24/7. Nếu bạn chuyển đúng nội dung yêu cầu (ví dụ: <code>NAP &lt;username&gt;</code>), tiền sẽ được cộng tự động vào ví từ 30 giây đến tối đa 3 phút.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border-bottom py-2">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                2. Mua hàng xong tôi xem danh sách tài khoản đã mua ở đâu?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse">
+                            <div class="accordion-body text-secondary">
+                                Ngay sau khi thanh toán, hệ thống sẽ hiển thị tài khoản trên màn hình và lưu trữ vĩnh viễn trong mục <a href="orders.html" class="text-primary fw-bold">Lịch sử đơn hàng</a>. Bạn có thể bấm vào xem chi tiết hoặc tải tệp định dạng .txt về máy tính.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border-bottom py-2">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                3. Hệ thống có hỗ trợ kết nối API cho bên thứ 3 hoặc đại lý không?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse">
+                            <div class="accordion-body text-secondary">
+                                Có. Hệ thống hỗ trợ bộ API RESTful chuẩn mực để các nhà phát triển và đại lý tích hợp lấy danh mục, kiểm tra tồn kho và đặt hàng tự động. Xem hướng dẫn chi tiết tại <a href="api-document.html" class="text-primary fw-bold">Tài liệu API</a>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-part py-4 bg-dark text-white text-center">
+        <small>© 2026 kimcss.tech | Mọi quyền được bảo lưu.</small>
+    </footer>
+
+    <!-- Bootstrap & Scripts -->
+    <script src="client/vendor/bootstrap/popper.min.js"></script>
+    <script src="client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/i18n.js"></script>
+</body>
+
+</html>

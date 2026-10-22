@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html lang="vi" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Quản lý thành viên - Admin Panel</title>
+    <link rel="icon" type="image/png" href="../assets/img/icon.png">
+    <link href="../public/theme/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/styles.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/icons.css" rel="stylesheet">
+    <link href="../public/theme/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet">
+    <link href="../public/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="main-header-container container-fluid">
+                <div class="header-content-left">
+                    <div class="header-element">
+                        <a href="index.html" class="header-logo">
+                            <span class="fs-18 fw-bold text-primary">ADMIN PANEL</span>
+                        </a>
+                    </div>
+                    <div class="header-element">
+                        <a aria-label="Toggle Sidebar" class="sidemenu-toggle header-link" href="javascript:void(0);" onclick="document.body.classList.toggle('sidenav-toggled')">
+                            <i class="bx bx-menu fs-20"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-content-right">
+                    <div class="header-element me-2">
+                        <a href="../index.html" class="btn btn-sm btn-outline-primary" target="_blank">
+                            <i class="bx bx-store me-1"></i> Xem Website
+                        </a>
+                    </div>
+                    <div class="header-element">
+                        <button class="btn btn-sm btn-danger" onclick="window.auth.logout()">
+                            <i class="bx bx-log-out me-1"></i> Đăng xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar sticky" id="sidebar">
+            <div class="main-sidebar-header">
+                <a href="index.html" class="header-logo text-white fw-bold fs-18">SHOPCLONE 7</a>
+            </div>
+            <div class="main-sidebar">
+                <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                    <ul class="main-menu">
+                        <li class="slide__category"><span class="category-name">TỔNG QUAN</span></li>
+                        <li class="slide">
+                            <a href="index.html" class="side-menu__item">
+                                <i class="bx bxs-dashboard side-menu__icon"></i>
+                                <span class="side-menu__label">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">QUẢN LÝ DỊCH VỤ</span></li>
+                        <li class="slide">
+                            <a href="categories.html" class="side-menu__item">
+                                <i class="bx bx-category side-menu__icon"></i>
+                                <span class="side-menu__label">Chuyên mục</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="products.html" class="side-menu__item">
+                                <i class="bx bx-box side-menu__icon"></i>
+                                <span class="side-menu__label">Tất cả sản phẩm</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="product-add.html" class="side-menu__item">
+                                <i class="bx bx-plus-circle side-menu__icon"></i>
+                                <span class="side-menu__label">Thêm sản phẩm</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="product-orders.html" class="side-menu__item">
+                                <i class="bx bx-cart side-menu__icon"></i>
+                                <span class="side-menu__label">Đơn hàng</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">NGƯỜI DÙNG</span></li>
+                        <li class="slide">
+                            <a href="users.html" class="side-menu__item active">
+                                <i class="bx bx-user side-menu__icon"></i>
+                                <span class="side-menu__label">Thành viên</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">CẤU HÌNH</span></li>
+                        <li class="slide">
+                            <a href="settings.html" class="side-menu__item">
+                                <i class="bx bx-cog side-menu__icon"></i>
+                                <span class="side-menu__label">Cài đặt chung</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content app-content">
+            <div class="container-fluid">
+                <div class="d-md-flex d-block align-items-center justify-content-between my-3 page-header-breadcrumb">
+                    <h4 class="page-title fw-semibold fs-18 mb-0">Quản lý thành viên</h4>
+                    <div class="ms-auto" style="min-width: 280px;">
+                        <input type="text" class="form-control" id="user-search-input" placeholder="Tìm kiếm theo username, email, SĐT...">
+                    </div>
+                </div>
+
+                <div class="card custom-card shadow-sm border-0">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 70px;">ID</th>
+                                        <th>Tài khoản</th>
+                                        <th>Email</th>
+                                        <th>Số dư</th>
+                                        <th>Chiết khấu</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngày tham gia</th>
+                                        <th class="text-end" style="width: 140px;">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-table-body">
+                                    <tr>
+                                        <td colspan="8" class="text-center py-4 text-muted">
+                                            <i class="fa fa-spinner fa-spin me-2"></i> Đang tải danh sách...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-0 py-3" id="users-pagination"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer mt-auto py-3 bg-white text-center border-top">
+            <div class="container">
+                <span class="text-muted">Copyright © 2026 <strong>ShopClone 7</strong>. All rights reserved.</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../public/js/jquery-3.6.0.js"></script>
+    <script src="../public/theme/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/theme/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/admin/users.js"></script>
+</body>
+</html>
+

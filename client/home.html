@@ -1,0 +1,423 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Trang Chủ - ShopClone 7</title>
+    <meta name="description" content="Hệ thống cung cấp sỉ lẻ tài khoản số lượng lớn, tự động 24/7." />
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --primary1: #0a58ca;
+        }
+    </style>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/client/fonts/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/venobox/venobox.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/slickslider/slick.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/niceselect/nice-select.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/user-auth.css">
+    <link rel="stylesheet" href="../public/client/css/index.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+    <link rel="stylesheet" href="../mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 & Notifications -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <link rel="stylesheet" href="../public/cute-alert/style.css" type="text/css">
+    <script src="../public/cute-alert/cute-alert.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.css" />
+    <script src="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+    <script src="../mod/js/main.js?v=2"></script>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <a class="backtop" href="#"><i class="fa-sharp fa-solid fa-chevron-up"></i></a>
+
+    <!-- Header Top -->
+    <div class="header-top">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-12 col-lg-5">
+                    <div class="header-top-welcome">
+                        <p><i class="fa-solid fa-bullhorn me-2 text-warning"></i> Chào mừng bạn đến với hệ thống dịch vụ MMO tự động 24/7!</p>
+                    </div>
+                </div>
+                <div class="col-md-5 col-lg-3">
+                    <div class="header-top-select d-flex align-items-center">
+                        <div class="header-select me-3"><i class="icofont-world me-1"></i>
+                            <select class="select" id="changeLanguage">
+                                <option value="vi" selected>Tiếng Việt</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                        <div class="header-select"><i class="icofont-money me-1"></i>
+                            <select class="select" id="changeCurrency">
+                                <option value="VND" selected>VND</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-4 text-end">
+                    <ul class="header-top-list mb-0 list-inline">
+                        <li class="list-inline-item"><a href="policy.html">Chính sách</a></li>
+                        <li class="list-inline-item"><a href="faq.html">FAQ</a></li>
+                        <li class="list-inline-item"><a href="contact.html">Liên Hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-media-group">
+                    <button class="header-user"><i class="fa-solid fa-bars"></i></button>
+                    <a href="home.html">
+                        <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+                    </a>
+                    <button class="header-src"><i class="fas fa-search"></i></button>
+                </div>
+                <a href="home.html" class="header-logo">
+                    <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="42">
+                </a>
+                <form class="header-form">
+                    <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="header-widget-group">
+                    <a href="product-orders.html" class="header-widget" title="Đơn hàng">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                    </a>
+                    <a href="favorites.html" class="header-widget" title="Sản phẩm yêu thích">
+                        <i class="fas fa-heart"></i>
+                        <sup id="numFavorites">0</sup>
+                    </a>
+                    <a href="recharge-bank.html" class="header-widget header-cart" title="Nạp tiền">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </a>
+                    <div id="header-user-area" class="d-inline-flex align-items-center">
+                        <a href="login.html" class="header-widget" title="Đăng nhập">
+                            <i class="fa-solid fa-user-lock fs-5 me-1"></i>
+                            <span>Đăng nhập</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar-part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="navbar-content">
+                        <ul class="navbar-list">
+                            <li class="navbar-item active">
+                                <a class="navbar-link" href="home.html"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                            </li>
+                            <li class="navbar-item dropdown-megamenu">
+                                <a class="navbar-link dropdown-arrow" href="#"><i class="fa-solid fa-layer-group me-1"></i> Sản phẩm</a>
+                                <div class="megamenu">
+                                    <div class="container">
+                                        <div id="menu-categories-container">
+                                            <div class="text-center p-3 text-muted">Đang tải danh mục...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="navbar-item dropdown">
+                                <a class="navbar-link dropdown-arrow" href="#"><i class="fa-solid fa-wallet me-1"></i> Nạp tiền</a>
+                                <ul class="dropdown-position-list">
+                                    <li><a href="recharge-bank.html"><i class="fa-solid fa-university me-2 text-primary"></i> Chuyển khoản ngân hàng (Auto)</a></li>
+                                    <li><a href="recharge-card.html"><i class="fa-solid fa-credit-card me-2 text-success"></i> Nạp thẻ cào tự động</a></li>
+                                    <li><a href="recharge-momo.html"><i class="fa-solid fa-qrcode me-2 text-danger"></i> Nạp qua ví MoMo</a></li>
+                                    <li><a href="recharge-crypto.html"><i class="fa-brands fa-bitcoin me-2 text-warning"></i> Nạp Crypto (USDT/BTC)</a></li>
+                                </ul>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="navbar-link" href="product-orders.html"><i class="fa-solid fa-bag-shopping me-1"></i> Lịch sử đơn hàng</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="navbar-link" href="transactions.html"><i class="fa-solid fa-clock-rotate-left me-1"></i> Biến động số dư</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="navbar-link" href="affiliates.html"><i class="fa-solid fa-handshake me-1"></i> Tiếp thị liên kết</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="navbar-link" href="blogs.html"><i class="fa-solid fa-newspaper me-1"></i> Tin tức</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="navbar-link" href="document-api.html"><i class="fa-solid fa-code me-1"></i> API Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Section -->
+    <section class="section feature-part py-4">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="alert alert-info border-0 shadow-sm d-flex align-items-center" role="alert">
+                        <i class="fa-solid fa-circle-info fs-3 me-3 text-info"></i>
+                        <div>
+                            <strong>Thông báo hệ thống:</strong> Đơn hàng và nạp tiền được xử lý hoàn toàn tự động 24/7. Vui lòng liên hệ hỗ trợ nếu cần giải đáp thắc mắc.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MMO Tools Widget -->
+            <div class="col-md-12 mb-4">
+                <div class="all-product-main row g-3">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="box-product-main p-3 rounded" style="background-image: url('../mod/img/bg-1.webp'); box-shadow: 0 2px 10px rgb(36 194 138 / 19%); background-size: cover;">
+                            <a href="tool-checklive-fb.html" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="box-img-product me-3">
+                                        <img src="../mod/img/icon-facebook.png" width="45" height="45" alt="FB Live">
+                                    </div>
+                                    <div class="box-text-style">
+                                        <div style="color: #fff; font-weight: 700; font-size: 17px;">Check Live FB</div>
+                                        <div style="font-size: 14px; color: #fff; opacity: .8;">Miễn phí 100%</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="box-product-main p-3 rounded" style="background-image: url('../mod/img/bg-2.webp'); box-shadow: 0 2px 10px rgb(0 147 255 / 27%); background-size: cover;">
+                            <a href="tool-2fa.html" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="box-img-product me-3">
+                                        <img src="../mod/img/icon-google-auth.webp" width="45" height="45" alt="2FA">
+                                    </div>
+                                    <div class="box-text-style">
+                                        <div style="color: #fff; font-weight: 700; font-size: 17px;">Lấy mã 2FA</div>
+                                        <div style="font-size: 14px; color: #fff; opacity: .8;">Miễn phí 100%</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="box-product-main p-3 rounded" style="background-image: url('../mod/img/bg-3.webp'); box-shadow: 0 2px 10px rgb(0 147 255 / 27%); background-size: cover;">
+                            <a href="tool-icon-facebook.html" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="box-img-product me-3">
+                                        <img src="../mod/img/icon-facebook.png" width="45" height="45" alt="Icon FB">
+                                    </div>
+                                    <div class="box-text-style">
+                                        <div style="color: #fff; font-weight: 700; font-size: 17px;">Icon Facebook</div>
+                                        <div style="font-size: 14px; color: #fff; opacity: .8;">Bảng ký tự đẹp</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="box-product-main p-3 rounded" style="background-image: url('../mod/img/bg-4.webp'); box-shadow: 0 2px 10px rgb(0 147 255 / 27%); background-size: cover;">
+                            <a href="tool-random-face.html" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <div class="box-img-product me-3">
+                                        <img src="../mod/img/icon-random-face.webp" width="45" height="45" alt="Face">
+                                    </div>
+                                    <div class="box-text-style">
+                                        <div style="color: #fff; font-weight: 700; font-size: 17px;">Random Face</div>
+                                        <div style="font-size: 14px; color: #fff; opacity: .8;">Tạo ảnh AI</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Catalogue and Wallet Section -->
+            <div class="row">
+                <div class="col-xl-9">
+                    <!-- Category Buttons Filter -->
+                    <ul class="custom-button-list mb-4" id="home-categories-container">
+                        <li>
+                            <a class="btn-category-home active" href="javascript:void(0);" onclick="loadProductsByCategory('', '')">
+                                <i class="fa-solid fa-cart-shopping me-2"></i>Tất cả sản phẩm
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Products Grid/List Container -->
+                    <div id="products-container">
+                        <div class="skeleton-container">
+                            <div class="skeleton-card">
+                                <div class="skeleton-image"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-title"></div>
+                                    <div class="skeleton-text"></div>
+                                    <div class="skeleton-info">
+                                        <div class="skeleton-stock"></div>
+                                        <div class="skeleton-sales"></div>
+                                    </div>
+                                </div>
+                                <div class="skeleton-right">
+                                    <div class="skeleton-price"></div>
+                                    <div class="skeleton-button"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="loading-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="loading-text">Đang tải sản phẩm...</div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar Wallet Widget -->
+                <div class="col-xl-3" id="home-wallet-widget">
+                    <!-- Dynamic Wallet or Login/Register rendered by home.js -->
+                </div>
+            </div>
+
+            <!-- Recent Activity Widget Row -->
+            <div class="row mt-5">
+                <div class="col-lg-6 mb-4">
+                    <div class="home-heading mb-3 d-flex align-items-center">
+                        <h4 class="fw-bold mb-0"><i class="fa-solid fa-cart-shopping text-primary me-2"></i> ĐƠN HÀNG GẦN ĐÂY</h4>
+                    </div>
+                    <div id="recent-orders-container" class="border rounded p-3 bg-white shadow-sm" style="max-height: 400px; overflow-y: auto;">
+                        <p class="text-muted text-center py-3">Đang tải dữ liệu đơn hàng...</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="home-heading mb-3 d-flex align-items-center">
+                        <h4 class="fw-bold mb-0"><i class="fa-solid fa-credit-card text-success me-2"></i> NẠP TIỀN GẦN ĐÂY</h4>
+                    </div>
+                    <div id="recent-deposits-container" class="border rounded p-3 bg-white shadow-sm" style="max-height: 400px; overflow-y: auto;">
+                        <p class="text-muted text-center py-3">Đang tải dữ liệu nạp tiền...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Purchase Container -->
+    <div class="modal fade" id="openModal" tabindex="-1" aria-labelledby="openModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotline Floating Button -->
+    <div class="hotline-phone-ring-wrap">
+        <div class="hotline-phone-ring">
+            <div class="hotline-phone-ring-circle"></div>
+            <div class="hotline-phone-ring-circle-fill"></div>
+            <div class="hotline-phone-ring-img-circle">
+                <a href="tel:0947838128" class="pps-btn-img">
+                    <img src="../mod/img/icon-call-nh.png" alt="Hotline" width="22">
+                </a>
+            </div>
+        </div>
+        <div class="hotline-bar">
+            <a href="tel:0947838128">
+                <span class="text-hotline">0947.838.128</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-part pt-5 pb-3 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-xl-4 mb-4">
+                    <div class="footer-widget">
+                        <a class="footer-logo mb-3 d-inline-block" href="home.html">
+                            <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="38">
+                        </a>
+                        <p class="footer-desc text-white-50">Hệ thống cung cấp dịch vụ MMO, tài khoản, phần mềm tự động uy tín hàng đầu. Cam kết chất lượng, bảo hành chu đáo.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-2 mb-4">
+                    <div class="footer-widget">
+                        <h4 class="footer-title text-white mb-3">Tài khoản</h4>
+                        <ul class="footer-links list-unstyled text-white-50">
+                            <li class="mb-2"><a href="profile.html" class="text-white-50 text-decoration-none">Hồ sơ cá nhân</a></li>
+                            <li class="mb-2"><a href="product-orders.html" class="text-white-50 text-decoration-none">Đơn hàng đã mua</a></li>
+                            <li class="mb-2"><a href="transactions.html" class="text-white-50 text-decoration-none">Biến động số dư</a></li>
+                            <li class="mb-2"><a href="recharge-bank.html" class="text-white-50 text-decoration-none">Nạp tiền vào ví</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3 mb-4">
+                    <div class="footer-widget">
+                        <h4 class="footer-title text-white mb-3">Tiện ích MMO</h4>
+                        <ul class="footer-links list-unstyled text-white-50">
+                            <li class="mb-2"><a href="tool-checklive-fb.html" class="text-white-50 text-decoration-none">Kiểm tra Live Facebook</a></li>
+                            <li class="mb-2"><a href="tool-2fa.html" class="text-white-50 text-decoration-none">Công cụ lấy mã 2FA</a></li>
+                            <li class="mb-2"><a href="tool-random-face.html" class="text-white-50 text-decoration-none">Tạo khuôn mặt Random</a></li>
+                            <li class="mb-2"><a href="tool-icon-facebook.html" class="text-white-50 text-decoration-none">Icon biểu tượng FB</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3 mb-4">
+                    <div class="footer-widget">
+                        <h4 class="footer-title text-white mb-3">Liên kết</h4>
+                        <ul class="footer-links list-unstyled text-white-50">
+                            <li class="mb-2"><a href="policy.html" class="text-white-50 text-decoration-none">Chính sách bảo hành</a></li>
+                            <li class="mb-2"><a href="faq.html" class="text-white-50 text-decoration-none">Câu hỏi thường gặp</a></li>
+                            <li class="mb-2"><a href="contact.html" class="text-white-50 text-decoration-none">Liên hệ hỗ trợ</a></li>
+                            <li class="mb-2"><a href="document-api.html" class="text-white-50 text-decoration-none">Tài liệu API tích hợp</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="text-white-50 small mb-0">© 2026 Bản quyền thuộc về ShopClone 7 | All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+                    <span class="badge bg-secondary me-2"><i class="fa-solid fa-shield-halved"></i> Bảo mật SSL</span>
+                    <span class="badge bg-secondary"><i class="fa-solid fa-bolt"></i> Auto 24/7</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="../public/client/vendor/bootstrap/popper.min.js"></script>
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../public/client/vendor/niceselect/nice-select.min.js"></script>
+    <script src="../public/client/vendor/slickslider/slick.min.js"></script>
+    <script src="../public/client/vendor/venobox/venobox.min.js"></script>
+    <script src="../public/client/js/main.js"></script>
+
+    <!-- App Modules -->
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/client/home.js"></script>
+</body>
+
+</html>
+

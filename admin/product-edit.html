@@ -1,0 +1,196 @@
+﻿<!doctype html>
+<html lang="vi" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Chỉnh sửa sản phẩm - Admin Panel</title>
+    <link rel="icon" type="image/png" href="../assets/img/icon.png">
+    <link href="../public/theme/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/styles.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/icons.css" rel="stylesheet">
+    <link href="../public/theme/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet">
+    <link href="../public/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="main-header-container container-fluid">
+                <div class="header-content-left">
+                    <div class="header-element">
+                        <a href="index.html" class="header-logo">
+                            <span class="fs-18 fw-bold text-primary">ADMIN PANEL</span>
+                        </a>
+                    </div>
+                    <div class="header-element">
+                        <a aria-label="Toggle Sidebar" class="sidemenu-toggle header-link" href="javascript:void(0);" onclick="document.body.classList.toggle('sidenav-toggled')">
+                            <i class="bx bx-menu fs-20"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-content-right">
+                    <div class="header-element me-2">
+                        <a href="../index.html" class="btn btn-sm btn-outline-primary" target="_blank">
+                            <i class="bx bx-store me-1"></i> Xem Website
+                        </a>
+                    </div>
+                    <div class="header-element">
+                        <button class="btn btn-sm btn-danger" onclick="window.auth.logout()">
+                            <i class="bx bx-log-out me-1"></i> Đăng xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar sticky" id="sidebar">
+            <div class="main-sidebar-header">
+                <a href="index.html" class="header-logo text-white fw-bold fs-18">SHOPCLONE 7</a>
+            </div>
+            <div class="main-sidebar">
+                <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                    <ul class="main-menu">
+                        <li class="slide__category"><span class="category-name">TỔNG QUAN</span></li>
+                        <li class="slide">
+                            <a href="index.html" class="side-menu__item">
+                                <i class="bx bxs-dashboard side-menu__icon"></i>
+                                <span class="side-menu__label">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">QUẢN LÝ DỊCH VỤ</span></li>
+                        <li class="slide">
+                            <a href="categories.html" class="side-menu__item">
+                                <i class="bx bx-category side-menu__icon"></i>
+                                <span class="side-menu__label">Chuyên mục</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="products.html" class="side-menu__item active">
+                                <i class="bx bx-box side-menu__icon"></i>
+                                <span class="side-menu__label">Tất cả sản phẩm</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="product-add.html" class="side-menu__item">
+                                <i class="bx bx-plus-circle side-menu__icon"></i>
+                                <span class="side-menu__label">Thêm sản phẩm</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="product-orders.html" class="side-menu__item">
+                                <i class="bx bx-cart side-menu__icon"></i>
+                                <span class="side-menu__label">Đơn hàng</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">NGƯỜI DÙNG</span></li>
+                        <li class="slide">
+                            <a href="users.html" class="side-menu__item">
+                                <i class="bx bx-user side-menu__icon"></i>
+                                <span class="side-menu__label">Thành viên</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">CẤU HÌNH</span></li>
+                        <li class="slide">
+                            <a href="settings.html" class="side-menu__item">
+                                <i class="bx bx-cog side-menu__icon"></i>
+                                <span class="side-menu__label">Cài đặt chung</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content app-content">
+            <div class="container-fluid">
+                <div class="d-md-flex d-block align-items-center justify-content-between my-3 page-header-breadcrumb">
+                    <h4 class="page-title fw-semibold fs-18 mb-0" id="page-action-title">Chỉnh sửa sản phẩm</h4>
+                    <div class="ms-auto">
+                        <a href="products.html" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card custom-card shadow-sm border-0">
+                    <div class="card-body">
+                        <form id="form-product">
+                            <input type="hidden" id="product-id" value="">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Tên sản phẩm <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="product-name" required placeholder="Ví dụ: Tài khoản Netflix 1 tháng">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Chuyên mục <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="product-category-id" required>
+                                        <option value="">-- Đang tải chuyên mục... --</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-semibold">Giá bán (VNĐ) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="product-price" required min="0" placeholder="50000">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-semibold">Giá vốn (VNĐ)</label>
+                                    <input type="number" class="form-control" id="product-cost" min="0" placeholder="30000">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-semibold">Giảm giá (%)</label>
+                                    <input type="number" class="form-control" id="product-discount" min="0" max="100" placeholder="0">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Thứ tự sắp xếp (STT)</label>
+                                    <input type="number" class="form-control" id="product-stt" value="0">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Trạng thái</label>
+                                    <select class="form-select" id="product-status">
+                                        <option value="1">Hiển thị (Bật)</option>
+                                        <option value="0">Tạm ẩn (Tắt)</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label fw-semibold">Mô tả ngắn</label>
+                                    <textarea class="form-control" id="product-short-desc" rows="3" placeholder="Mô tả ngắn gọn về sản phẩm..."></textarea>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label fw-semibold">Nội dung chi tiết</label>
+                                    <textarea class="form-control" id="product-content" rows="6" placeholder="Thông tin chi tiết bảo hành, hướng dẫn sử dụng..."></textarea>
+                                </div>
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-primary px-4">
+                                        <i class="fa-solid fa-save me-1"></i> Lưu thay đổi
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer mt-auto py-3 bg-white text-center border-top">
+            <div class="container">
+                <span class="text-muted">Copyright © 2026 <strong>ShopClone 7</strong>. All rights reserved.</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../public/js/jquery-3.6.0.js"></script>
+    <script src="../public/theme/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/theme/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/admin/product-form.js"></script>
+</body>
+</html>
+

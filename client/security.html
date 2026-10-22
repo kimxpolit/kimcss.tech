@@ -1,0 +1,196 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bảo mật tài khoản - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-shield-halved text-primary me-2"></i> Thiết lập bảo mật tài khoản</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="profile.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-user me-1"></i> Hồ sơ</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Navigation -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card border-0 shadow-sm overflow-hidden">
+                        <div class="list-group list-group-flush">
+                            <a href="profile.html" class="list-group-item list-group-item-action py-3"><i class="fas fa-user me-2"></i> Thông tin cá nhân</a>
+                            <a href="security.html" class="list-group-item list-group-item-action active fw-bold py-3"><i class="fa-solid fa-shield-halved me-2"></i> Bảo mật tài khoản</a>
+                            <a href="change-password.html" class="list-group-item list-group-item-action py-3"><i class="fa fa-key me-2"></i> Đổi mật khẩu</a>
+                            <a href="transactions.html" class="list-group-item list-group-item-action py-3"><i class="fa-solid fa-wallet me-2"></i> Biến động số dư</a>
+                            <a href="logs.html" class="list-group-item list-group-item-action py-3"><i class="fa fa-history me-2"></i> Nhật ký hoạt động</a>
+                            <a href="javascript:void(0)" class="list-group-item list-group-item-action text-danger py-3" onclick="window.auth.logout()"><i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="col-lg-9">
+                    <!-- Security Toggles -->
+                    <div class="card border-0 shadow-sm p-4 mb-4">
+                        <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="fa-solid fa-lock text-primary me-2"></i> Tùy chọn bảo mật</h5>
+                        <form id="formSecuritySettings">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="status_2fa">
+                                <label class="form-check-label fw-bold" for="status_2fa">Bật xác thực 2 bước (Google Authenticator)</label>
+                                <div class="text-muted small">Yêu cầu mã 6 số từ ứng dụng Google Authenticator mỗi khi đăng nhập.</div>
+                            </div>
+
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="status_otp_mail">
+                                <label class="form-check-label fw-bold" for="status_otp_mail">Xác thực OTP qua Email khi đăng nhập</label>
+                                <div class="text-muted small">Hệ thống sẽ gửi mã xác nhận 6 số đến email mỗi lần đăng nhập.</div>
+                            </div>
+
+                            <div class="form-check form-switch mb-4">
+                                <input class="form-check-input" type="checkbox" id="status_noti_login_to_mail">
+                                <label class="form-check-label fw-bold" for="status_noti_login_to_mail">Gửi thông báo email khi có đăng nhập mới</label>
+                                <div class="text-muted small">Gửi email cảnh báo thời gian, địa chỉ IP và thiết bị mỗi khi tài khoản đăng nhập thành công.</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="btnSaveSecurity"><i class="fa-solid fa-save me-1"></i> Lưu cấu hình bảo mật</button>
+                        </form>
+                    </div>
+
+                    <!-- 2FA QR Setup Card -->
+                    <div class="card border-0 shadow-sm p-4" id="card2faSetup">
+                        <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="fa-solid fa-qrcode text-primary me-2"></i> Cài đặt Google Authenticator</h5>
+                        <p class="text-muted small">Quét mã QR bằng ứng dụng <strong>Google Authenticator</strong> hoặc <strong>Authy</strong> trên điện thoại của bạn, sau đó nhập mã 6 số để xác nhận kích hoạt.</p>
+                        
+                        <div class="row align-items-center g-3">
+                            <div class="col-md-4 text-center">
+                                <div class="border rounded p-2 bg-white d-inline-block">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=otpauth://totp/ShopClone7?secret=JBSWY3DPEHPK3PXP" id="qr2fa" class="img-fluid" alt="QR 2FA">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label small text-muted">Secret Key (Mã khoá bí mật dự phòng):</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control font-monospace" id="secret2fa" value="JBSWY3DPEHPK3PXP" readonly>
+                                        <button class="btn btn-outline-secondary" onclick="navigator.clipboard.writeText(document.getElementById('secret2fa').value); window.api.showToast('Đã copy secret key')"><i class="fa-solid fa-copy"></i></button>
+                                    </div>
+                                </div>
+                                <form id="formSave2FA">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold small">Mã xác nhận 6 số từ ứng dụng:</label>
+                                        <input type="text" class="form-control" id="code2fa" placeholder="000000" maxlength="6" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-success" id="btnConfirm2FA"><i class="fa-solid fa-check me-1"></i> Xác nhận & Bật 2FA</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!window.auth.checkAuth('user')) return;
+            const user = window.auth.getUser();
+
+            if (user) {
+                document.getElementById('status_2fa').checked = user.status_2fa == 1;
+                document.getElementById('status_otp_mail').checked = user.status_otp_mail == 1;
+            }
+
+            document.getElementById('formSecuritySettings').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const s2fa = document.getElementById('status_2fa').checked ? 1 : 0;
+                const sOtp = document.getElementById('status_otp_mail').checked ? 1 : 0;
+                const sNoti = document.getElementById('status_noti_login_to_mail').checked ? 1 : 0;
+
+                try {
+                    const res = await window.api.post('ajaxs/client/auth.php', {
+                        action: 'changeSecurity',
+                        status_2fa: s2fa,
+                        status_otp_mail: sOtp,
+                        status_noti_login_to_mail: sNoti
+                    });
+                    if (res && res.status === 'success') {
+                        window.api.alertSuccess(res.msg || 'Cập nhật bảo mật thành công!');
+                        await window.auth.syncUser();
+                    } else {
+                        window.api.alertError(res ? res.msg : 'Lỗi cập nhật bảo mật');
+                    }
+                } catch(err) {
+                    console.error(err);
+                }
+            });
+
+            document.getElementById('formSave2FA').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const code = document.getElementById('code2fa').value.trim();
+                const secret = document.getElementById('secret2fa').value.trim();
+
+                try {
+                    const res = await window.api.post('ajaxs/client/auth.php', {
+                        action: 'Save2FA',
+                        code: code,
+                        secret: secret
+                    });
+                    if (res && res.status === 'success') {
+                        window.api.alertSuccess(res.msg || 'Bật xác thực 2FA thành công!');
+                        await window.auth.syncUser();
+                        location.reload();
+                    } else {
+                        window.api.alertError(res ? res.msg : 'Mã xác thực không chính xác.');
+                    }
+                } catch(err) {
+                    console.error(err);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+

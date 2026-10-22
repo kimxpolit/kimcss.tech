@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Chi tiết bài viết - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/blog-grid.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-newspaper text-primary me-2"></i> Kiến thức & tin tức MMO</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="blogs.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-left me-1"></i> Tất cả bài viết</a>
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="card border-0 shadow-sm p-4 bg-white" id="blog-content-area">
+                        <div class="text-center py-5 text-muted">
+                            <i class="fa fa-spinner fa-spin fa-2x text-primary mb-2"></i>
+                            <p>Đang tải bài viết...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+            const area = document.getElementById('blog-content-area');
+
+            if (!slug) {
+                window.location.href = 'blogs.html';
+                return;
+            }
+
+            try {
+                const res = await window.api.get('api/data.php', { action: 'get_blog_detail', slug: slug });
+                if (res && res.status === 'success' && res.data) {
+                    const b = res.data;
+                    document.title = `${b.title} - ShopClone 7`;
+                    area.innerHTML = `
+                        <h2 class="fw-bold mb-3">${b.title}</h2>
+                        <div class="text-muted small mb-4 pb-2 border-bottom">
+                            <i class="fa-regular fa-clock me-1"></i> Đăng ngày: ${b.create_date || ''} • <i class="fa-regular fa-eye ms-2 me-1"></i> Lượt xem: ${b.view || 1}
+                        </div>
+                        <div class="blog-body lh-lg">
+                            ${b.content || b.description || 'Nội dung đang được cập nhật...'}
+                        </div>
+                        <hr class="my-4">
+                        <div class="d-flex justify-content-between">
+                            <a href="blogs.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-arrow-left me-1"></i> Quay lại</a>
+                            <button class="btn btn-outline-primary btn-sm" onclick="navigator.clipboard.writeText(window.location.href); window.api.showToast('Đã copy liên kết bài viết');"><i class="fa-solid fa-share-nodes me-1"></i> Chia sẻ</button>
+                        </div>
+                    `;
+                } else {
+                    area.innerHTML = '<div class="alert alert-warning text-center">Bài viết không tồn tại hoặc đã bị xóa.</div>';
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        });
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Random Face AI - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+    <link rel="stylesheet" href="../mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-wand-magic-sparkles text-primary me-2"></i> Trình tạo ảnh đại diện người ngẫu nhiên bằng AI</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="tool-icon-facebook.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-icons me-1"></i> Icon FB</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="card border-0 shadow-sm p-4 bg-white">
+                        <h4 class="fw-bold mb-3"><i class="fa-solid fa-user-astronaut text-primary me-2"></i> TẠO ẢNH NGƯỜI NGẪU NHIÊN (AI FACE)</h4>
+                        <p class="text-muted small mb-4">Hình ảnh được tạo hoàn toàn bằng công nghệ AI, thích hợp làm ảnh đại diện avatar cho tài khoản mạng xã hội.</p>
+
+                        <div class="border rounded-4 p-2 bg-white shadow-sm d-inline-block mx-auto mb-4" style="max-width: 320px;">
+                            <img id="face-img" src="https://thispersondoesnotexist.com/" class="img-fluid rounded-3" alt="Random Face" style="width: 300px; height: 300px; object-fit: cover;">
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3">
+                            <button class="btn btn-primary px-4 rounded-pill" onclick="generateNewFace()"><i class="fa-solid fa-rotate me-2"></i> Tạo khuôn mặt mới</button>
+                            <a id="btnDownloadFace" href="https://thispersondoesnotexist.com/" target="_blank" download="avatar.jpg" class="btn btn-outline-success px-4 rounded-pill"><i class="fa-solid fa-download me-2"></i> Tải ảnh về</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script>
+        function generateNewFace() {
+            const img = document.getElementById('face-img');
+            const downloadBtn = document.getElementById('btnDownloadFace');
+            const newUrl = `https://thispersondoesnotexist.com/?t=${Date.now()}`;
+            img.src = newUrl;
+            downloadBtn.href = newUrl;
+            window.api.showToast('Đã tạo khuôn mặt mới');
+        }
+    </script>
+</body>
+
+</html>
+

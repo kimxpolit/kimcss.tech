@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment and sensitive files
+.env
+*.log
+error_log
+
+# Temporary and cache files
+tmp/
+.DS_Store
+Thumbs.db
+
+# OS generated
+.vscode/
+.idea/

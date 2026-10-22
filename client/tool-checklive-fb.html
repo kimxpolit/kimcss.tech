@@ -1,0 +1,106 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Check Live UID Facebook - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+    <link rel="stylesheet" href="../mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-wrench text-primary me-2"></i> Tiện ích MMO kiểm tra UID Facebook trực tuyến</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="tool-2fa.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-shield-halved me-1"></i> Lấy mã 2FA</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <!-- Counter badges -->
+            <div class="d-flex justify-content-center mb-4">
+                <span class="badge bg-success fs-6 px-4 py-2 me-2">Live: <strong id="liveCount">0</strong></span>
+                <span class="badge bg-danger fs-6 px-4 py-2 me-2">Dead: <strong id="dieCount">0</strong></span>
+                <span class="badge bg-warning text-dark fs-6 px-4 py-2">Đã kiểm tra: <strong id="totalCount">0</strong></span>
+            </div>
+
+            <!-- Main Input and Output Areas -->
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="card border-0 shadow-sm p-3 bg-white">
+                        <label class="form-label fw-bold">Nhập danh sách UID hoặc định dạng (UID|PASS|... mỗi tài khoản 1 dòng):</label>
+                        <textarea class="form-control font-monospace mb-3" id="inputAccounts" rows="6" placeholder="1000827282928|pass123|...&#10;1000918273645|pass456|..."></textarea>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary px-4" id="btnStartCheck"><i class="fa-solid fa-play me-1"></i> Bắt đầu kiểm tra</button>
+                            <button class="btn btn-outline-danger" id="btnStopCheck"><i class="fa-solid fa-stop me-1"></i> Dừng lại</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm p-3 bg-white">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label fw-bold text-success mb-0"><i class="fa-solid fa-circle-check me-1"></i> Danh sách LIVE</label>
+                            <button class="btn btn-sm btn-outline-success" onclick="copyTextarea('liveAccounts')"><i class="fa-solid fa-copy me-1"></i> Sao chép</button>
+                        </div>
+                        <textarea class="form-control font-monospace text-success bg-light" id="liveAccounts" rows="8" readonly></textarea>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm p-3 bg-white">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label fw-bold text-danger mb-0"><i class="fa-solid fa-circle-xmark me-1"></i> Danh sách DIE</label>
+                            <button class="btn btn-sm btn-outline-danger" onclick="copyTextarea('dieAccounts')"><i class="fa-solid fa-copy me-1"></i> Sao chép</button>
+                        </div>
+                        <textarea class="form-control font-monospace text-danger bg-light" id="dieAccounts" rows="8" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/client/tool-checklive-fb.js"></script>
+</body>
+
+</html>
+

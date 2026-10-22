@@ -1,0 +1,117 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Chi tiết đơn hàng - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/product-details.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-cart-shopping text-primary me-2"></i> Hệ thống bán tài khoản tự động</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-3">
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="product-orders.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-bag-shopping me-1"></i> Đơn hàng của tôi</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container" id="order-detail-container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <a href="product-orders.html" class="btn btn-outline-secondary btn-sm mb-2"><i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh sách</a>
+                    <h4 class="fw-bold mb-0">Đơn hàng <span class="text-primary" id="order-trans-id">#...</span></h4>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-info text-white" onclick="copyAllAccounts()"><i class="fa-solid fa-copy me-1"></i> Sao chép tất cả</button>
+                    <button class="btn btn-success" onclick="downloadTxt()"><i class="fa-solid fa-download me-1"></i> Tải về (.txt)</button>
+                </div>
+            </div>
+
+            <!-- Order Summary Card -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <small class="text-muted d-block">Sản phẩm</small>
+                            <strong id="order-product-name">Đang tải...</strong>
+                        </div>
+                        <div class="col-md-3">
+                            <small class="text-muted d-block">Thời gian mua</small>
+                            <span id="order-date">...</span>
+                        </div>
+                        <div class="col-md-3">
+                            <small class="text-muted d-block">Số lượng</small>
+                            <strong class="text-primary" id="order-qty">0</strong>
+                        </div>
+                        <div class="col-md-3">
+                            <small class="text-muted d-block">Tổng thanh toán</small>
+                            <strong class="text-danger fs-5" id="order-pay">0đ</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accounts Container -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-list-check text-primary me-2"></i> Danh sách tài khoản đã nhận</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div id="order-accounts-list" class="table-responsive">
+                        <div class="p-4 text-center text-muted">
+                            <i class="fa fa-spinner fa-spin fa-2x mb-2 text-primary"></i>
+                            <p>Đang tải tài khoản...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <textarea id="accounts-textarea" style="display: none;"></textarea>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/client/product-order.js"></script>
+</body>
+
+</html>
+

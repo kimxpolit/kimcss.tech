@@ -1,0 +1,201 @@
+﻿<!doctype html>
+<html lang="vi" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>CTV Dashboard - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/icon.png">
+    <link href="../public/theme/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/styles.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/icons.css" rel="stylesheet">
+    <link href="../public/theme/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet">
+    <link href="../public/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="../public/theme/assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="main-header-container container-fluid">
+                <div class="header-content-left">
+                    <div class="header-element">
+                        <a href="index.html" class="header-logo">
+                            <span class="fs-18 fw-bold text-info">CỘNG TÁC VIÊN PANEL</span>
+                        </a>
+                    </div>
+                    <div class="header-element">
+                        <a aria-label="Toggle Sidebar" class="sidemenu-toggle header-link" href="javascript:void(0);" onclick="document.body.classList.toggle('sidenav-toggled')">
+                            <i class="bx bx-menu fs-20"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-content-right">
+                    <div class="header-element me-2">
+                        <a href="../index.html" class="btn btn-sm btn-outline-primary" target="_blank">
+                            <i class="bx bx-store me-1"></i> Xem Website
+                        </a>
+                    </div>
+                    <div class="header-element">
+                        <button class="btn btn-sm btn-danger" onclick="window.auth.logout()">
+                            <i class="bx bx-log-out me-1"></i> Đăng xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar sticky" id="sidebar">
+            <div class="main-sidebar-header">
+                <a href="index.html" class="header-logo text-white fw-bold fs-18">CTV PORTAL</a>
+            </div>
+            <div class="main-sidebar">
+                <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                    <ul class="main-menu">
+                        <li class="slide__category"><span class="category-name">TỔNG QUAN</span></li>
+                        <li class="slide">
+                            <a href="index.html" class="side-menu__item active">
+                                <i class="bx bxs-dashboard side-menu__icon"></i>
+                                <span class="side-menu__label">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">QUẢN LÝ SẢN PHẨM</span></li>
+                        <li class="slide">
+                            <a href="products.html" class="side-menu__item">
+                                <i class="bx bx-box side-menu__icon"></i>
+                                <span class="side-menu__label">Sản phẩm của tôi</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="product-add.html" class="side-menu__item">
+                                <i class="bx bx-plus-circle side-menu__icon"></i>
+                                <span class="side-menu__label">Đăng sản phẩm mới</span>
+                            </a>
+                        </li>
+                        <li class="slide__category"><span class="category-name">TÀI CHÍNH</span></li>
+                        <li class="slide">
+                            <a href="ctv-withdraw.html" class="side-menu__item">
+                                <i class="bx bx-wallet side-menu__icon"></i>
+                                <span class="side-menu__label">Rút tiền hoa hồng</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content app-content">
+            <div class="container-fluid">
+                <div class="d-md-flex d-block align-items-center justify-content-between my-3 page-header-breadcrumb">
+                    <h4 class="page-title fw-semibold fs-18 mb-0">Bảng điều khiển Cộng Tác Viên</h4>
+                    <div class="ms-auto">
+                        <a href="product-add.html" class="btn btn-primary btn-sm me-2">
+                            <i class="fa-solid fa-plus me-1"></i> Đăng sản phẩm
+                        </a>
+                        <a href="ctv-withdraw.html" class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-wallet me-1"></i> Rút tiền
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
+                        <div class="card custom-card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-primary text-white p-3 rounded-circle me-3">
+                                        <i class="fa-solid fa-box-open fs-20"></i>
+                                    </div>
+                                    <div class="flex-fill">
+                                        <span class="text-muted d-block mb-1">Sản phẩm đã đăng</span>
+                                        <h4 class="fw-bold mb-0" id="stat-ctv-products">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
+                        <div class="card custom-card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-info text-white p-3 rounded-circle me-3">
+                                        <i class="fa-solid fa-cart-shopping fs-20"></i>
+                                    </div>
+                                    <div class="flex-fill">
+                                        <span class="text-muted d-block mb-1">Đơn hàng đã bán</span>
+                                        <h4 class="fw-bold mb-0" id="stat-ctv-orders">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
+                        <div class="card custom-card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-success text-white p-3 rounded-circle me-3">
+                                        <i class="fa-solid fa-chart-line fs-20"></i>
+                                    </div>
+                                    <div class="flex-fill">
+                                        <span class="text-muted d-block mb-1">Doanh thu tích lũy</span>
+                                        <h4 class="fw-bold mb-0 text-success" id="stat-ctv-revenue">0đ</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
+                        <div class="card custom-card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-warning text-white p-3 rounded-circle me-3">
+                                        <i class="fa-solid fa-coins fs-20"></i>
+                                    </div>
+                                    <div class="flex-fill">
+                                        <span class="text-muted d-block mb-1">Số dư khả dụng</span>
+                                        <h4 class="fw-bold mb-0 text-warning" id="stat-ctv-balance">0đ</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Guide Box -->
+                <div class="card custom-card border-0 shadow-sm mt-3">
+                    <div class="card-body">
+                        <h6 class="fw-bold text-primary mb-3"><i class="fa-solid fa-circle-info me-2"></i> Chính sách & Hướng dẫn Cộng Tác Viên</h6>
+                        <ul class="mb-0 text-muted lh-lg">
+                            <li>Sản phẩm sau khi được bạn đăng tải sẽ chuyển sang trạng thái <strong>Chờ duyệt</strong> để Admin kiểm tra chất lượng.</li>
+                            <li>Sau khi được Admin duyệt, sản phẩm sẽ tự động hiển thị trên gian hàng chính của hệ thống.</li>
+                            <li>Doanh thu bán hàng từ sản phẩm của bạn sẽ được cộng trực tiếp vào số dư ví CTV theo tỷ lệ hoa hồng quy định.</li>
+                            <li>Bạn có thể thực hiện rút tiền về tài khoản ngân hàng bất kỳ lúc nào tại mục <strong>Rút tiền hoa hồng</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer mt-auto py-3 bg-white text-center border-top">
+            <div class="container">
+                <span class="text-muted">Copyright © 2026 <strong>ShopClone 7</strong>. All rights reserved.</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../public/js/jquery-3.6.0.js"></script>
+    <script src="../public/theme/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/theme/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/ctv/dashboard.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Thanh Toán Đơn Hàng - ShopClone 7 | HOÀNG KIM MMO SOLUTION</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+    <!-- Google Fonts & Stylesheets -->
+    <link rel="stylesheet" href="client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 & jQuery -->
+    <link rel="stylesheet" href="sweetalert2/default.css" type="text/css">
+    <script src="sweetalert2/sweetalert2.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+
+    <style>
+        .checkout-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+        .payment-method-box {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .payment-method-box:hover, .payment-method-box.selected {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-white border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="small text-muted">
+                <i class="fa-solid fa-lock text-success me-2"></i> Kênh đặt hàng bảo mật an toàn 100% - Mã hóa giao dịch SSL
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <a href="index.html" class="small text-decoration-none text-secondary"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="cart.html" class="small text-decoration-none text-secondary"><i class="fa-solid fa-cart-shopping me-1"></i> Giỏ hàng</a>
+                <div id="header-user-slot" class="d-inline-flex"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 bg-white border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="header-logo">
+                <img class="site-logo-img" src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='client/images/logo.png'" alt="Logo" height="42">
+            </a>
+            <div class="d-flex align-items-center gap-2">
+                <a href="cart.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Quay lại Giỏ Hàng
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-4">
+        <div class="container">
+            <!-- Breadcrumb Navigation -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb bg-white p-3 rounded-4 shadow-sm border mb-0">
+                    <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-primary"><i class="fa-solid fa-house me-1"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="cart.html" class="text-decoration-none text-primary">Giỏ hàng</a></li>
+                    <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">Xác nhận đơn hàng &amp; Thanh toán</li>
+                </ol>
+            </nav>
+
+            <form id="checkout-form" onsubmit="handlePlaceOrder(event)">
+                <div class="row g-4">
+                    <!-- Left Column: Customer & Delivery Info (7 Cols) -->
+                    <div class="col-lg-7">
+                        <div class="checkout-card p-4 mb-4">
+                            <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom">
+                                <i class="fa-solid fa-address-card text-primary me-2"></i> 1. Thông Tin Khách Hàng &amp; Nhận Hàng
+                            </h5>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Họ và tên (<span class="text-danger">*</span>):</label>
+                                    <input type="text" id="cust-name" class="form-control" placeholder="Nguyễn Văn A" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Số điện thoại (<span class="text-danger">*</span>):</label>
+                                    <input type="tel" id="cust-phone" class="form-control" placeholder="0987654321" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold">Địa chỉ Email nhận thông tin đơn hàng (<span class="text-danger">*</span>):</label>
+                                    <input type="email" id="cust-email" class="form-control" placeholder="email@example.com" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold">Địa chỉ giao hàng / Tỉnh thành (<span class="text-danger">*</span>):</label>
+                                    <input type="text" id="cust-address" class="form-control" placeholder="Số nhà, tên đường, Phường/Xã, Quận/Huyện, Tỉnh/TP" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold">Ghi chú đơn hàng (Tùy chọn):</label>
+                                    <textarea id="cust-note" class="form-control" rows="2" placeholder="Yêu cầu riêng về tài khoản, thời gian liên hệ..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Box -->
+                        <div class="checkout-card p-4">
+                            <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom">
+                                <i class="fa-solid fa-credit-card text-primary me-2"></i> 2. Chọn Phương Thức Thanh Toán
+                            </h5>
+
+                            <div class="d-flex flex-column gap-3">
+                                <label class="payment-method-box selected d-flex align-items-center gap-3">
+                                    <input type="radio" name="payment_method" value="vietqr" class="form-check-input mt-0" checked>
+                                    <div>
+                                        <div class="fw-bold text-dark"><i class="fa-solid fa-qrcode text-primary me-1"></i> Quét mã VietQR Tự Động (Khuyên dùng)</div>
+                                        <small class="text-muted">Chuyển khoản qua app ngân hàng MB, Vietcombank, Techcombank, Momo duyệt tức thì.</small>
+                                    </div>
+                                </label>
+
+                                <label class="payment-method-box d-flex align-items-center gap-3">
+                                    <input type="radio" name="payment_method" value="wallet" class="form-check-input mt-0">
+                                    <div>
+                                        <div class="fw-bold text-dark"><i class="fa-solid fa-wallet text-success me-1"></i> Trừ Số Dư Ví Cá Nhân</div>
+                                        <small class="text-muted">Sử dụng số dư ví hiện có trên hệ thống để thanh toán tức thì.</small>
+                                    </div>
+                                </label>
+
+                                <label class="payment-method-box d-flex align-items-center gap-3">
+                                    <input type="radio" name="payment_method" value="cod" class="form-check-input mt-0">
+                                    <div>
+                                        <div class="fw-bold text-dark"><i class="fa-solid fa-truck text-warning me-1"></i> Thanh Toán Khi Nhận Hàng (COD)</div>
+                                        <small class="text-muted">Kiểm tra thông tin tài khoản hoặc thiết bị trước khi thanh toán.</small>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Order Review (5 Cols) -->
+                    <div class="col-lg-5">
+                        <div class="checkout-card p-4 sticky-top" style="top: 20px;">
+                            <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom">
+                                <i class="fa-solid fa-bag-shopping text-primary me-2"></i> 3. Đơn Hàng Của Bạn (<span class="cart-badge-count">0</span>)
+                            </h5>
+
+                            <!-- Items List -->
+                            <div id="checkout-items-list" class="mb-3" style="max-height: 280px; overflow-y: auto;">
+                                <!-- Populated by JS -->
+                            </div>
+
+                            <hr>
+
+                            <!-- Cost calculation -->
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Tạm tính:</span>
+                                <span class="fw-semibold text-dark" id="checkout-subtotal">0 ₫</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-2 text-success" id="checkout-discount-row" style="display: none;">
+                                <span>Giảm giá voucher:</span>
+                                <span class="fw-bold" id="checkout-discount">-0 ₫</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">Phí giao dịch:</span>
+                                <span class="fw-bold text-success">Miễn phí (0 ₫)</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center pt-3 border-top mb-4">
+                                <span class="fw-bold text-dark fs-5">TỔNG THANH TOÁN:</span>
+                                <span class="fw-bold text-danger fs-3" id="checkout-grand-total">0 ₫</span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow" id="btnPlaceOrder">
+                                <i class="fa-solid fa-check-circle me-2"></i> XÁC NHẬN ĐẶT HÀNG
+                            </button>
+
+                            <div class="text-center mt-3">
+                                <a href="cart.html" class="small text-secondary text-decoration-none">
+                                    <i class="fa-solid fa-pen-to-square me-1"></i> Chỉnh sửa lại giỏ hàng
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-top py-4 mt-5">
+        <div class="container text-center text-muted small">
+            <p class="mb-1">© 2026 HOÀNG KIM MMO SOLUTION - Hệ Thống Kinh Doanh Dịch Vụ MMO Chuyên Nghiệp</p>
+            <p class="mb-0">Dữ liệu đơn hàng được mã hóa và bảo mật an toàn tuyệt đối</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="client/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/i18n.js"></script>
+
+    <script>
+        // Khởi tạo thông tin đơn hàng trên trang Checkout
+        function initCheckoutPage() {
+            const cart = getCart();
+            const listEl = document.getElementById('checkout-items-list');
+
+            if (cart.length === 0) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Giỏ hàng trống',
+                    text: 'Giỏ hàng của bạn đang trống! Vui lòng chọn sản phẩm trước khi thanh toán.',
+                    confirmButtonText: 'Quay lại mua sắm'
+                }).then(() => {
+                    window.location.href = 'index.html';
+                });
+                return;
+            }
+
+            const summary = calculateCartSummary(cart);
+
+            listEl.innerHTML = cart.map(item => `
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <div class="d-flex align-items-center gap-2">
+                        <img src="${item.preview_image || 'mod/img/icon-facebook.png'}" width="38" height="38" class="rounded border p-1 bg-light" onerror="this.src='mod/img/icon-facebook.png'">
+                        <div>
+                            <div class="fw-semibold small text-dark text-truncate" style="max-width: 220px;" title="${item.name}">${item.name}</div>
+                            <small class="text-muted">SL: <b>${item.quantity}</b> × ${formatCurrencyVND(item.price)}</small>
+                        </div>
+                    </div>
+                    <div class="fw-bold text-dark small text-nowrap">
+                        ${formatCurrencyVND(Number(item.price) * Number(item.quantity))}
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('checkout-subtotal').innerText = formatCurrencyVND(summary.subtotal);
+            if (summary.discountAmount > 0) {
+                document.getElementById('checkout-discount-row').style.display = 'flex';
+                document.getElementById('checkout-discount').innerText = '-' + formatCurrencyVND(summary.discountAmount);
+            }
+            document.getElementById('checkout-grand-total').innerText = formatCurrencyVND(summary.grandTotal);
+
+            // Điền sẵn thông tin nếu người dùng đã đăng nhập
+            if (window.auth && window.auth.isLoggedIn()) {
+                const user = window.auth.getUser();
+                if (user) {
+                    if (document.getElementById('cust-name')) document.getElementById('cust-name').value = user.fullname || user.username || '';
+                    if (document.getElementById('cust-email')) document.getElementById('cust-email').value = user.email || '';
+                    if (document.getElementById('cust-phone')) document.getElementById('cust-phone').value = user.phone || '';
+                }
+            }
+
+            // Radio button click styling
+            document.querySelectorAll('.payment-method-box').forEach(box => {
+                box.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-method-box').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (radio) radio.checked = true;
+                });
+            });
+        }
+
+        // Xử lý đặt hàng
+        async function handlePlaceOrder(e) {
+            e.preventDefault();
+
+            const cart = getCart();
+            if (cart.length === 0) {
+                Swal.fire('Lỗi', 'Giỏ hàng đang trống!', 'warning');
+                return;
+            }
+
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const email = document.getElementById('cust-email').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+            const note = document.getElementById('cust-note').value.trim();
+            const paymentMethod = document.querySelector('input[name="payment_method"]:checked')?.value || 'vietqr';
+
+            if (!name || !phone || !email || !address) {
+                Swal.fire('Thiếu thông tin', 'Vui lòng điền đầy đủ các thông tin bắt buộc (*)', 'warning');
+                return;
+            }
+
+            const summary = calculateCartSummary(cart);
+            const orderCode = 'DH' + Date.now().toString().slice(-6);
+
+            const newOrder = {
+                order_code: orderCode,
+                created_at: new Date().toISOString(),
+                customer: { name, phone, email, address, note },
+                payment_method: paymentMethod,
+                items: cart,
+                summary: summary,
+                status: 'success'
+            };
+
+            // Lưu đơn hàng vào localStorage
+            try {
+                const rawOrders = localStorage.getItem('shopclone_orders');
+                const orders = rawOrders ? JSON.parse(rawOrders) : [];
+                orders.unshift(newOrder);
+                localStorage.setItem('shopclone_orders', JSON.stringify(orders));
+            } catch (err) {
+                console.error('Lỗi lưu đơn hàng:', err);
+            }
+
+            // Xóa sạch giỏ hàng sau khi đặt thành công
+            saveCart([]);
+            localStorage.removeItem('shopclone_applied_coupon');
+
+            // Thông báo thành công
+            await Swal.fire({
+                icon: 'success',
+                title: 'Đặt hàng thành công!',
+                html: `
+                    Mã đơn hàng: <b class="text-primary fs-5">#${orderCode}</b><br>
+                    Tổng thanh toán: <b class="text-danger">${formatCurrencyVND(summary.grandTotal)}</b><br>
+                    <p class="text-muted small mt-2">Hệ thống đã ghi nhận đơn hàng và gửi email xác nhận đến <b>${email}</b>.</p>
+                `,
+                confirmButtonText: '<i class="fa-solid fa-list-check me-1"></i> Xem danh sách đơn hàng'
+            });
+
+            window.location.href = 'orders.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', initCheckoutPage);
+    </script>
+</body>
+
+</html>

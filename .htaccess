@@ -1,0 +1,78 @@
+RewriteEngine On
+
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+<FilesMatch "\.DS_Store$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.sql$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+Options -Indexes
+Options -MultiViews
+
+<FilesMatch "\.(sqlite|sqlite3|db|db3)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(zip|rar|7z|gz|tgz|bz2|xz|tar)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Chặn các file database đã nén dạng double-extension: .sql.gz, .db.zip, ...
+RewriteCond %{REQUEST_URI} \.(sql|sqlite|sqlite3|db|db3)\.(gz|zip|bz2|xz|7z|rar|tar|tgz)$ [NC]
+RewriteRule ^ - [F,L]
+
+#Xử lý Route CTV
+RewriteRule ^ctv/([A-Za-z0-9-]+) index.php?module=ctv&action=$1 [L]
+RewriteRule ^ctv index.php?module=ctv&action= [L]
+#Xử lý Route ADMIN
+RewriteRule ^admin/([A-Za-z0-9-]+) index.php?module=admin&action=$1 [L]
+RewriteRule ^admin index.php?module=admin&action= [L]
+#Xử lý Route CLIENT
+RewriteCond %{QUERY_STRING} ^token=([^&]+)&id_product=([^&]+)&key=([^&]+)&order_id=([^&]+)&quantity=([^&]+)
+RewriteRule ^api/apiv2/buy_taphoa\.php$ ajaxs/client/product.php?action=buyProduct&api_key=%1&id=%2&amount=%5&is_taphoammo=1 [L,QSA]
+RewriteCond %{QUERY_STRING} ^token=([^&]+)&id_product=([^&]+)&key=([^&]+)&order_id=([^&]+)$
+RewriteRule ^api/apiv2/buy_taphoa\.php$ ajaxs/client/product.php?action=buyProduct&api_key=%1&id=%2&amount=1&is_taphoammo=1 [L,QSA]
+RewriteCond %{QUERY_STRING} ^token=([^&]+)&id_product=([^&]+)
+RewriteRule ^api/apiv2/store_taphoa\.php$ api/taphoammo/get_stock.php?api_key=%1&product=%2 [L,QSA]
+RewriteRule ^recharge-manual/([A-Za-z0-9-]+) index.php?module=client&action=recharge-manual&slug=$1 [L]
+RewriteRule ^login index.php?module=client&action= [L]
+RewriteRule ^Dashbroad index.php?module=client&action= [L]
+RewriteRule ^Auth/Login index.php?module=client&action= [L]
+RewriteRule ^tool/random-face index.php?module=client&action=tool-random-face [L]
+RewriteRule ^tool/icon-facebook index.php?module=client&action=tool-icon-facebook [L]
+RewriteRule ^tool/get-2fa index.php?module=client&action=tool-2fa [L]
+RewriteRule ^tool/check-live-facebook index.php?module=client&action=tool-checklive-fb [L]
+RewriteRule ^category/([A-Za-z0-9-]+) index.php?module=client&action=home&slug=$1 [L]
+RewriteRule ^api/buy_product ajaxs/client/product.php [L]
+RewriteRule ^blogs index.php?module=client&action=blogs [L]
+RewriteRule ^blog/([A-Za-z0-9-]+) index.php?module=client&action=blog&slug=$1 [L]
+RewriteRule ^document-api index.php?module=client&action=document-api [L]
+RewriteRule ^product/([A-Za-z0-9-]+)&aff=([A-Za-z0-9-]+)$ index.php?module=client&action=product&slug=$1&aff=$2 [L]
+RewriteRule ^product/([A-Za-z0-9-]+) index.php?module=client&action=product&slug=$1 [L]
+RewriteRule ^product-order/([A-Za-z0-9-]+) index.php?module=client&action=product-order&trans_id=$1 [L]
+RewriteRule ^product-orders index.php?module=client&action=product-orders [L]
+RewriteRule ^join/([A-Za-z0-9-]+) index.php?module=client&action=home&aff=$1 [L]
+RewriteRule ^client/home/([A-Za-z0-9-]+) index.php?module=client&action=home&shop=$1 [L]
+RewriteRule ^payment/([A-Za-z0-9-]+) index.php?module=client&action=payment&trans_id=$1 [L]
+RewriteRule ^client/([A-Za-z0-9-]+) index.php?module=client&action=$1 [L]
+RewriteRule ^client index.php?module=client&action= [L]
+#Xử lý Route COMMON
+RewriteRule ^common/([A-Za-z0-9-]+) index.php?module=common&action=$1 [L]
+
+
+# Xử lý thay đổi ngôn ngữ từ URL (đặt cuối cùng để tránh xung đột)
+# Chỉ áp dụng nếu không phải là file hoặc thư mục thật
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-z]{2,5})/?$ views/client/set-language.php?lang=$1 [L,QSA]

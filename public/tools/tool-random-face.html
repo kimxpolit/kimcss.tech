@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tạo Ảnh Người Ngẫu Nhiên AI (Random Face) - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="/assets/storage/images/logo_dark_8OJ.png" />
+
+    <!-- Original Stylesheets -->
+    <link rel="stylesheet" href="/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/client/css/main.css">
+    <link rel="stylesheet" href="/client/css/wallet.css">
+    <link rel="stylesheet" href="/mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="/sweetalert2/default.css" type="text/css">
+    <script src="/sweetalert2/sweetalert2.js"></script>
+    <script src="/js/jquery-3.6.0.js"></script>
+
+    <style>
+        .face-avatar {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        .history-thumb {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .history-thumb:hover {
+            border-color: #0d6efd;
+            transform: scale(1.08);
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 bg-light">
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-white border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small class="text-primary fw-bold"><i class="fa-solid fa-wand-magic-sparkles me-1"></i> Trình tạo khuôn mặt người ngẫu nhiên bằng trí tuệ nhân tạo (AI Face Generator)</small></div>
+            <div id="header-user-slot"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="/index.html">
+                <img class="site-logo-img" src="/assets/storage/images/logo_dark_8OJ.png" onerror="this.src='/assets/img/logo.png'" alt="logo" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="/index.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="/tools/index.html" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-toolbox me-1"></i> Tất cả tiện ích</a>
+                <a href="/tools/tool-checklive-fb.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-bolt me-1"></i> Check Live FB</a>
+                <a href="/tools/tool-2fa.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-shield-halved me-1"></i> Lấy mã 2FA</a>
+                <a href="/tools/tool-icon-facebook.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-icons me-1"></i> Icon FB</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-4 flex-grow-1">
+        <div class="container" style="max-width: 850px;">
+            <div class="card border-0 rounded-4 overflow-hidden mb-4 shadow-sm text-white p-4" style="background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);">
+                <div class="d-flex align-items-center">
+                    <img src="/mod/img/icon-random-face.png" width="60" height="60" class="me-3" alt="Random Face">
+                    <div>
+                        <span class="badge bg-white text-primary mb-1">Miễn phí 100%</span>
+                        <h4 class="fw-bold mb-0">Tạo Ảnh Người Ngẫu Nhiên (AI Generated Faces)</h4>
+                        <small class="opacity-75">Tạo avatar chân thực cho Via Facebook, Clone, Zalo, TikTok, Telegram không bị trùng lặp</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4 bg-white rounded-3 text-center mb-4">
+                <!-- Gender filters -->
+                <div class="d-flex justify-content-center gap-2 mb-4">
+                    <button class="btn btn-sm btn-outline-primary active" id="genderAll" onclick="setGender('all')">Tất cả giới tính</button>
+                    <button class="btn btn-sm btn-outline-primary" id="genderMale" onclick="setGender('male')"><i class="fa-solid fa-mars me-1"></i> Nam</button>
+                    <button class="btn btn-sm btn-outline-primary" id="genderFemale" onclick="setGender('female')"><i class="fa-solid fa-venus me-1"></i> Nữ</button>
+                </div>
+
+                <!-- Main Face Display -->
+                <div class="position-relative d-inline-block mx-auto mb-4">
+                    <img id="mainFaceImg" class="face-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80" alt="Random Face Avatar">
+                    <div id="loadingOverlay" class="position-absolute top-50 start-50 translate-middle" style="display:none;">
+                        <div class="spinner-border text-primary" role="status"></div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex justify-content-center flex-wrap gap-3 mb-4">
+                    <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm" onclick="generateFace()"><i class="fa-solid fa-rotate me-2"></i> Tạo khuôn mặt mới</button>
+                    <button class="btn btn-success px-4 py-2 rounded-pill shadow-sm" onclick="downloadCurrentFace()"><i class="fa-solid fa-download me-2"></i> Tải ảnh về máy</button>
+                    <button class="btn btn-outline-secondary px-3 py-2 rounded-pill" onclick="copyImageUrl()"><i class="fa-solid fa-link me-1"></i> Copy link ảnh</button>
+                </div>
+
+                <!-- History -->
+                <div class="border-top pt-3">
+                    <small class="text-muted text-uppercase fw-bold d-block mb-2">Các ảnh đã tạo gần đây (Click để chọn lại):</small>
+                    <div class="d-flex justify-content-center gap-2 flex-wrap" id="historyContainer"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-white border-top text-center mt-auto">
+        <div class="container">
+            <small class="text-muted" id="footer-copyright">© All Copyrights Reserved by <a href="/index.html">ShopClone 7</a> | Tiện Ích MMO Tự Động</small>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/core/theme.js"></script>
+    <script src="/js/core/i18n.js"></script>
+
+    <script>
+        const femaleFaces = [
+            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=80'
+        ];
+
+        const maleFaces = [
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=80'
+        ];
+
+        let currentGender = 'all';
+        let historyList = [];
+        let currentUrl = femaleFaces[0];
+
+        function setGender(g) {
+            currentGender = g;
+            document.querySelectorAll('#genderAll, #genderMale, #genderFemale').forEach(b => b.classList.remove('active'));
+            if (g === 'all') document.getElementById('genderAll').classList.add('active');
+            if (g === 'male') document.getElementById('genderMale').classList.add('active');
+            if (g === 'female') document.getElementById('genderFemale').classList.add('active');
+            generateFace();
+        }
+
+        function generateFace() {
+            let pool = [];
+            if (currentGender === 'male') pool = maleFaces;
+            else if (currentGender === 'female') pool = femaleFaces;
+            else pool = [...femaleFaces, ...maleFaces];
+
+            // Or use thispersondoesnotexist random hash timestamp
+            const useAI = Math.random() > 0.4;
+            let url = '';
+            if (useAI) {
+                url = `https://thispersondoesnotexist.com/?rand=${Date.now()}`;
+            } else {
+                url = pool[Math.floor(Math.random() * pool.length)] + '&t=' + Date.now();
+            }
+
+            setFaceImage(url);
+        }
+
+        function setFaceImage(url) {
+            currentUrl = url;
+            const img = document.getElementById('mainFaceImg');
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) overlay.style.display = 'block';
+
+            img.onload = () => {
+                if (overlay) overlay.style.display = 'none';
+            };
+            img.onerror = () => {
+                if (overlay) overlay.style.display = 'none';
+                img.src = femaleFaces[0];
+            };
+            img.src = url;
+
+            // Add to history
+            if (!historyList.includes(url)) {
+                historyList.unshift(url);
+                if (historyList.length > 6) historyList.pop();
+                updateHistoryUI();
+            }
+        }
+
+        function updateHistoryUI() {
+            const container = document.getElementById('historyContainer');
+            if (!container) return;
+            container.innerHTML = historyList.map(u => `
+                <img src="${u}" class="history-thumb" onclick="setFaceImage('${u}')" alt="thumb">
+            `).join('');
+        }
+
+        async function downloadCurrentFace() {
+            try {
+                window.api.showToast('Đang tải ảnh về máy...');
+                const a = document.createElement('a');
+                a.href = currentUrl;
+                a.target = '_blank';
+                a.download = `Avatar_AI_${Date.now()}.jpg`;
+                a.click();
+            } catch (e) {
+                window.open(currentUrl, '_blank');
+            }
+        }
+
+        function copyImageUrl() {
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                window.api.alertSuccess('Đã copy đường dẫn ảnh vào Clipboard!');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHistoryUI();
+        });
+    </script>
+</body>
+
+</html>

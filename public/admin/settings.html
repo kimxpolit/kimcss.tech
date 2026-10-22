@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Cấu Hình Giao Diện & Hệ Thống - kimcss.tech Admin</title>
+    <link rel="icon" type="image/png" href="../assets/storage/images/logo_dark_8OJ.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../sweetalert2/default.css" type="text/css">
+    <script src="../sweetalert2/sweetalert2.js"></script>
+    <script src="../js/jquery-3.6.0.js"></script>
+
+    <style>
+        body { background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .sidebar { min-height: 100vh; background: #1e293b; color: #cbd5e1; }
+        .sidebar .nav-link { color: #94a3b8; padding: 12px 20px; font-weight: 500; border-radius: 8px; margin: 4px 12px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background: #334155; color: #fff; }
+        .sidebar .nav-link i { width: 24px; }
+
+        /* Settings Horizontal Tabs Bar (Always single row, sleek & responsive) */
+        .settings-nav {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            padding: 0 8px;
+            gap: 4px;
+        }
+        .settings-nav::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .settings-nav .nav-item {
+            flex: 1 1 0;
+            min-width: fit-content;
+            text-align: center;
+        }
+        .settings-nav .nav-link {
+            width: 100%;
+            font-weight: 600;
+            font-size: 13.5px;
+            color: #64748b;
+            border: none;
+            padding: 14px 10px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border-radius: 8px 8px 0 0;
+        }
+        .settings-nav .nav-link:hover {
+            color: #1e293b;
+            background-color: #f8fafc;
+        }
+        .settings-nav .nav-link.active {
+            color: #2563eb;
+            background-color: rgba(37, 99, 235, 0.05);
+            border-bottom: 3px solid #2563eb;
+            font-weight: 700;
+        }
+
+        /* Live Preview Box */
+        .preview-box {
+            background: #ffffff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Shimmer & Glow Animation in Preview */
+        .logo-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 8px;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.45));
+            transition: transform 0.3s ease;
+        }
+        .logo-wrapper::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 70%;
+            height: 200%;
+            background: linear-gradient(
+                105deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 235, 130, 0.18) 30%,
+                rgba(255, 255, 255, 0.75) 50%,
+                rgba(255, 215, 0, 0.35) 70%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(25deg);
+            pointer-events: none;
+            animation: goldSweepLight 3.5s infinite ease-in-out;
+        }
+        @keyframes goldSweepLight {
+            0% { left: -150%; opacity: 0; }
+            15% { opacity: 1; }
+            45% { left: 200%; opacity: 1; }
+            50%, 100% { left: 200%; opacity: 0; }
+        }
+
+        .color-preview-pill {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar p-0" style="width: 260px;">
+            <div class="p-4 border-bottom border-secondary d-flex align-items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-primary fs-3"></i>
+                <h5 class="fw-bold text-white mb-0">kimcss.tech Admin</h5>
+            </div>
+            <div class="py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-gauge-high me-2"></i> Tổng quan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">
+                            <i class="fa-solid fa-box-archive me-2 text-warning"></i> Quản lý sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="product-stock.html">
+                            <i class="fa-solid fa-cloud-arrow-up me-2 text-success"></i> Nhập kho tài khoản
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.html">
+                            <i class="fa-solid fa-users me-2 text-info"></i> Quản lý thành viên
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="orders.html">
+                            <i class="fa-solid fa-bag-shopping me-2 text-danger"></i> Quản lý đơn hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="settings.html">
+                            <i class="fa-solid fa-gear me-2 text-primary"></i> Cấu hình hệ thống & Ngân hàng
+                        </a>
+                    </li>
+                    <li class="nav-item mt-4 pt-3 border-top border-secondary">
+                        <a class="nav-link text-white" href="../index.html">
+                            <i class="fa-solid fa-globe me-2 text-success"></i> Xem trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="javascript:void(0)" onclick="window.auth.logout()">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom bg-white p-3 rounded-3 shadow-sm">
+                <div>
+                    <h4 class="fw-bold mb-0 text-dark">Bộ Cấu Hình Hệ Thống, Giao Diện & Ngân Hàng (SQL Server)</h4>
+                    <small class="text-muted">Quản lý toàn diện Logo động, màu sắc, hotline, cổng nạp VietQR và tài khoản thụ hưởng</small>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold" id="btnSaveSettingsTop" onclick="saveSettings()">
+                        <i class="fa-solid fa-floppy-disk me-2"></i> Lưu Cấu Hình
+                    </button>
+                </div>
+            </div>
+
+            <!-- Settings Card with Tabs -->
+            <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden mb-4">
+                <div class="card-header bg-white border-bottom p-0">
+                    <ul class="nav settings-nav px-2" id="settingsTab" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active" id="tab-logo-btn" data-bs-toggle="tab" data-bs-target="#tab-logo" type="button">
+                                <i class="fa-solid fa-image text-primary me-1"></i> 1. Logo & Nhận Diện
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="tab-theme-btn" data-bs-toggle="tab" data-bs-target="#tab-theme" type="button">
+                                <i class="fa-solid fa-palette text-warning me-1"></i> 2. Màu Sắc Giao Diện
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="tab-contact-btn" data-bs-toggle="tab" data-bs-target="#tab-contact" type="button">
+                                <i class="fa-solid fa-headset text-success me-1"></i> 3. Liên Hệ & Thông Báo
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="tab-display-btn" data-bs-toggle="tab" data-bs-target="#tab-display" type="button">
+                                <i class="fa-solid fa-toggle-on text-info me-1"></i> 4. Cấu Hình Hiển Thị
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="tab-bank-btn" data-bs-toggle="tab" data-bs-target="#tab-bank" type="button">
+                                <i class="fa-solid fa-building-columns text-danger me-1"></i> 5. Ngân Hàng & VietQR
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body p-4">
+                    <form id="form-settings" onsubmit="event.preventDefault(); saveSettings();">
+                        <div class="tab-content" id="settingsTabContent">
+
+                            <!-- TAB 1: LOGO & BRANDING -->
+                            <div class="tab-pane fade show active" id="tab-logo" role="tabpanel">
+                                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-gem text-warning me-2"></i> Logo Động & Kích Thước Hiển Thị</h5>
+                                <div class="row g-4">
+                                    <div class="col-lg-7">
+                                        <!-- Logo File Upload -->
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Tải lên tệp tin Logo mới (.png, .gif, .mp4, .webm, .webp, .svg):</label>
+                                            <div class="input-group">
+                                                <input type="file" id="logo_file_input" class="form-control" accept=".png,.jpg,.jpeg,.gif,.webp,.svg,.mp4,.webm">
+                                                <button class="btn btn-outline-secondary" type="button" id="btnUploadMedia" onclick="handleMediaUpload()">
+                                                    <i class="fa-solid fa-cloud-arrow-up me-1"></i> Tải lên
+                                                </button>
+                                            </div>
+                                            <small class="text-muted">Hỗ trợ ảnh tĩnh, ảnh động GIF và video lặp lại MP4/WEBM.</small>
+                                        </div>
+
+                                        <!-- Logo URL Input -->
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Đường dẫn Logo (site_logo):</label>
+                                            <input type="text" class="form-control" id="set_site_logo" name="site_logo" placeholder="/assets/storage/images/logo_kimcss.png" oninput="updateLivePreview()">
+                                        </div>
+
+                                        <!-- Logo Height Slider -->
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <label class="form-label fw-bold mb-0">Chiều cao hiển thị (logo_height):</label>
+                                                <span class="badge bg-primary fs-6" id="label_logo_height">54px</span>
+                                            </div>
+                                            <input type="range" class="form-range" id="set_logo_height" min="35" max="85" step="1" value="54" oninput="updateLivePreview()">
+                                            <small class="text-muted">Khuyên dùng từ 52px - 58px để logo to rõ, không bị bóp méo.</small>
+                                        </div>
+                                    </div>
+
+                                    <!-- Live Preview Column -->
+                                    <div class="col-lg-5">
+                                        <label class="form-label fw-bold">Xem trước trực tiếp (Live Preview):</label>
+                                        <div class="preview-box shadow-sm mb-2" id="preview_container">
+                                            <span class="text-muted">Đang tải logo...</span>
+                                        </div>
+                                        <small class="text-center d-block text-secondary">Hiệu ứng quét tia sáng vàng kim (Gold Shimmer) và phát sáng 3D được kích hoạt tự động.</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: THEME CUSTOMIZER (COLORS) -->
+                            <div class="tab-pane fade" id="tab-theme" role="tabpanel">
+                                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-palette text-warning me-2"></i> Bộ Tùy Biến Màu Sắc Giao Diện</h5>
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="p-3 border rounded-3 bg-light">
+                                            <label class="form-label fw-bold">Màu chủ đạo (primary_color):</label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="color" class="form-control form-control-color" id="picker_primary" value="#2563eb" oninput="syncColor('primary', this.value)">
+                                                <input type="text" class="form-control" id="set_primary_color" value="#2563eb" oninput="syncColorPicker('primary', this.value)">
+                                            </div>
+                                            <small class="text-muted">Áp dụng cho nút bấm, badge, tiêu đề.</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="p-3 border rounded-3 bg-light">
+                                            <label class="form-label fw-bold">Màu điểm nhấn (accent_color):</label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="color" class="form-control form-control-color" id="picker_accent" value="#d4af37" oninput="syncColor('accent', this.value)">
+                                                <input type="text" class="form-control" id="set_accent_color" value="#d4af37" oninput="syncColorPicker('accent', this.value)">
+                                            </div>
+                                            <small class="text-muted">Áp dụng cho viền, icon nổi bật, ánh kim.</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="p-3 border rounded-3 bg-light">
+                                            <label class="form-label fw-bold">Màu nền Navbar (navbar_bg):</label>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="color" class="form-control form-control-color" id="picker_navbar" value="#ffffff" oninput="syncColor('navbar', this.value)">
+                                                <input type="text" class="form-control" id="set_navbar_bg" value="#ffffff" oninput="syncColorPicker('navbar', this.value)">
+                                            </div>
+                                            <small class="text-muted">Màu nền thanh điều hướng trên cùng.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: CONTACT & NOTICES -->
+                            <div class="tab-pane fade" id="tab-contact" role="tabpanel">
+                                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-headset text-success me-2"></i> Thông Tin Liên Hệ & Tỷ Giá Tiền Tệ</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Tiêu đề Website / Tên Shop:</label>
+                                        <input type="text" class="form-control" id="set_site_title" placeholder="kimcss.tech">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-primary">Hotline hỗ trợ (Đổi toàn bộ số ĐT trên web):</label>
+                                        <input type="text" class="form-control border-primary fw-bold" id="set_site_hotline" placeholder="0989.461.037">
+                                        <small class="text-primary"><i class="fa-solid fa-circle-check me-1"></i> Hệ thống tự động thay thế số này vào Header, Nút gọi nổi, Zalo, Footer, Nạp MoMo & Liên hệ.</small>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Email hỗ trợ:</label>
+                                        <input type="email" class="form-control" id="set_site_email" placeholder="hotro@kimcss.tech">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Số điện thoại Zalo:</label>
+                                        <input type="text" class="form-control" id="set_site_zalo" placeholder="0989461037">
+                                        <small class="text-muted">Để trống sẽ tự động lấy theo số Hotline.</small>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Kênh Telegram CSKH:</label>
+                                        <input type="text" class="form-control" id="set_site_telegram" placeholder="@kimcss_support">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Tỷ giá USD quy đổi (VND / 1 USD):</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="set_usd_rate" placeholder="25400" min="1000" step="100">
+                                            <span class="input-group-text fw-bold">₫</span>
+                                        </div>
+                                        <small class="text-muted">Dùng cho bộ chuyển đổi tiền tệ VND &lt;-&gt; USD trên Topbar.</small>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-bold">Thông báo Ticker chạy Marquee trên Header (marquee_notice):</label>
+                                        <textarea class="form-control" id="set_marquee_notice" rows="2" placeholder="Dòng chữ thông báo chạy ngang..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: DISPLAY CONFIGURATION -->
+                            <div class="tab-pane fade" id="tab-display" role="tabpanel">
+                                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-toggle-on text-info me-2"></i> Cấu Hình Hiển Thị & Popup Chào Mừng</h5>
+                                
+                                <div class="card p-3 border rounded-3 mb-3 bg-light">
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="set_welcome_popup_status" style="width: 2.5em; height: 1.3em;">
+                                        <label class="form-check-label fw-bold ms-2" for="set_welcome_popup_status">Bật Popup thông báo chào mừng khi khách vào trang chủ</label>
+                                    </div>
+                                    <div class="mt-2">
+                                        <label class="form-label small fw-bold">Nội dung Popup chào mừng (Hỗ trợ định dạng HTML):</label>
+                                        <textarea class="form-control" id="set_welcome_popup_content" rows="4"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="card p-3 border rounded-3 mb-3 bg-light">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="set_show_recent_orders" style="width: 2.5em; height: 1.3em;">
+                                        <label class="form-check-label fw-bold ms-2" for="set_show_recent_orders">Hiển thị 2 bảng Đơn hàng vừa mua & Nạp tiền gần đây trên trang chủ</label>
+                                    </div>
+                                </div>
+
+                                <div class="card p-3 border rounded-3 bg-light">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="set_status_menu_tools" style="width: 2.5em; height: 1.3em;">
+                                        <label class="form-check-label fw-bold ms-2" for="set_status_menu_tools">Bật 4 Widget Tiện ích MMO trên Trang chủ (Check Live FB, Get 2FA, Icon FB, Random Face)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 5: BANK & VIETQR CONFIGURATION -->
+                            <div class="tab-pane fade" id="tab-bank" role="tabpanel">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                                    <h5 class="fw-bold mb-0 text-dark">
+                                        <i class="fa-solid fa-building-columns text-danger me-2"></i> Cấu Hình Nạp Tiền Ngân Hàng & VietQR Napas
+                                    </h5>
+                                    <button type="button" class="btn btn-sm btn-success rounded-pill px-3 fw-bold" onclick="openAddBankModal()">
+                                        <i class="fa-solid fa-plus me-1"></i> Thêm Ngân Hàng Mới
+                                    </button>
+                                </div>
+
+                                <!-- Sub-card 1: General Bank Settings -->
+                                <div class="card p-4 border rounded-3 mb-4 bg-light shadow-sm">
+                                    <h6 class="fw-bold text-primary mb-3">
+                                        <i class="fa-solid fa-sliders me-2"></i> 1. Cấu hình quy định nạp tiền
+                                    </h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-check form-switch pt-2">
+                                                <input class="form-check-input" type="checkbox" id="set_bank_status" style="width: 2.5em; height: 1.3em;">
+                                                <label class="form-check-label fw-bold ms-2" for="set_bank_status">Bật cổng nạp tiền Ngân Hàng (VietQR Napas)</label>
+                                            </div>
+                                            <small class="text-muted d-block mt-1">Khi tắt, khách hàng sẽ không thấy phương thức chuyển khoản ngân hàng trên trang nạp tiền.</small>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-bold">Cú pháp nạp tiền (deposit_syntax_prefix):</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-white fw-bold text-primary"><i class="fa-solid fa-barcode"></i></span>
+                                                <input type="text" class="form-control fw-bold font-monospace" id="set_deposit_syntax_prefix" placeholder="NAPTIEN">
+                                            </div>
+                                            <small class="text-muted">Ví dụ: <code>NAPTIEN</code> &rarr; Cú pháp chuyển khoản sẽ là <code>NAPTIEN username</code>.</small>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-bold">Số tiền nạp tối thiểu (bank_min):</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="set_bank_min" placeholder="10000" min="1000" step="1000">
+                                                <span class="input-group-text fw-bold">₫</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-bold">Số tiền nạp tối đa (bank_max):</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="set_bank_max" placeholder="50000000" min="10000" step="50000">
+                                                <span class="input-group-text fw-bold">₫</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label fw-bold">Lưu ý khi nạp tiền (bank_notice):</label>
+                                            <textarea class="form-control" id="set_bank_notice" rows="2" placeholder="Vui lòng nhập đúng nội dung chuyển khoản để hệ thống cộng tiền tự động trong 3 giây."></textarea>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label fw-bold">Token Webhook API / Auto Cron (token_webhook_web2m):</label>
+                                            <input type="text" class="form-control font-monospace" id="set_token_webhook_web2m" placeholder="Token API Webhook nếu kết nối cổng tự động...">
+                                            <small class="text-muted">Dành cho webhook ngân hàng tự động.</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-card 2: Bank Accounts Table -->
+                                <div class="card p-4 border rounded-3 bg-white shadow-sm">
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-1">
+                                                <i class="fa-solid fa-list-check text-success me-2"></i> 2. Danh Sách Tài Khoản Thụ Hưởng (VietQR & MoMo)
+                                            </h6>
+                                            <small class="text-muted">Khách hàng sẽ quét mã VietQR tự động hoặc chuyển khoản vào các tài khoản đang Bật dưới đây.</small>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="loadAdminBanks()">
+                                            <i class="fa-solid fa-rotate me-1"></i> Làm mới danh sách
+                                        </button>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover align-middle border mb-0" id="table-admin-banks">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 50px;">#</th>
+                                                    <th style="width: 90px;">Logo</th>
+                                                    <th>Ngân hàng</th>
+                                                    <th>Số tài khoản</th>
+                                                    <th>Chủ tài khoản</th>
+                                                    <th>Chi nhánh</th>
+                                                    <th style="width: 140px;">Trạng thái</th>
+                                                    <th style="width: 130px;" class="text-end">Thao tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bank-accounts-table-body">
+                                                <tr><td colspan="8" class="text-center py-4"><i class="fa fa-spinner fa-spin me-2"></i> Đang tải danh sách ngân hàng...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer bg-light p-3 text-end">
+                    <button type="button" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold" id="btnSaveSettingsBottom" onclick="saveSettings()">
+                        <i class="fa-solid fa-floppy-disk me-2"></i> Lưu Toàn Bộ Cấu Hình Hệ Thống & Ngân Hàng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Thêm Ngân Hàng Mới -->
+    <div class="modal fade" id="modalAddBank" tabindex="-1" aria-labelledby="modalAddBankLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-primary text-white p-3">
+                    <h5 class="modal-title fw-bold" id="modalAddBankLabel">
+                        <i class="fa-solid fa-building-columns me-2"></i> Thêm Tài Khoản Ngân Hàng Mới
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formAddBank" onsubmit="event.preventDefault(); saveNewBank();">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Chọn ngân hàng (Chuẩn VietQR): <span class="text-danger">*</span></label>
+                                <select class="form-select" id="add_bank_select" onchange="onBankSelectChange('add')" required>
+                                    <option value="">-- Chọn ngân hàng thụ hưởng --</option>
+                                    <option value="VCB" data-name="Vietcombank (Ngoại Thương Việt Nam)">Vietcombank (VCB)</option>
+                                    <option value="MB" data-name="MBBank (Ngân Hàng Quân Đội)">MBBank (MB)</option>
+                                    <option value="TCB" data-name="Techcombank (Kỹ Thương Việt Nam)">Techcombank (TCB)</option>
+                                    <option value="ACB" data-name="ACB (Á Châu)">ACB (Á Châu)</option>
+                                    <option value="BIDV" data-name="BIDV (Đầu Tư & Phát Triển)">BIDV</option>
+                                    <option value="CTG" data-name="VietinBank (Công Thương Việt Nam)">VietinBank (CTG)</option>
+                                    <option value="TPB" data-name="TPBank (Tiên Phong)">TPBank (TPB)</option>
+                                    <option value="VPB" data-name="VPBank (Việt Nam Thịnh Vượng)">VPBank (VPB)</option>
+                                    <option value="STB" data-name="Sacombank (Sài Gòn Thương Tín)">Sacombank (STB)</option>
+                                    <option value="HDB" data-name="HDBank (Phát Triển TP.HCM)">HDBank (HDB)</option>
+                                    <option value="OCB" data-name="OCB (Phương Đông)">OCB</option>
+                                    <option value="MSB" data-name="MSB (Hàng Hải Việt Nam)">MSB</option>
+                                    <option value="SHB" data-name="SHB (Sài Gòn - Hà Nội)">SHB</option>
+                                    <option value="VIB" data-name="VIB (Quốc Tế Việt Nam)">VIB</option>
+                                    <option value="LPB" data-name="LPBank (Lộc Phát Việt Nam)">LPBank (LPB)</option>
+                                    <option value="MOMO" data-name="Ví Điện Tử MoMo">Ví Điện Tử MoMo</option>
+                                    <option value="ZALOPAY" data-name="Ví Điện Tử ZaloPay">Ví ZaloPay</option>
+                                    <option value="OTHER" data-name="">Khác (Tự nhập mã ngân hàng)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Mã ngân hàng (Bank ID): <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control font-monospace fw-bold" id="add_bank_id" placeholder="VCB" required>
+                                <small class="text-muted">Mã chuẩn VietQR (vd: VCB, MB, ACB, TCB, MOMO...)</small>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Tên đầy đủ ngân hàng: <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="add_bank_name" placeholder="Ngân hàng TMCP Ngoại thương Việt Nam" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Số tài khoản / Số điện thoại: <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control font-monospace fw-bold fs-5 text-primary" id="add_account_number" placeholder="Nhập số tài khoản..." required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Tên chủ tài khoản: <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control fw-bold text-uppercase" id="add_account_name" placeholder="NGUYEN VAN A" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Chi nhánh (Không bắt buộc):</label>
+                                <input type="text" class="form-control" id="add_branch" placeholder="Hội sở chính / Toàn quốc">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Link Logo / Icon ngân hàng:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="add_icon" placeholder="https://api.vietqr.io/img/VCB.png" oninput="document.getElementById('add_icon_preview').src = this.value">
+                                    <span class="input-group-text p-1 bg-white">
+                                        <img id="add_icon_preview" src="https://api.vietqr.io/img/VCB.png" style="height: 26px; width: 45px; object-fit: contain;" onerror="this.src='../assets/img/icon-bank.svg'">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check form-switch pt-2">
+                                    <input class="form-check-input" type="checkbox" id="add_status" checked style="width: 2.5em; height: 1.3em;">
+                                    <label class="form-check-label fw-bold ms-2" for="add_status">Kích hoạt nhận tiền ngay sau khi thêm</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light p-3">
+                        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold" id="btnSaveNewBank">
+                            <i class="fa-solid fa-plus me-1"></i> Thêm Ngân Hàng
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Sửa Ngân Hàng -->
+    <div class="modal fade" id="modalEditBank" tabindex="-1" aria-labelledby="modalEditBankLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-dark text-white p-3">
+                    <h5 class="modal-title fw-bold" id="modalEditBankLabel">
+                        <i class="fa-solid fa-pen-to-square me-2 text-warning"></i> Chỉnh Sửa Tài Khoản Ngân Hàng
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formEditBank" onsubmit="event.preventDefault(); saveEditBank();">
+                    <input type="hidden" id="edit_bank_id_db">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Mã ngân hàng (Bank ID): <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control font-monospace fw-bold" id="edit_bank_id" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Tên đầy đủ ngân hàng: <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="edit_bank_name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Số tài khoản: <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control font-monospace fw-bold fs-5 text-primary" id="edit_account_number" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Tên chủ tài khoản: <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control fw-bold text-uppercase" id="edit_account_name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Chi nhánh:</label>
+                                <input type="text" class="form-control" id="edit_branch">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Link Logo / Icon:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="edit_icon" oninput="document.getElementById('edit_icon_preview').src = this.value">
+                                    <span class="input-group-text p-1 bg-white">
+                                        <img id="edit_icon_preview" src="" style="height: 26px; width: 45px; object-fit: contain;" onerror="this.src='../assets/img/icon-bank.svg'">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check form-switch pt-2">
+                                    <input class="form-check-input" type="checkbox" id="edit_status" style="width: 2.5em; height: 1.3em;">
+                                    <label class="form-check-label fw-bold ms-2" for="edit_status">Bật nhận tiền qua tài khoản này</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light p-3">
+                        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-warning text-dark rounded-pill px-4 fw-bold" id="btnSaveEditBank">
+                            <i class="fa-solid fa-floppy-disk me-1"></i> Lưu Thay Đổi
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS (CDN with Local Fallback) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>if (typeof bootstrap === 'undefined') document.write('<script src="../client/vendor/bootstrap/bootstrap.bundle.min.js"><\/script>')</script>
+
+    <!-- App Modules -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/core/theme.js"></script>
+
+    <script>
+        // Native Tab Switcher Fallback (Guarantees 100% responsiveness even without Bootstrap JS)
+        function initTabSwitcherFallback() {
+            const tabButtons = document.querySelectorAll('#settingsTab button, #settingsTab a');
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-bs-target') || this.getAttribute('href');
+                    if (!targetId) return;
+
+                    // Update active button state
+                    tabButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Update active pane state
+                    const panes = document.querySelectorAll('#settingsTabContent .tab-pane');
+                    panes.forEach(p => p.classList.remove('show', 'active'));
+
+                    const targetPane = document.querySelector(targetId);
+                    if (targetPane) {
+                        targetPane.classList.add('show', 'active');
+                    }
+                });
+            });
+
+            // Auto-switch tab if URL has hash (e.g. #tab-bank)
+            function checkHashAndSwitch() {
+                const currentHash = window.location.hash;
+                if (currentHash) {
+                    const targetBtn = document.querySelector(`[data-bs-target="${currentHash}"]`) || document.querySelector(`[href="${currentHash}"]`) || document.getElementById(currentHash.replace('#', '') + '-btn');
+                    if (targetBtn) {
+                        targetBtn.click();
+                    }
+                }
+            }
+            window.addEventListener('hashchange', checkHashAndSwitch);
+            if (window.location.hash) {
+                setTimeout(checkHashAndSwitch, 120);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            initTabSwitcherFallback();
+            if (!window.auth.checkAuth('admin')) return;
+            await loadSettings();
+        });
+
+        async function loadSettings() {
+            try {
+                const res = await window.api.get('/admin/settings');
+                if (res && res.status === 'success' && res.data) {
+                    const d = res.data;
+
+                    // Tab 1: Logo
+                    setValue('set_site_logo', d.site_logo || d.logo_dark || '');
+                    setValue('set_logo_height', d.logo_height || 54);
+                    setText('label_logo_height', `${d.logo_height || 54}px`);
+
+                    // Tab 2: Theme
+                    setValue('set_primary_color', d.primary_color || '#2563eb');
+                    setValue('picker_primary', d.primary_color || '#2563eb');
+                    setValue('set_accent_color', d.accent_color || '#d4af37');
+                    setValue('picker_accent', d.accent_color || '#d4af37');
+                    setValue('set_navbar_bg', d.navbar_bg || '#ffffff');
+                    setValue('picker_navbar', d.navbar_bg || '#ffffff');
+
+                    // Tab 3: Contact
+                    setValue('set_site_title', d.site_title || '');
+                    setValue('set_site_hotline', d.site_hotline || d.hotline || '');
+                    setValue('set_site_email', d.site_email || d.email || '');
+                    setValue('set_site_zalo', d.site_zalo || d.zalo || '');
+                    setValue('set_site_telegram', d.site_telegram || d.telegram || '');
+                    setValue('set_usd_rate', d.usd_rate || 25400);
+                    setValue('set_marquee_notice', d.marquee_notice || d.notice_top_left || '');
+
+                    // Tab 4: Display
+                    const popupCheck = document.getElementById('set_welcome_popup_status');
+                    if (popupCheck) popupCheck.checked = (d.welcome_popup_status === 1 || d.welcome_popup_status === true || d.welcome_popup_status === '1');
+                    setValue('set_welcome_popup_content', d.welcome_popup_content || '');
+
+                    const ordersCheck = document.getElementById('set_show_recent_orders');
+                    if (ordersCheck) ordersCheck.checked = (d.show_recent_orders === 1 || d.show_recent_orders === true || d.show_recent_orders === '1');
+
+                    const toolsCheck = document.getElementById('set_status_menu_tools');
+                    if (toolsCheck) toolsCheck.checked = (d.status_menu_tools === 1 || d.status_menu_tools === true || d.status_menu_tools === '1' || d.status_menu_tools === undefined);
+
+                    // Tab 5: Bank & VietQR
+                    const bankStatusCheck = document.getElementById('set_bank_status');
+                    if (bankStatusCheck) bankStatusCheck.checked = (d.bank_status === 1 || d.bank_status === true || d.bank_status === '1' || d.bank_status === undefined);
+                    setValue('set_deposit_syntax_prefix', d.deposit_syntax_prefix || d.prefix_autobank || 'NAPTIEN');
+                    setValue('set_bank_min', d.bank_min || 10000);
+                    setValue('set_bank_max', d.bank_max || 50000000);
+                    setValue('set_bank_notice', d.bank_notice || '');
+                    setValue('set_token_webhook_web2m', d.token_webhook_web2m || '');
+
+                    updateLivePreview();
+
+                    // Load Bank Accounts List
+                    await loadAdminBanks();
+                }
+            } catch (err) {
+                console.error('Error loading settings:', err);
+            }
+        }
+
+        function setValue(id, val) {
+            const el = document.getElementById(id);
+            if (el) el.value = val !== undefined && val !== null ? val : '';
+        }
+
+        function syncColor(type, val) {
+            const txt = document.getElementById(`set_${type}_color`) || document.getElementById(`set_${type}_bg`);
+            if (txt) txt.value = val;
+        }
+
+        function syncColorPicker(type, val) {
+            const pkr = document.getElementById(`picker_${type}`);
+            if (pkr && /^#[0-9A-Fa-f]{6}$/.test(val)) pkr.value = val;
+        }
+
+        function getVal(id, defaultVal = '') {
+            const el = document.getElementById(id);
+            return el && el.value !== undefined ? el.value.trim() : defaultVal;
+        }
+
+        function getChecked(id) {
+            const el = document.getElementById(id);
+            return el ? !!el.checked : false;
+        }
+
+        function setText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
+        function updateLivePreview() {
+            const src = getVal('set_site_logo') || '../assets/storage/images/logo_kimcss.png';
+            const height = parseInt(getVal('set_logo_height', '54')) || 54;
+            setText('label_logo_height', `${height}px`);
+
+            const container = document.getElementById('preview_container');
+            if (!container) return;
+
+            const isVideo = src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.ogg');
+            if (isVideo) {
+                container.innerHTML = `
+                    <span class="logo-wrapper">
+                        <video src="${src}" autoplay loop muted playsinline class="logo-main" style="height: ${height}px;"></video>
+                    </span>
+                `;
+            } else {
+                container.innerHTML = `
+                    <span class="logo-wrapper">
+                        <img src="${src}" onerror="this.src='../assets/storage/images/logo_kimcss.png'" alt="Logo Preview" class="logo-main" style="height: ${height}px;">
+                    </span>
+                `;
+            }
+        }
+
+        async function handleMediaUpload() {
+            const input = document.getElementById('logo_file_input');
+            if (!input || !input.files || input.files.length === 0) {
+                Swal.fire('Lỗi', 'Vui lòng chọn một tệp ảnh hoặc video từ máy tính!', 'warning');
+                return;
+            }
+
+            const file = input.files[0];
+            const btn = document.getElementById('btnUploadMedia');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i> Đang tải lên...';
+            }
+
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                try {
+                    const base64Data = e.target.result;
+                    const res = await window.api.post('/admin/upload-media', {
+                        filename: file.name,
+                        data: base64Data
+                    });
+
+                    if (res && res.status === 'success' && res.url) {
+                        setValue('set_site_logo', res.url);
+                        updateLivePreview();
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Tải lên thành công!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    } else {
+                        Swal.fire('Thất bại', res ? res.msg : 'Lỗi tải lên media', 'error');
+                    }
+                } catch (err) {
+                    Swal.fire('Lỗi', 'Lỗi khi upload: ' + err.message, 'error');
+                } finally {
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up me-1"></i> Tải lên';
+                    }
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function saveSettings() {
+            const btnBottom = document.getElementById('btnSaveSettingsBottom');
+            const btnTop = document.getElementById('btnSaveSettingsTop');
+            if (btnBottom) {
+                btnBottom.disabled = true;
+                btnBottom.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Đang lưu...';
+            }
+            if (btnTop) {
+                btnTop.disabled = true;
+                btnTop.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Đang lưu...';
+            }
+
+            const payload = {
+                site_logo: getVal('set_site_logo'),
+                logo_height: parseInt(getVal('set_logo_height', '54')) || 54,
+                primary_color: getVal('set_primary_color', '#2563eb'),
+                accent_color: getVal('set_accent_color', '#d4af37'),
+                navbar_bg: getVal('set_navbar_bg', '#ffffff'),
+                site_title: getVal('set_site_title'),
+                site_hotline: getVal('set_site_hotline'),
+                site_email: getVal('set_site_email'),
+                site_zalo: getVal('set_site_zalo'),
+                site_telegram: getVal('set_site_telegram'),
+                usd_rate: parseFloat(getVal('set_usd_rate', '25400')) || 25400,
+                marquee_notice: getVal('set_marquee_notice'),
+                welcome_popup_status: getChecked('set_welcome_popup_status') ? 1 : 0,
+                welcome_popup_content: getVal('set_welcome_popup_content'),
+                show_recent_orders: getChecked('set_show_recent_orders') ? 1 : 0,
+                status_menu_tools: getChecked('set_status_menu_tools') ? 1 : 0,
+                
+                // Bank & VietQR Configuration
+                bank_status: getChecked('set_bank_status') ? 1 : 0,
+                deposit_syntax_prefix: getVal('set_deposit_syntax_prefix', 'NAPTIEN'),
+                prefix_autobank: getVal('set_deposit_syntax_prefix', 'NAPTIEN'),
+                bank_min: parseInt(getVal('set_bank_min', '10000')) || 10000,
+                bank_max: parseInt(getVal('set_bank_max', '50000000')) || 50000000,
+                bank_notice: getVal('set_bank_notice'),
+                token_webhook_web2m: getVal('set_token_webhook_web2m')
+            };
+
+            try {
+                const res = await window.api.post('/admin/settings', payload);
+                if (res && res.status === 'success') {
+                    // Broadcast change across tabs
+                    localStorage.setItem('hk_site_settings_updated', Date.now());
+
+                    window.api.alertSuccess('Đã cập nhật toàn bộ cấu hình hệ thống & số điện thoại trên web!');
+                    if (window.applySiteSettings && res.data) {
+                        window.applySiteSettings(res.data);
+                    }
+                } else {
+                    window.api.alertError(res ? res.msg : 'Lỗi cập nhật cấu hình');
+                }
+            } catch (err) {
+                window.api.alertError('Lỗi kết nối máy chủ: ' + err.message);
+            } finally {
+                if (btnBottom) {
+                    btnBottom.disabled = false;
+                    btnBottom.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Lưu Toàn Bộ Cấu Hình Hệ Thống & Ngân Hàng';
+                }
+                if (btnTop) {
+                    btnTop.disabled = false;
+                    btnTop.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Lưu Cấu Hình';
+                }
+            }
+        }
+
+        /* --- BANK ACCOUNTS CRUD MANAGEMENT --- */
+        let cachedAdminBanks = [];
+
+        async function loadAdminBanks() {
+            const tbody = document.getElementById('bank-accounts-table-body');
+            if (!tbody) return;
+
+            try {
+                const res = await window.api.get('/admin/banks');
+                if (res && res.status === 'success' && res.banks) {
+                    cachedAdminBanks = res.banks;
+                    if (cachedAdminBanks.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-muted">Chưa có tài khoản ngân hàng nào trong hệ thống. Bấm <b>"Thêm Ngân Hàng Mới"</b> để bắt đầu.</td></tr>';
+                        return;
+                    }
+
+                    tbody.innerHTML = cachedAdminBanks.map((b, idx) => {
+                        const icon = b.icon || `https://api.vietqr.io/img/${b.bank_id}.png`;
+                        const isChecked = b.status === 1 || b.status === true;
+                        return `
+                            <tr>
+                                <td class="text-muted fw-bold">${idx + 1}</td>
+                                <td>
+                                    <div class="p-1 bg-white border rounded text-center shadow-sm" style="width: 72px; height: 38px; display: flex; align-items: center; justify-content: center;">
+                                        <img src="${icon}" alt="${b.bank_name}" style="max-height: 30px; max-width: 64px; object-fit: contain;" onerror="this.src='../assets/img/icon-bank.svg'">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-dark">${b.bank_name}</div>
+                                    <span class="badge bg-light text-primary border font-monospace">${b.bank_id}</span>
+                                </td>
+                                <td>
+                                    <span class="font-monospace fw-bold fs-6 text-primary">${b.account_number}</span>
+                                </td>
+                                <td>
+                                    <span class="fw-bold text-uppercase">${b.account_name}</span>
+                                </td>
+                                <td>
+                                    <span class="small text-muted">${b.branch || 'Toàn quốc'}</span>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch d-inline-flex align-items-center">
+                                        <input class="form-check-input" type="checkbox" id="switch-bank-${b.id}" ${isChecked ? 'checked' : ''} onchange="toggleBankStatus(${b.id})" style="cursor: pointer; width: 2.2em; height: 1.2em;">
+                                        <label class="form-check-label ms-2 small fw-bold ${isChecked ? 'text-success' : 'text-secondary'}" for="switch-bank-${b.id}">
+                                            ${isChecked ? 'Bật nhận tiền' : 'Đang tắt'}
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <button type="button" class="btn btn-sm btn-outline-warning rounded-circle me-1" onclick="openEditBankModal(${b.id})" title="Chỉnh sửa">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteBank(${b.id}, '${b.bank_name}', '${b.account_number}')" title="Xóa">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            } catch (err) {
+                console.error('Error loading admin banks:', err);
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-danger">Lỗi kết nối khi tải danh sách ngân hàng!</td></tr>';
+            }
+        }
+
+        function openAddBankModal() {
+            const form = document.getElementById('formAddBank');
+            if (form) form.reset();
+            document.getElementById('add_bank_id').value = '';
+            document.getElementById('add_bank_name').value = '';
+            document.getElementById('add_account_number').value = '';
+            document.getElementById('add_account_name').value = '';
+            document.getElementById('add_branch').value = 'Hội sở chính';
+            document.getElementById('add_icon').value = '';
+            document.getElementById('add_icon_preview').src = '../assets/img/icon-bank.svg';
+            document.getElementById('add_status').checked = true;
+
+            const modalEl = document.getElementById('modalAddBank');
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            } else {
+                $(modalEl).modal('show');
+            }
+        }
+
+        function onBankSelectChange(mode) {
+            const sel = document.getElementById(`${mode}_bank_select`);
+            if (!sel) return;
+
+            const val = sel.value;
+            const opt = sel.options[sel.selectedIndex];
+            const name = opt ? opt.getAttribute('data-name') : '';
+
+            if (val && val !== 'OTHER') {
+                const bankIdInput = document.getElementById(`${mode}_bank_id`);
+                const bankNameInput = document.getElementById(`${mode}_bank_name`);
+                const bankIconInput = document.getElementById(`${mode}_icon`);
+                const bankIconPreview = document.getElementById(`${mode}_icon_preview`);
+
+                if (bankIdInput) bankIdInput.value = val;
+                if (bankNameInput) bankNameInput.value = name || opt.text;
+                const iconUrl = val === 'MOMO' ? 'https://developers.momo.vn/v3/assets/images/logo.png' : `https://api.vietqr.io/img/${val}.png`;
+                if (bankIconInput) bankIconInput.value = iconUrl;
+                if (bankIconPreview) bankIconPreview.src = iconUrl;
+            }
+        }
+
+        async function saveNewBank() {
+            const bank_id = getVal('add_bank_id');
+            const bank_name = getVal('add_bank_name');
+            const account_number = getVal('add_account_number');
+            const account_name = getVal('add_account_name');
+            const branch = getVal('add_branch') || 'Toàn quốc';
+            const icon = getVal('add_icon') || `https://api.vietqr.io/img/${bank_id.toUpperCase()}.png`;
+            const status = getChecked('add_status') ? 1 : 0;
+
+            if (!bank_id || !bank_name || !account_number || !account_name) {
+                window.api.alertError('Vui lòng nhập đầy đủ mã ngân hàng, tên ngân hàng, số tài khoản và tên chủ tài khoản!');
+                return;
+            }
+
+            try {
+                const res = await window.api.post('/admin/banks', {
+                    bank_id,
+                    bank_name,
+                    account_number,
+                    account_name,
+                    branch,
+                    icon,
+                    status
+                });
+
+                if (res && res.status === 'success') {
+                    window.api.alertSuccess(res.msg || 'Thêm tài khoản ngân hàng thành công!');
+                    const modalEl = document.getElementById('modalAddBank');
+                    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                        const modal = bootstrap.Modal.getInstance(modalEl);
+                        if (modal) modal.hide();
+                    } else {
+                        $(modalEl).modal('hide');
+                    }
+                    await loadAdminBanks();
+                } else {
+                    window.api.alertError(res ? res.msg : 'Lỗi thêm ngân hàng!');
+                }
+            } catch (err) {
+                window.api.alertError('Lỗi kết nối máy chủ: ' + err.message);
+            }
+        }
+
+        function openEditBankModal(id) {
+            const bank = cachedAdminBanks.find(b => b.id === id);
+            if (!bank) return;
+
+            document.getElementById('edit_bank_id_db').value = bank.id;
+            document.getElementById('edit_bank_id').value = bank.bank_id;
+            document.getElementById('edit_bank_name').value = bank.bank_name;
+            document.getElementById('edit_account_number').value = bank.account_number;
+            document.getElementById('edit_account_name').value = bank.account_name;
+            document.getElementById('edit_branch').value = bank.branch || '';
+            document.getElementById('edit_icon').value = bank.icon || '';
+            document.getElementById('edit_icon_preview').src = bank.icon || `https://api.vietqr.io/img/${bank.bank_id}.png`;
+            document.getElementById('edit_status').checked = (bank.status === 1 || bank.status === true);
+
+            const modalEl = document.getElementById('modalEditBank');
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            } else {
+                $(modalEl).modal('show');
+            }
+        }
+
+        async function saveEditBank() {
+            const id = document.getElementById('edit_bank_id_db').value;
+            const bank_id = getVal('edit_bank_id');
+            const bank_name = getVal('edit_bank_name');
+            const account_number = getVal('edit_account_number');
+            const account_name = getVal('edit_account_name');
+            const branch = getVal('edit_branch');
+            const icon = getVal('edit_icon');
+            const status = getChecked('edit_status') ? 1 : 0;
+
+            try {
+                const res = await window.api.put(`/admin/banks/${id}`, {
+                    bank_id,
+                    bank_name,
+                    account_number,
+                    account_name,
+                    branch,
+                    icon,
+                    status
+                });
+
+                if (res && res.status === 'success') {
+                    window.api.alertSuccess(res.msg || 'Cập nhật tài khoản ngân hàng thành công!');
+                    const modalEl = document.getElementById('modalEditBank');
+                    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                        const modal = bootstrap.Modal.getInstance(modalEl);
+                        if (modal) modal.hide();
+                    } else {
+                        $(modalEl).modal('hide');
+                    }
+                    await loadAdminBanks();
+                } else {
+                    window.api.alertError(res ? res.msg : 'Lỗi cập nhật ngân hàng!');
+                }
+            } catch (err) {
+                window.api.alertError('Lỗi kết nối máy chủ: ' + err.message);
+            }
+        }
+
+        async function toggleBankStatus(id) {
+            try {
+                const res = await window.api.post(`/admin/banks/toggle-status/${id}`);
+                if (res && res.status === 'success') {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: res.msg,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    await loadAdminBanks();
+                } else {
+                    window.api.alertError(res ? res.msg : 'Lỗi đổi trạng thái ngân hàng');
+                }
+            } catch (err) {
+                window.api.alertError('Lỗi kết nối: ' + err.message);
+            }
+        }
+
+        async function deleteBank(id, bankName, accNum) {
+            const result = await Swal.fire({
+                title: 'Xóa tài khoản ngân hàng?',
+                html: `Bạn có chắc chắn muốn xóa ngân hàng <b>${bankName}</b> (${accNum}) khỏi hệ thống? Khách hàng sẽ không thể quét nạp qua số này nữa!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fa-solid fa-trash me-1"></i> Xóa vĩnh viễn',
+                cancelButtonText: 'Hủy'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    const res = await window.api.delete(`/admin/banks/${id}`);
+                    if (res && res.status === 'success') {
+                        window.api.alertSuccess(res.msg || 'Đã xóa ngân hàng thành công!');
+                        await loadAdminBanks();
+                    } else {
+                        window.api.alertError(res ? res.msg : 'Lỗi khi xóa ngân hàng');
+                    }
+                } catch (err) {
+                    window.api.alertError('Lỗi kết nối máy chủ: ' + err.message);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

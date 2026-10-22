@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Lấy Mã 2FA Trực Tuyến - Google Authenticator - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="/assets/storage/images/logo_dark_8OJ.png" />
+
+    <!-- Original Stylesheets -->
+    <link rel="stylesheet" href="/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/client/css/main.css">
+    <link rel="stylesheet" href="/client/css/wallet.css">
+    <link rel="stylesheet" href="/mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="/sweetalert2/default.css" type="text/css">
+    <script src="/sweetalert2/sweetalert2.js"></script>
+    <script src="/js/jquery-3.6.0.js"></script>
+
+    <style>
+        .code-display {
+            font-size: 42px;
+            letter-spacing: 6px;
+            font-weight: 800;
+            color: #0d6efd;
+            font-family: monospace;
+        }
+        .timer-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #e8f4fd;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0d6efd;
+            border: 2px solid #0d6efd;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 bg-light">
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-white border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small class="text-primary fw-bold"><i class="fa-solid fa-shield-halved me-1"></i> Trình tạo mã 2FA TOTP bảo mật chạy trực tiếp trên trình duyệt (100% Offline / Client-Side)</small></div>
+            <div id="header-user-slot"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="/index.html">
+                <img class="site-logo-img" src="/assets/storage/images/logo_dark_8OJ.png" onerror="this.src='/assets/img/logo.png'" alt="logo" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="/index.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="/tools/index.html" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-toolbox me-1"></i> Tất cả tiện ích</a>
+                <a href="/tools/tool-checklive-fb.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-bolt me-1"></i> Check Live FB</a>
+                <a href="/tools/tool-icon-facebook.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-icons me-1"></i> Icon FB</a>
+                <a href="/tools/tool-random-face.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-user-astronaut me-1"></i> Random Face</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-4 flex-grow-1">
+        <div class="container" style="max-width: 800px;">
+            <!-- Hero Card -->
+            <div class="card border-0 rounded-4 overflow-hidden mb-4 shadow-sm text-white p-4" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);">
+                <div class="d-flex align-items-center">
+                    <img src="/mod/img/icon-google-auth.png" width="60" height="60" class="me-3" alt="2FA">
+                    <div>
+                        <span class="badge bg-white text-primary mb-1">Miễn phí 100%</span>
+                        <h4 class="fw-bold mb-0">Lấy Mã 2FA Google Authenticator (RFC 6238)</h4>
+                        <small class="opacity-75">Tự động tính toán mã 6 số thời gian thực, không gửi khóa bí mật lên máy chủ</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single 2FA Key Generator -->
+            <div class="card border-0 shadow-sm p-4 bg-white rounded-3 mb-4">
+                <label class="form-label fw-bold mb-2">Nhập khóa bí mật 2FA Secret Key (Chuỗi chữ và số, ví dụ: <code>JBSWY3DPEHPK3PXP</code>):</label>
+                <div class="input-group input-group-lg mb-3">
+                    <input type="text" class="form-control font-monospace" id="secretKeyInput" placeholder="Dán mã 2FA secret key vào đây..." oninput="generateTOTP()">
+                    <button class="btn btn-outline-secondary" onclick="pasteSecretKey()"><i class="fa-solid fa-paste me-1"></i> Dán</button>
+                    <button class="btn btn-primary" onclick="generateTOTP()"><i class="fa-solid fa-rotate me-1"></i> Lấy mã</button>
+                </div>
+
+                <!-- Result Box -->
+                <div class="border rounded-3 p-4 bg-light text-center mb-3">
+                    <div class="d-flex justify-content-center align-items-center gap-3 mb-2">
+                        <span class="timer-circle" id="timeRemaining">30</span>
+                        <div class="code-display" id="otpCodeDisplay">------</div>
+                    </div>
+                    <div class="progress mb-3" style="height: 6px;">
+                        <div class="progress-bar bg-primary" id="progressBar" style="width: 100%; transition: width 1s linear;"></div>
+                    </div>
+                    <button class="btn btn-success px-4 py-2" id="btnCopyCode" onclick="copyOTP()"><i class="fa-solid fa-copy me-2"></i> Sao chép mã 6 số</button>
+                </div>
+            </div>
+
+            <!-- Batch 2FA Generator -->
+            <div class="card border-0 shadow-sm p-4 bg-white rounded-3">
+                <h5 class="fw-bold mb-3"><i class="fa-solid fa-layer-group text-primary me-2"></i> Lấy mã hàng loạt (Mỗi dòng 1 key 2FA):</h5>
+                <textarea class="form-control font-monospace mb-3 p-3" id="batchSecretInput" rows="5" placeholder="Dán danh sách 2FA key hoặc dòng chứa 2FA key (UID|Pass|2FA|...):&#10;JBSWY3DPEHPK3PXP&#10;456789123|Pass123|HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"></textarea>
+                <button class="btn btn-primary mb-3" onclick="processBatch2FA()"><i class="fa-solid fa-play me-1"></i> Xử lý hàng loạt</button>
+
+                <div id="batchResults" style="display:none;">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="form-label fw-bold text-success mb-0">Kết quả mã OTP 2FA:</label>
+                        <button class="btn btn-sm btn-outline-success" onclick="copyBatchResults()"><i class="fa-solid fa-copy me-1"></i> Sao chép kết quả</button>
+                    </div>
+                    <textarea class="form-control font-monospace bg-light text-success" id="batchResultsText" rows="6" readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-white border-top text-center mt-auto">
+        <div class="container">
+            <small class="text-muted" id="footer-copyright">© All Copyrights Reserved by <a href="/index.html">ShopClone 7</a> | Tiện Ích MMO Tự Động</small>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/core/theme.js"></script>
+    <script src="/js/core/i18n.js"></script>
+
+    <!-- Native RFC 6238 TOTP Engine -->
+    <script>
+        // Base32 Decode Table
+        const RFC4648_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+
+        function base32ToBytes(base32) {
+            const clean = base32.toUpperCase().replace(/[\s=-]/g, '');
+            const length = clean.length;
+            let bits = 0;
+            let value = 0;
+            let index = 0;
+            const bytes = new Uint8Array(Math.floor((length * 5) / 8));
+
+            for (let i = 0; i < length; i++) {
+                const val = RFC4648_ALPHABET.indexOf(clean[i]);
+                if (val === -1) continue;
+                value = (value << 5) | val;
+                bits += 5;
+                if (bits >= 8) {
+                    bytes[index++] = (value >>> (bits - 8)) & 255;
+                    bits -= 8;
+                }
+            }
+            return bytes.slice(0, index);
+        }
+
+        async function computeTOTP(secretKey, epochSeconds = Math.floor(Date.now() / 1000)) {
+            try {
+                const cleanKey = secretKey.trim().replace(/\s+/g, '');
+                if (!cleanKey) return '------';
+
+                const keyBytes = base32ToBytes(cleanKey);
+                if (keyBytes.length === 0) return '------';
+
+                const counter = Math.floor(epochSeconds / 30);
+                const counterBytes = new Uint8Array(8);
+                let tmp = counter;
+                for (let i = 7; i >= 0; i--) {
+                    counterBytes[i] = tmp & 0xff;
+                    tmp = Math.floor(tmp / 256);
+                }
+
+                const cryptoKey = await window.crypto.subtle.importKey(
+                    'raw',
+                    keyBytes,
+                    { name: 'HMAC', hash: 'SHA-1' },
+                    false,
+                    ['sign']
+                );
+
+                const signature = await window.crypto.subtle.sign('HMAC', cryptoKey, counterBytes);
+                const hmac = new Uint8Array(signature);
+                const offset = hmac[hmac.length - 1] & 0x0f;
+                const binary =
+                    ((hmac[offset] & 0x7f) << 24) |
+                    ((hmac[offset + 1] & 0xff) << 16) |
+                    ((hmac[offset + 2] & 0xff) << 8) |
+                    (hmac[offset + 3] & 0xff);
+
+                const otp = (binary % 1000000).toString().padStart(6, '0');
+                return otp;
+            } catch (e) {
+                return '------';
+            }
+        }
+
+        let currentOTP = '------';
+
+        async function generateTOTP() {
+            const input = document.getElementById('secretKeyInput').value.trim();
+            if (!input) {
+                document.getElementById('otpCodeDisplay').innerText = '------';
+                currentOTP = '------';
+                return;
+            }
+            const otp = await computeTOTP(input);
+            currentOTP = otp;
+            document.getElementById('otpCodeDisplay').innerText = otp.length === 6 ? `${otp.slice(0,3)} ${otp.slice(3)}` : otp;
+        }
+
+        function updateTimer() {
+            const now = Math.floor(Date.now() / 1000);
+            const remaining = 30 - (now % 30);
+            const circle = document.getElementById('timeRemaining');
+            const progress = document.getElementById('progressBar');
+
+            if (circle) circle.innerText = remaining;
+            if (progress) progress.style.width = ((remaining / 30) * 100) + '%';
+
+            if (remaining === 30 || remaining === 0) {
+                generateTOTP();
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function copyOTP() {
+            if (!currentOTP || currentOTP === '------') {
+                window.api.alertError('Chưa có mã OTP để sao chép!');
+                return;
+            }
+            navigator.clipboard.writeText(currentOTP).then(() => {
+                window.api.alertSuccess(`Đã sao chép mã [${currentOTP}] vào Clipboard!`);
+            });
+        }
+
+        async function pasteSecretKey() {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text) {
+                    document.getElementById('secretKeyInput').value = text.trim();
+                    generateTOTP();
+                }
+            } catch (e) {
+                window.api.alertError('Không thể đọc dữ liệu từ Clipboard. Hãy bấm Ctrl+V để dán!');
+            }
+        }
+
+        async function processBatch2FA() {
+            const raw = document.getElementById('batchSecretInput').value.trim();
+            if (!raw) {
+                window.api.alertError('Vui lòng nhập danh sách 2FA secret!');
+                return;
+            }
+            const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+            const results = [];
+
+            for (const line of lines) {
+                // Try extracting 2FA key: if format UID|Pass|2FA, grab 2FA part
+                const parts = line.split('|');
+                let secretCandidate = parts[0];
+                for (const p of parts) {
+                    const cleanP = p.replace(/\s+/g, '');
+                    if (cleanP.length >= 16 && /^[A-Za-z2-7]+$/.test(cleanP)) {
+                        secretCandidate = cleanP;
+                        break;
+                    }
+                }
+                const code = await computeTOTP(secretCandidate);
+                results.push(`${secretCandidate} => ${code}`);
+            }
+
+            document.getElementById('batchResultsText').value = results.join('\n');
+            document.getElementById('batchResults').style.display = 'block';
+            window.api.alertSuccess(`Đã tính toán xong ${results.length} mã 2FA!`);
+        }
+
+        function copyBatchResults() {
+            const el = document.getElementById('batchResultsText');
+            if (!el || !el.value) return;
+            navigator.clipboard.writeText(el.value).then(() => {
+                window.api.alertSuccess('Đã sao chép danh sách mã 2FA vào clipboard!');
+            });
+        }
+    </script>
+</body>
+
+</html>

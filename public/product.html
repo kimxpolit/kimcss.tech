@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Chi tiết sản phẩm - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --primary1: #0a58ca;
+        }
+    </style>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="client/css/main.css">
+    <link rel="stylesheet" href="client/css/user-auth.css">
+    <link rel="stylesheet" href="client/css/index.css">
+    <link rel="stylesheet" href="client/css/product-details.css">
+    <link rel="stylesheet" href="mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="sweetalert2/default.css" type="text/css">
+    <script src="sweetalert2/sweetalert2.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <a class="backtop" href="#"><i class="fa-sharp fa-solid fa-chevron-up"></i></a>
+
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-bolt text-warning me-2"></i> Giao dịch tức thì, cấp tài khoản tự động 24/7</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 bg-white border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="header-logo">
+                <img src="assets/storage/images/logo_dark_8OJ.png" onerror="this.src='client/images/logo.png'" alt="ShopClone 7" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="index.html" class="btn btn-outline-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="cart.html" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold"><i class="fa-solid fa-cart-shopping me-1"></i> Giỏ hàng (<span class="cart-badge-count">0</span>)</a>
+                <a href="recharge.html" class="btn btn-outline-success btn-sm rounded-pill px-3"><i class="fa-solid fa-wallet me-1"></i> Nạp tiền</a>
+                <a href="orders.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-bag-shopping me-1"></i> Đơn hàng</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm</li>
+                </ol>
+            </nav>
+
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white" id="product-detail-area">
+                <div class="row g-4">
+                    <!-- Product Image -->
+                    <div class="col-lg-5 text-center">
+                        <div class="border rounded-4 p-4 bg-light d-inline-block shadow-sm mb-3">
+                            <img id="product-main-img" src="mod/img/icon-facebook.png" alt="Product" class="img-fluid rounded" style="max-height: 260px; object-fit: contain;">
+                        </div>
+                    </div>
+
+                    <!-- Product Info & Purchase Form -->
+                    <div class="col-lg-7">
+                        <h4 class="fw-bold mb-3 text-dark" id="product-name">Đang tải sản phẩm...</h4>
+
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fs-6">
+                                <i class="fa-solid fa-check-circle me-1"></i> Còn lại: <strong id="product-stock">0</strong>
+                            </span>
+                            <span class="badge bg-light text-muted border px-3 py-2 fs-6">
+                                Đã bán: <strong id="product-sold" class="text-dark">0</strong>
+                            </span>
+                        </div>
+
+                        <div class="price-section p-3 bg-light rounded-3 mb-4">
+                            <small class="text-muted d-block mb-1">Giá bán hiện tại:</small>
+                            <div id="product-price">
+                                <span class="fs-3 fw-bold text-danger">0 ₫</span>
+                            </div>
+                        </div>
+
+                        <div class="description-section mb-4">
+                            <h6 class="fw-bold text-dark mb-2"><i class="fa-solid fa-circle-info text-primary me-2"></i> Mô tả sản phẩm:</h6>
+                            <p class="text-muted small" id="product-desc">Đang tải mô tả chi tiết...</p>
+                        </div>
+
+                        <!-- Stepper & Calculation -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-6">
+                                <label class="form-label fw-bold small">Số lượng mua:</label>
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="changeQty(-1)"><i class="fa-solid fa-minus"></i></button>
+                                    <input type="number" id="amount" class="form-control text-center fw-bold" value="1" min="1" onchange="calculatePrice()">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="changeQty(1)"><i class="fa-solid fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label fw-bold small">Mã giảm giá (Coupon):</label>
+                                <div class="input-group">
+                                    <input type="text" id="coupon" class="form-control" placeholder="Nhập coupon (GIAM10)..." onchange="calculatePrice()">
+                                    <button class="btn btn-outline-primary" type="button" onclick="calculatePrice()">Áp dụng</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price Breakdown -->
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Thành tiền:</td>
+                                        <td class="text-end fw-bold" id="into_money">0 ₫</td>
+                                    </tr>
+                                    <tr id="into_discount_row" style="display: none;">
+                                        <td class="text-danger">Giảm giá Coupon:</td>
+                                        <td class="text-end text-danger fw-bold" id="into_discount">0 ₫</td>
+                                    </tr>
+                                    <tr class="table-primary">
+                                        <td class="fs-5 fw-bold">Tổng thanh toán:</td>
+                                        <td class="text-end fs-5 fw-bold text-danger" id="into_pay">0 ₫</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Action Buttons (WEB1044 Requirement) -->
+                        <div class="d-flex flex-column flex-sm-row gap-3">
+                            <button class="btn btn-outline-primary btn-lg flex-grow-1 rounded-pill py-3 fw-bold shadow-sm" type="button" id="btnAddToCartDetail" onclick="handleAddToCartFromDetail()">
+                                <i class="fa-solid fa-cart-plus me-2"></i> THÊM VÀO GIỎ HÀNG
+                            </button>
+                            <button class="btn btn-primary btn-lg flex-grow-1 rounded-pill py-3 fw-bold shadow-sm" id="btnBuy" onclick="buyProduct()">
+                                <i class="fa-solid fa-bolt me-2"></i> MUA NGAY
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-part py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="client/vendor/bootstrap/popper.min.js"></script>
+    <script src="client/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- App Modules -->
+    <script src="js/data.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/i18n.js"></script>
+    <script src="js/product.js"></script>
+</body>
+
+</html>
+

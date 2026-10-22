@@ -1,0 +1,204 @@
+﻿<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nạp tiền qua Tiền Ảo (Crypto) - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-brands fa-bitcoin text-warning me-2"></i> Cổng thanh toán USDT / Crypto tự động</small></div>
+            <div id="header-user-area"></div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="40">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="home.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="recharge-bank.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-university me-1"></i> Nạp Ngân Hàng</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <!-- Crypto Invoice Form -->
+                    <div class="card border-0 shadow-sm p-4" id="crypto-form-card">
+                        <h4 class="fw-bold text-center mb-3"><i class="fa-brands fa-bitcoin text-warning me-2"></i> NẠP TIỀN CRYPTO (USDT)</h4>
+                        <p class="text-muted small text-center mb-4">Hệ thống chấp nhận mạng TRC20, BEP20 và Web3. Tỷ giá quy đổi cập nhật theo thời gian thực.</p>
+
+                        <form id="crypto-create-form">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Chọn đồng coin / mạng (<span class="text-danger">*</span>)</label>
+                                <select class="form-select" id="crypto-currency" required>
+                                    <option value="USDT.TRC20" selected>USDT (Tron - TRC20)</option>
+                                    <option value="USDT.BEP20">USDT (BNB Smart Chain - BEP20)</option>
+                                    <option value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Số tiền nạp (USD) (<span class="text-danger">*</span>)</label>
+                                <input type="number" class="form-control" id="crypto-amount" placeholder="Tối thiểu 5 USD..." min="1" value="10" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-warning btn-lg w-100 rounded-pill fw-bold text-dark" id="btnCreateCrypto">
+                                <i class="fa-solid fa-file-invoice-dollar me-2"></i> TẠO HOÁ ĐƠN THANH TOÁN
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Invoice Display Box (Shown after creation) -->
+                    <div class="card border-0 shadow-sm p-4 text-center mt-4" id="crypto-invoice-card" style="display: none;">
+                        <h5 class="fw-bold mb-3 text-success"><i class="fa-solid fa-circle-check me-2"></i> Hoá đơn đã được tạo</h5>
+                        <p class="text-muted small mb-3">Vui lòng chuyển chính xác số coin đến địa chỉ ví bên dưới:</p>
+
+                        <div class="border rounded p-2 bg-white d-inline-block mx-auto mb-3" style="max-width: 220px;">
+                            <img id="crypto-qr" src="" class="img-fluid" alt="Crypto QR">
+                        </div>
+
+                        <div class="text-start bg-light p-3 rounded mb-3 small">
+                            <div class="mb-2">
+                                <span class="text-muted">Địa chỉ ví nhận:</span>
+                                <div class="d-flex align-items-center mt-1">
+                                    <code class="fs-6 me-2" id="crypto-address">...</code>
+                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="copyCryptoAddress()"><i class="fa-solid fa-copy"></i></button>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <span class="text-muted">Số tiền cần chuyển:</span>
+                                <strong class="text-danger fs-6 d-block" id="crypto-pay-amount">...</strong>
+                            </div>
+                            <div>
+                                <span class="text-muted">Trạng thái:</span>
+                                <span class="badge bg-warning text-dark ms-2" id="crypto-status">Đang chờ xác nhận mạng (0/1)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <small>© 2026 ShopClone 7 | All Rights Reserved.</small>
+    </footer>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script>
+        let invoiceTransId = '';
+        let invoiceInterval = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!window.auth.checkAuth('user')) return;
+
+            const form = document.getElementById('crypto-create-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('btnCreateCrypto');
+                btn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Đang tạo hoá đơn...';
+                btn.disabled = true;
+
+                const currency = document.getElementById('crypto-currency').value;
+                const amount = document.getElementById('crypto-amount').value;
+
+                try {
+                    const res = await window.api.post('ajaxs/client/create.php', {
+                        action: 'RechargeCryptoNew',
+                        currency: currency,
+                        amount: amount
+                    });
+
+                    if (res && res.status === 'success' && res.data) {
+                        invoiceTransId = res.data.trans_id;
+                        document.getElementById('crypto-address').innerText = res.data.address;
+                        document.getElementById('crypto-pay-amount').innerText = `${res.data.amount} ${currency}`;
+                        document.getElementById('crypto-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(res.data.address)}`;
+
+                        document.getElementById('crypto-form-card').style.display = 'none';
+                        document.getElementById('crypto-invoice-card').style.display = 'block';
+
+                        // Poll status
+                        startInvoicePolling();
+                    } else {
+                        window.api.alertError(res ? res.msg : 'Không thể tạo hoá đơn crypto');
+                    }
+                } catch(err) {
+                    console.error('Crypto error:', err);
+                    window.api.alertError('Lỗi kết nối khi tạo hoá đơn crypto');
+                } finally {
+                    btn.innerHTML = '<i class="fa-solid fa-file-invoice-dollar me-2"></i> TẠO HOÁ ĐƠN THANH TOÁN';
+                    btn.disabled = false;
+                }
+            });
+        });
+
+        function copyCryptoAddress() {
+            const addr = document.getElementById('crypto-address').innerText;
+            navigator.clipboard.writeText(addr).then(() => {
+                window.api.showToast(`Đã sao chép địa chỉ ví`);
+            });
+        }
+
+        function startInvoicePolling() {
+            if (invoiceInterval) clearInterval(invoiceInterval);
+            invoiceInterval = setInterval(async () => {
+                if (!invoiceTransId) return;
+                try {
+                    const res = await window.api.post('ajaxs/client/view.php', {
+                        action: 'loadStatusInvoice',
+                        trans_id: invoiceTransId
+                    });
+                    if (res && res.status === 'success' && res.data) {
+                        if (res.data.status === 'completed' || res.data.status == 1) {
+                            clearInterval(invoiceInterval);
+                            await window.auth.syncUser();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thanh toán hoàn tất!',
+                                text: 'Số dư của bạn đã được cộng thành công.',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = 'home.html';
+                            });
+                        }
+                    }
+                } catch(e) {}
+            }, 10000);
+        }
+    </script>
+</body>
+
+</html>
+

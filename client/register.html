@@ -1,0 +1,104 @@
+﻿<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Đăng ký tài khoản - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/user-auth.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <section class="user-form-part py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+                    <div class="user-form-logo text-center mb-4">
+                        <a href="home.html">
+                            <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="48">
+                        </a>
+                    </div>
+                    <div class="user-form-card shadow-sm p-4 bg-white rounded">
+                        <div class="user-form-title text-center mb-4">
+                            <h3 class="fw-bold">ĐĂNG KÝ TÀI KHOẢN</h3>
+                            <p class="text-muted small">Tạo tài khoản để quản lý đơn hàng và nhận ưu đãi riêng</p>
+                        </div>
+                        <form class="user-form" id="register-form">
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Tên đăng nhập (<span class="text-danger">*</span>)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                    <input type="text" class="form-control" id="username" placeholder="Nhập username..." required autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Địa chỉ Email (<span class="text-danger">*</span>)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" placeholder="example@gmail.com" required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Số điện thoại</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                                    <input type="tel" class="form-control" id="phone" placeholder="0987654321">
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Mật khẩu (<span class="text-danger">*</span>)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" placeholder="Tối thiểu 6 ký tự..." required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Nhập lại mật khẩu (<span class="text-danger">*</span>)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-shield-halved"></i></span>
+                                    <input type="password" class="form-control" id="re_password" placeholder="Nhập lại mật khẩu..." required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="form-label fw-bold">Mã giới thiệu (nếu có)</label>
+                                <input type="text" class="form-control" id="ref" placeholder="Mã giới thiệu từ bạn bè...">
+                            </div>
+                            <div class="form-button">
+                                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-pill" id="btnRegister">
+                                    <i class="fa-solid fa-user-plus me-2"></i> ĐĂNG KÝ TÀI KHOẢN
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="user-form-remind text-center mt-4">
+                        <p class="text-muted">Đã có tài khoản? <a href="login.html" class="fw-bold text-primary">Đăng nhập</a></p>
+                        <p><a href="home.html" class="text-secondary small"><i class="fa-solid fa-arrow-left me-1"></i> Quay lại trang chủ</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap & Modules -->
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/client/register.js"></script>
+</body>
+
+</html>
+

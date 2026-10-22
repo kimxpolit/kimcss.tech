@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="vi" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nạp tiền tự động qua Ngân Hàng (VietQR) - ShopClone 7</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --primary1: #0a58ca;
+        }
+    </style>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../public/client/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="../public/client/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="../public/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../public/client/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/client/css/main.css">
+    <link rel="stylesheet" href="../public/client/css/wallet.css">
+    <link rel="stylesheet" href="../mod/css/main.css?v=21">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../public/sweetalert2/default.css" type="text/css">
+    <script src="../public/sweetalert2/sweetalert2.js"></script>
+    <link rel="stylesheet" href="../public/cute-alert/style.css" type="text/css">
+    <script src="../public/cute-alert/cute-alert.js"></script>
+    <script src="../public/js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <a class="backtop" href="#"><i class="fa-sharp fa-solid fa-chevron-up"></i></a>
+
+    <!-- Header Top -->
+    <div class="header-top py-2 bg-light border-bottom">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small><i class="fa-solid fa-bolt text-warning me-2"></i> Hệ thống nạp tiền ngân hàng tự động 24/7 qua VietQR</small></div>
+            <div id="header-user-area">
+                <span class="badge bg-primary me-2"><i class="fa-solid fa-wallet me-1"></i> Số dư: <strong id="header-balance">250.000 ₫</strong></span>
+                <span class="text-dark small"><i class="fa-solid fa-user me-1"></i> <strong id="header-username">khachhang</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Main -->
+    <header class="header-part py-3 border-bottom bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="home.html">
+                <img src="../assets/img/logo.png" onerror="this.src='../public/client/images/logo.png'" alt="logo" height="42">
+            </a>
+            <div class="d-flex gap-2">
+                <a href="home.html" class="btn btn-outline-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-house me-1"></i> Trang chủ</a>
+                <a href="product-orders.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fa-solid fa-bag-shopping me-1"></i> Đơn hàng</a>
+                <a href="profile.html" class="btn btn-outline-info btn-sm rounded-pill px-3"><i class="fa-solid fa-user-gear me-1"></i> Cá nhân</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <!-- Instructions Alert -->
+            <div class="alert alert-warning border-0 shadow-sm rounded-4 mb-4 p-4">
+                <h5 class="fw-bold mb-2"><i class="fa-solid fa-triangle-exclamation text-danger me-2"></i> QUY ĐỊNH NẠP TIỀN TỰ ĐỘNG</h5>
+                <ul class="mb-0 small ps-3">
+                    <li class="mb-1">Vui lòng nhập <strong>chính xác 100%</strong> nội dung chuyển khoản: <strong class="text-danger transfer-syntax">NAPTIEN...</strong></li>
+                    <li class="mb-1">Hệ thống quét tự động sau 1-3 giây. Tiền sẽ được cộng trực tiếp vào số dư ví của bạn mà không cần liên hệ Admin.</li>
+                    <li>Mã VietQR bên dưới tự động mã hóa số tiền và cú pháp nạp. Bạn chỉ cần mở app ngân hàng và quét mã để thanh toán.</li>
+                </ul>
+            </div>
+
+            <!-- Amount Selection Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 p-4 bg-white">
+                <h5 class="fw-bold mb-3 text-primary"><i class="fa-solid fa-coins me-2"></i> 1. Nhập số tiền cần nạp để tạo mã VietQR</h5>
+                <div class="row align-items-center">
+                    <div class="col-lg-5 mb-3 mb-lg-0">
+                        <label class="form-label text-muted small fw-bold">Số tiền muốn nạp (VNĐ)</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light text-primary fw-bold"><i class="fa-solid fa-dong-sign"></i></span>
+                            <input type="text" class="form-control fw-bold text-primary" id="recharge-amount-input" placeholder="Ví dụ: 100,000" value="100,000">
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <label class="form-label text-muted small fw-bold">Chọn nhanh hạn mức</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="50000">50.000 ₫</button>
+                            <button type="button" class="btn btn-primary btn-sm btn-quick-amount active rounded-pill px-3 py-2" data-amount="100000">100.000 ₫</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="200000">200.000 ₫</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="500000">500.000 ₫</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="1000000">1.000.000 ₫</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-quick-amount rounded-pill px-3 py-2" data-amount="2000000">2.000.000 ₫</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banks List Section -->
+            <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-qrcode text-primary me-2"></i> 2. Quét mã VietQR hoặc chuyển khoản trực tiếp</h5>
+            <div class="row" id="banks-list-container">
+                <div class="col-12 text-center py-5 text-muted">
+                    <i class="fa fa-spinner fa-spin fa-2x text-primary mb-2"></i>
+                    <p>Đang tải danh sách ngân hàng...</p>
+                </div>
+            </div>
+
+            <!-- Deposit History Section -->
+            <div class="card border-0 shadow-sm rounded-4 mt-4 overflow-hidden">
+                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0"><i class="fa-solid fa-clock-rotate-left text-primary me-2"></i> Lịch sử nạp tiền gần đây</h5>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="loadDepositHistory()"><i class="fa-solid fa-rotate me-1"></i> Làm mới</button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Thời gian</th>
+                                    <th>Phương thức</th>
+                                    <th>Mã GD</th>
+                                    <th>Nội dung</th>
+                                    <th>Số tiền nạp</th>
+                                    <th>Thực nhận</th>
+                                </tr>
+                            </thead>
+                            <tbody id="deposits-table-body">
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">Đang tải lịch sử nạp...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-part pt-4 pb-3 bg-dark text-white text-center">
+        <div class="container">
+            <p class="text-white-50 small mb-0">© 2026 ShopClone 7 | Hệ thống Nạp tiền Tự động 24/7</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Vendor Scripts -->
+    <script src="../public/client/vendor/bootstrap/popper.min.js"></script>
+    <script src="../public/client/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Core App Modules -->
+    <script src="../assets/js/core/mock_db.js"></script>
+    <script src="../assets/js/modules/api.js"></script>
+    <script src="../assets/js/modules/auth.js"></script>
+    <script src="../assets/js/modules/client/recharge-bank.js"></script>
+</body>
+
+</html>
