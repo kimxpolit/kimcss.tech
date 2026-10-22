@@ -138,7 +138,8 @@ window.buyProduct = async function() {
     if (!window.auth.isLoggedIn()) {
         window.api.alertError('Vui lòng đăng nhập để thực hiện mua hàng!');
         setTimeout(() => {
-            window.location.href = '/login.html?redirect=' + encodeURIComponent(window.location.href);
+            const redirectPath = window.location.pathname.split('/').pop() + window.location.search;
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(redirectPath);
         }, 1200);
         return;
     }

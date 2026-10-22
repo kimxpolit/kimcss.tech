@@ -175,7 +175,7 @@ class AuthService {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         sessionStorage.clear();
-        window.location.href = '/login.html';
+        window.location.href = 'login.html';
     }
 
     checkAuth(requiredRole = 'user') {
@@ -184,14 +184,15 @@ class AuthService {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             sessionStorage.clear();
-            window.location.href = '/login.html?redirect=' + encodeURIComponent(window.location.href);
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(currentPath);
             return false;
         }
 
         if (requiredRole === 'admin' && user.role !== 'admin') {
             window.api.alertError('Bạn không có quyền truy cập khu vực Quản trị viên!');
             setTimeout(() => {
-                window.location.href = '/index.html';
+                window.location.href = 'index.html';
             }, 1200);
             return false;
         }

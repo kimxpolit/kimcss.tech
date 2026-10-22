@@ -35,14 +35,14 @@ function getRechargeSyntax() {
 async function initRechargePage() {
     // 1. Enforce authentication: must be logged in with real account
     if (!window.auth || !window.auth.isLoggedIn()) {
-        window.location.href = '/login.html?redirect=' + encodeURIComponent('recharge.html');
+        window.location.href = 'login.html?redirect=' + encodeURIComponent('recharge.html');
         return;
     }
 
     // 2. Sync fresh user state from SQL Server (/api/auth/me)
     const user = await window.auth.syncUser();
     if (!user) {
-        window.location.href = '/login.html?redirect=' + encodeURIComponent('recharge.html');
+        window.location.href = 'login.html?redirect=' + encodeURIComponent('recharge.html');
         return;
     }
     initialBalance = Number(user.balance || 0);

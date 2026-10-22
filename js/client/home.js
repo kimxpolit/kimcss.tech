@@ -604,7 +604,7 @@ window.calcTotalPayment = function() {
 // 10. Buy Product In Modal (ajaxs/client/modal/view-product.php:188)
 window.buyProductInModal = async function() {
     if (!window.auth || !window.auth.isLoggedIn()) {
-        window.location.href = '/login.html';
+        window.location.href = 'login.html';
         return;
     }
 
