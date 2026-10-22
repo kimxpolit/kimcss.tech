@@ -927,4 +927,12 @@ li.dropdown:hover > .dropdown-position-list {
         opacity: 0;
     }
 }
-
+
+/* Product Sort Select Toolbar Fix */
+#sort-select {
+    min-width: 215px !important;
+    padding-right: 38px !important;
+    padding-left: 18px !important;
+    background-position: right 14px center !important;
+    cursor: pointer !important;
+}

@@ -820,7 +820,8 @@ li.dropdown {
 .form-select {
     height: 45px;
     font-size: 15px;
-    padding: 0px 16px;
+    padding: 0px 38px 0px 16px;
+    background-position: right 14px center;
     letter-spacing: 0.3px;
     background-size: 12px 10px;
 
