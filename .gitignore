@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
-vendor/
+/vendor/
+!client/vendor/
+!public/client/vendor/
 
 # Environment and sensitive files
 .env
